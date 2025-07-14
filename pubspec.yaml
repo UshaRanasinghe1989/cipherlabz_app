@@ -1,0 +1,22 @@
+name: cipherlabz_app
+publish_to: none
+environment:
+  sdk: ^3.8.0
+workspace:
+  - apps/hr_app
+  - packages/attendance_package
+  - packages/leave_package
+  - packages/login_package
+
+dev_dependencies:
+  build_runner: ^2.4.6
+  melos: 6.3.3
+
+# melos:
+#   scripts:
+#     build:
+#       run: dart run build_runner build --delete-conflicting-outputs
+#       exec:
+#         concurrency: 4
+#       packageFilters:
+#         dependsOn: build_runner 

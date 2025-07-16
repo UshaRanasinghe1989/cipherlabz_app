@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:color_package/color_package.dart';
+import 'package:shared_resources/shared_resources.dart';
+
 import 'package:splash/src/presentation/widgets/powered_by.dart';
 
 class SplashScreenWidget extends StatefulWidget {
@@ -10,17 +13,17 @@ class SplashScreenWidget extends StatefulWidget {
 }
 
 class _SplashScreenWidgetState extends State<SplashScreenWidget> {
-  //@override
-  // void initState() {
-  //   super.initState();
+  @override
+  void initState() {
+    super.initState();
 
-  //   // Delay and navigate
-  //   Future.delayed(Duration(seconds: 3), () {
-  //     if (mounted) {
-  //       Navigator.pushReplacementNamed(context, '/login');
-  //     }
-  //   });
-  // }
+    // Delay and navigate
+    Future.delayed(Duration(seconds: 3), () {
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/login');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                         child: const Text(
                           "HR Management",
                           style: TextStyle(
-                            fontFamily: "Poppins",
+                            fontFamily: AppFonts.poppins,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w500,
                           ),

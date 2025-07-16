@@ -1,9 +1,7 @@
-name: login_package
+name: shared_resources
 description: "A new Flutter package project."
 version: 0.0.1
 homepage:
-publish_to: none
-# resolution: workspace
 
 environment:
   sdk: ^3.8.1
@@ -12,14 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^6.1.5
-  flutter_svg: ^2.0.7
-  color_package:
-    path: ../../packages/color_package
-  shared_resources:
-    path: ../../packages/shared_resources
-  splash: 
-    path: ../../packages/splash
 
 dev_dependencies:
   flutter_test:
@@ -31,13 +21,33 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-  assets:
-    - assets/login_page_img.png
+  fonts:
+      - family: Poppins
+        fonts:
+          - asset: assets/fonts/Poppins-Thin100.ttf
+            weight: 100
+          - asset: assets/fonts/Poppins-Regular400.ttf
+            weight: 400
+          - asset: assets/fonts/Poppins-Medium500.ttf
+            weight: 500
+          - asset: assets/fonts/Poppins-SemiBold600.ttf
+            weight: 600
+          - asset: assets/fonts/Poppins-Bold700.ttf
+            weight: 700
+          
+      - family: Inter
+        fonts:
+          - asset: assets/fonts/Inter_18pt-Medium.ttf
+            weight: 500
 
+      - family: Londrina Solid
+        fonts:
+          - asset: assets/fonts/LondrinaSolid-Regular.ttf
+            weight: 400
   # To add assets to your package, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/icons/
+
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/to/asset-from-package

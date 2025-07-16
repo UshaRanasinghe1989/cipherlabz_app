@@ -13,4 +13,13 @@ class AppColors {
   //SPLASH SCREEN COLORS
   static const Color hrManagementTxtBlue = Color(0XFF3700FF); //#3700FF
   static const Color hrManagementTxtRed = Color(0XFFFF0000); //#FF0000
+
+  //LOGIN PAGE COLORS
+  static const backgroundBlue = Color(0XFF46AEFC); //#46AEFC
+  static const darkBlue = Color(0xFF001645);
+
+  static const textFieldFillColor = Color(0XFFFFFAFA);
+  static const hintTextColor = Color.fromRGBO(0, 0, 0, 0.44);
+
+  static const signInBtnColor = Color(0XFF0590DF); //#0590DF
 }

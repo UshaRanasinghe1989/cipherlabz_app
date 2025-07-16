@@ -4,6 +4,8 @@ description: "A new Flutter project."
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
+# resolution: workspace
+
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -17,7 +19,6 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
 version: 1.0.0+1
-resolution: workspace
 
 environment:
   sdk: ^3.8.1
@@ -31,6 +32,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  splash:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -39,6 +41,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # flutter_native_splash: ^2.4.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -52,7 +55,10 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  # assets:
+  #   - assets/splash/cipher_labz_logo.png
+  #   - assets/splash/open_sky_logo.png
+ 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -88,3 +94,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+

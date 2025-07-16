@@ -10,6 +10,16 @@ scripts:
     exec:
       concurrency: 4
 
+  # splash-hr:
+  #   run: cmd /c "cd apps\\hr_app && flutter pub run flutter_native_splash:create --path=native_splash.yaml"
+  #   packageFilters:
+  #     scope: hr_app
+
+  run-hr:
+    run: cmd /c "cd apps\\hr_app && flutter run -t lib/main.dart -d windows"
+    packageFilters:
+      scope: hr_app    
+
 # scripts:
 #   generate:
 #     run: melos exec -c 1 --depends-on build_runner -- dart run build_runner build

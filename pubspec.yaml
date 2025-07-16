@@ -2,11 +2,12 @@ name: cipherlabz_app
 publish_to: none
 environment:
   sdk: ^3.8.0
-workspace:
-  - apps/hr_app
-  - packages/attendance_package
-  - packages/leave_package
-  - packages/login_package
+# workspace:
+#   - apps/hr_app
+#   - packages/attendance_package
+#   - packages/leave_package
+#   - packages/login_package
+#   - packages/splash
 
 dev_dependencies:
   build_runner: ^2.4.6

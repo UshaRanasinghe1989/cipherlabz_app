@@ -16,7 +16,7 @@ scripts:
   #     scope: hr_app
 
   run-hr:
-    run: cmd /c "cd apps\\hr_app && flutter run -t lib/main.dart -d windows"
+    run: cmd /c "cd apps\\hr_app && flutter run -t lib/main.dart"
     packageFilters:
       scope: hr_app    
 

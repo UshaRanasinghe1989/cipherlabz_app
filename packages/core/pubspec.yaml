@@ -1,9 +1,7 @@
-name: login_package
+name: core
 description: "A new Flutter package project."
 version: 0.0.1
 homepage:
-publish_to: none
-# resolution: workspace
 
 environment:
   sdk: ^3.8.1
@@ -12,19 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^6.1.5
-  flutter_svg: ^2.0.7
-  dartz: ^0.10.1
-  shared_preferences: ^2.5.3
-  
-  color_package:
-    path: ../../packages/color_package
-  shared_resources:
-    path: ../../packages/shared_resources
-  core:
-    path: ../../packages/core
-  splash: 
-    path: ../../packages/splash
 
 dev_dependencies:
   flutter_test:
@@ -36,8 +21,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-  assets:
-    - assets/login_page_img.png
 
   # To add assets to your package, add an assets section, like this:
   # assets:

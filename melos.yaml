@@ -10,6 +10,13 @@ scripts:
     exec:
       concurrency: 4
 
+  make-package:
+    description: "Create a new package inside /packages with Clean Architecture structure"
+    run: |
+      flutter create --template=package packages/<package_name> 
+    # PowerShell / cmd command
+    # melos run make-package
+
   # splash-hr:
   #   run: cmd /c "cd apps\\hr_app && flutter pub run flutter_native_splash:create --path=native_splash.yaml"
   #   packageFilters:

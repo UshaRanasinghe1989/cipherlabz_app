@@ -1,8 +1,12 @@
+import 'package:attendance_package/attendance_package.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+//RESOURCES
 import 'package:shared_resources/shared_resources.dart';
-
+//CUSTOM PACKAGES
+import 'package:announcement_package/announcement_package.dart';
+import 'package:schedule_package/schedule_package.dart';
+//PAGES
 import 'package:splash/splash.dart';
 import 'package:login_package/login_package.dart';
 
@@ -11,10 +15,12 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        //ChangeNotifierProvider(create: (context) => AttendanceProvider()),
+        ChangeNotifierProvider(create: (context) => AttendanceProvider()),
         ChangeNotifierProvider(
           create: (context) => LoginProvider(user: null, failure: null),
         ),
+        ChangeNotifierProvider(create: (context) => ScheduleProvider()),
+        ChangeNotifierProvider(create: (context) => AnnouncementProvider()),
       ],
       child: const MyApp(),
     ),

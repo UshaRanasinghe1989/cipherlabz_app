@@ -32,12 +32,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  shared_resources: 
+    path: ../../packages/shared_resources
   splash:
     path: ../../packages/splash
   login_package:
     path: ../../packages/login_package
-  shared_resources: 
-    path: ../../packages/shared_resources
+  schedule_package:
+    path: ../../packages/schedule_package
+  announcement_package:
+    path: ../../packages/announcement_package
+  attendance_package:
+    path: ../../packages/attendance_package
+  
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

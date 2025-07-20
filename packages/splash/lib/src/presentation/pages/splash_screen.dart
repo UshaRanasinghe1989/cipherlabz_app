@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
+//RESOURCES
 import 'package:color_package/color_package.dart';
 import 'package:shared_resources/shared_resources.dart';
-
+//WIDGETS
 import 'package:splash/src/presentation/widgets/powered_by.dart';
 
 class SplashScreenWidget extends StatefulWidget {
@@ -53,10 +53,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                         blendMode: BlendMode.srcIn,
                         shaderCallback: (bounds) =>
                             const LinearGradient(
-                              colors: [
-                                AppColors.hrManagementTxtBlue,
-                                AppColors.hrManagementTxtRed,
-                              ],
+                              colors: [AppColors.blue3700FF, AppColors.red],
                             ).createShader(
                               Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                             ),

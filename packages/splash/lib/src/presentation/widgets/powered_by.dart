@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:color_package/color_package.dart';
+import 'package:shared_resources/shared_resources.dart';
 
 class PoweredByWidget extends StatelessWidget {
   const PoweredByWidget({super.key});
@@ -12,8 +13,8 @@ class PoweredByWidget extends StatelessWidget {
         Text(
           "Powered by",
           style: TextStyle(
-            color: AppColors.poweredByTextColor,
-            fontFamily: "Poppins",
+            color: AppColors.gray7C7A82, //#7C7A82
+            fontFamily: AppFonts.poppins,
             fontSize: 12,
             fontWeight: FontWeight.w400,
           ),

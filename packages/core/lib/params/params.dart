@@ -10,3 +10,9 @@ class UserParams {
 
   const UserParams({required this.loginId, required this.password});
 }
+
+class ScheduleParams {
+  final DateTime today;
+
+  const ScheduleParams({required this.today});
+}

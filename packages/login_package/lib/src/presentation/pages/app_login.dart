@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//COLOR PACKAGE
+//RESOURCES PACKAGES
 import 'package:color_package/color_package.dart';
-//LOGIN PACKAGE
+//CUSTOM PACKAGES
+import 'package:splash/splash.dart';
+//PROVIDER
 import 'package:login_package/src/presentation/providers/login_provider.dart';
-
+//WIDGETS
 import 'package:login_package/src/presentation/widgets/forgot_password.dart';
 import 'package:login_package/src/presentation/widgets/login_page_img.dart';
 import 'package:login_package/src/presentation/widgets/page_title.dart';
 import 'package:login_package/src/presentation/widgets/sign_in_btn.dart';
 import 'package:login_package/src/presentation/widgets/text_field.dart';
-
-import 'package:splash/src/presentation/widgets/powered_by.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
@@ -48,7 +48,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               height:
                   MediaQuery.of(context).size.height * 0.87, // 80% of screen,
               decoration: BoxDecoration(
-                color: AppColors.backgroundBlue,
+                color: AppColors.blue46AEFC, //#46AEFC
                 borderRadius: BorderRadius.circular(30),
               ),
               child: Center(

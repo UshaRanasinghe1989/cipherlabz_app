@@ -1,7 +1,6 @@
 name: login_package
 description: "A new Flutter package project."
 version: 0.0.1
-homepage:
 publish_to: none
 # resolution: workspace
 
@@ -15,7 +14,8 @@ dependencies:
   provider: ^6.1.5
   flutter_svg: ^2.0.7
   dartz: ^0.10.1
-  shared_preferences: ^2.5.3
+  shared_preferences: ^2.5.3  
+  intl: ^0.18.1
   
   color_package:
     path: ../../packages/color_package
@@ -23,8 +23,13 @@ dependencies:
     path: ../../packages/shared_resources
   core:
     path: ../../packages/core
+    
   splash: 
     path: ../../packages/splash
+  attendance_package: 
+    path: ../../packages/attendance_package
+  home_package: 
+    path: ../../packages/home_package
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:color_package/color_package.dart';
+import 'package:shared_resources/shared_resources.dart';
 
 class TextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
@@ -26,13 +27,13 @@ class TextFieldWidget extends StatelessWidget {
         decoration: InputDecoration(
           hintText: customHintText,
           hintStyle: TextStyle(
-            fontFamily: "Poppins",
+            fontFamily: AppFonts.poppins,
             fontSize: 15,
             fontWeight: FontWeight.w400,
-            color: AppColors.hintTextColor,
+            color: AppColors.grey00000070, //#00000070
           ),
           filled: true,
-          fillColor: AppColors.textFieldFillColor,
+          fillColor: AppColors.whiteFFFAFA, //#FFFAFA
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(
               Radius.elliptical(textFormFieldRadius, textFormFieldRadius),
@@ -40,7 +41,7 @@ class TextFieldWidget extends StatelessWidget {
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: AppColors.textFieldFillColor,
+              color: AppColors.whiteFFFAFA, //#FFFAFA
               width: 1,
             ),
             borderRadius: BorderRadius.circular(textFormFieldRadius),

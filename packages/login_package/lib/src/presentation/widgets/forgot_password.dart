@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:color_package/color_package.dart';
+import 'package:shared_resources/shared_resources.dart';
 
 class ForgotPasswordWidget extends StatefulWidget {
   const ForgotPasswordWidget({super.key});
@@ -19,8 +20,8 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
       child: Text(
         'Forgot Password',
         style: TextStyle(
-          color: AppColors.darkBlue,
-          fontFamily: "Poppins",
+          color: AppColors.blue001645, //#001645
+          fontFamily: AppFonts.poppins,
           fontSize: 13,
           fontWeight: FontWeight.w700,
         ),

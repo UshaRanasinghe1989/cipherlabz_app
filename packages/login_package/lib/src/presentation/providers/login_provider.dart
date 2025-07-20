@@ -1,13 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:dartz/dartz.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:core/errors/failure.dart';
 import 'package:core/params/params.dart';
-import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
+//BUSINESS
 import 'package:login_package/src/business/entity/user_entity.dart';
-import 'package:login_package/src/business/usecase/get_user.dart';
 import 'package:login_package/src/business/usecase/is_existing_user.dart';
+//DATA
 import 'package:login_package/src/data/datasource/user_local_datasource/user_local_datasource_impl.dart';
 import 'package:login_package/src/data/repository_impl/user_repository_impl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginProvider extends ChangeNotifier {
   UserEntity? user;

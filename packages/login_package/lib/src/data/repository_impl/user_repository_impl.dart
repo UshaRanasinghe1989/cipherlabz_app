@@ -8,7 +8,7 @@ import 'package:login_package/src/data/datasource/user_local_datasource/user_loc
 //import 'package:login_package/src/data/datasource/user_remote_datasource/user_remote_datasource.dart';
 import 'package:login_package/src/data/model/user_model.dart';
 
-import 'package:login_package/src/data/dummy_data/user_set.dart';
+import 'package:login_package/src/data/dummy_data/dummy_data.dart';
 
 UserEntity? user;
 

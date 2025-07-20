@@ -63,7 +63,7 @@ class SigninBtnWidget extends StatelessWidget {
             }
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.signInBtnColor,
+            backgroundColor: AppColors.blue0590DF, //#0590DF
             side: BorderSide(color: Colors.white, width: 1.0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),

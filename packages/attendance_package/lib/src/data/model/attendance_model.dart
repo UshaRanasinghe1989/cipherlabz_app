@@ -9,4 +9,16 @@ class AttendanceModel extends AttendanceEntity {
     required super.latitude,
     required super.longitude,
   });
+
+  //MODEL =>ENTITY
+  AttendanceEntity toEntity() {
+    return AttendanceEntity(
+      id: id,
+      userId: userId,
+      checkIn: checkIn,
+      checkOut: checkOut,
+      latitude: latitude,
+      longitude: longitude,
+    );
+  }
 }

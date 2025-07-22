@@ -47,7 +47,7 @@ class TodaysScheduleWidget extends StatelessWidget {
               child: Text(
                 "What`s Up Today",
                 style: TextStyle(
-                  color: AppColors.black,
+                  color: Colors.black,
                   fontFamily: AppFonts.poppins,
                   fontSize: 15,
                   fontWeight: FontWeight.w600,

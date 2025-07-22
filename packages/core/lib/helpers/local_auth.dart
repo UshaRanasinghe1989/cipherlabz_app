@@ -10,20 +10,23 @@ class LocalAuth {
       final bool canAuthenticate = await _auth.canCheckBiometrics;
       final bool isDeviceSupported = await _auth.isDeviceSupported();
 
-      if (isAuthenticated && canAuthenticate && isDeviceSupported) {
+      if (canAuthenticate && isDeviceSupported) {
+        print("Calling authenticate() now...");
         isAuthenticated = await _auth.authenticate(
           localizedReason: 'Please authenticate to proceed',
           options: const AuthenticationOptions(
-            biometricOnly: true,
+            biometricOnly: false,
             stickyAuth: true,
             useErrorDialogs: true,
           ),
         );
+      } else {
+        print('Biometric authentication not supported.');
       }
-
+      print("$isAuthenticated **********");
       return isAuthenticated;
     } catch (e) {
-      print('Authentication error: $e');
+      print('Authentication failed with error: $e');
       return false;
     }
   }

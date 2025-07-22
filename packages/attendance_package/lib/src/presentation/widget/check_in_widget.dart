@@ -1,3 +1,4 @@
+import 'package:core/helpers/local_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -13,15 +14,17 @@ import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 class CheckInWidget extends StatelessWidget {
   CheckInWidget({super.key});
 
-  final now = DateTime.now();
-
   String _currentTime() {
-    String formattedTime = DateFormat("hh.mm.ss a").format(now);
+    String formattedTime = DateFormat("hh.mm.ss a").format(DateTime.now());
     return formattedTime;
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<AttendanceProvider>(context).isCheckedInProvider(user!.id);
+    });
+
     return Positioned(
       top: 325,
       left: 40,
@@ -62,7 +65,7 @@ class CheckInWidget extends StatelessWidget {
                   fontFamily: AppFonts.inter,
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
-                  color: Colors.black,
+                  color: AppColors.black,
                 ),
               ),
             ),
@@ -96,10 +99,37 @@ class CheckInWidget extends StatelessWidget {
                               : "Swipe to Check In",
                           style: TextStyle(color: AppColors.white),
                         ),
-                        onSwipe: () {
-                          final now = DateTime.now();
+                        onSwipe: () async {
+                          try {
+                            final bool authenticated = await LocalAuth()
+                                .canAuthWithBioFunc();
+                            if (!authenticated) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Authentication failed'),
+                                ),
+                              );
+                              return;
+                            }
 
-                          provider.addAttendance(LoginProvider.user!.id, now);
+                            await provider.saveAttendance(
+                              user!.id,
+                              DateTime.now(),
+                            ); // <- await!
+                            await provider.getAttendanceObj(
+                              user!.id,
+                            ); // <- await!
+                            await provider.isCheckedInProvider(
+                              user!.id,
+                            ); // <- await!
+                          } catch (e) {
+                            print('Authentication error: $e');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Error during authentication'),
+                              ),
+                            );
+                          }
                         },
                       );
                     },

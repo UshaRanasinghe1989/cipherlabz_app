@@ -1,107 +1,174 @@
+import 'package:attendance_package/attendance_package.dart';
+import 'package:core/helpers/get_location.dart';
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
+import 'package:dartz/dartz.dart';
 //BUSINESS
 import 'package:attendance_package/src/business/entity/attendance_entity.dart';
+import 'package:attendance_package/src/business/repository/attendance_repository.dart';
+import 'package:attendance_package/src/business/usecase/attendance_usecases.dart';
+import 'package:attendance_package/src/business/usecase/is_checked_in.dart';
 //DATA
-import 'package:attendance_package/src/data/dummy_data/dummy_data.dart';
-//ENUM
-import 'package:attendance_package/src/enum/attendance_status.dart';
-//HELPERS
-import 'package:core/helpers/get_location.dart';
-import 'package:core/helpers/local_auth.dart';
+import 'package:attendance_package/src/data/datasource/attendance_local_datasource.dart';
+//RESOURCES
+import 'package:core/core.dart';
 
 class AttendanceProvider extends ChangeNotifier {
-  bool isCheckedIn = false;
-  Map<int, AttendanceEntity> attendanceMap = AttendanceData.attendanceMap;
+  final AttendanceLocalDataSource dataSource;
+  final AttendanceRepository repository;
+  final AttendanceUseCases attendanceUseCases;
 
-  //RETURN OBJECT FOR A USER ID
-  AttendanceEntity? getAttendanceObj(int userId) {
-    return AttendanceData.attendanceMap[userId];
-  }
+  bool _isCheckedIn = false;
+  bool get isCheckedIn => _isCheckedIn;
 
-  //ADD ATTENDANCE RECORD
-  void addAttendance(int userId, DateTime now) async {
-    LocationData? position;
+  AttendanceProvider(this.repository, this.dataSource, this.attendanceUseCases);
 
+  factory AttendanceProvider.empty() => AttendanceProvider(
+    AttendanceRepositoryImpl.repo(),
+    AttendanceLocalDataSource(),
+    AttendanceUseCases(
+      saveAttendance: SaveAttendanceUseCase(
+        AttendanceRepositoryImpl.repo(),
+        LocalAuth(),
+        GetCurrentLoaction(),
+      ),
+      getAttendanceObj: GetAttendance(
+        repository: AttendanceRepositoryImpl.repo(),
+      ),
+      isCheckedIn: isCheckedInUseCase(AttendanceRepositoryImpl.repo()),
+    ),
+  );
+
+  Future<Either<Failure, AttendanceEntity>> saveAttendance(
+    int userId,
+    DateTime checkInTime,
+  ) async {
+    notifyListeners();
     try {
-      await LocalAuth().canAuthWithBioFunc().then((result) async {
-        if (result) {
-          print("User authenticated");
-
-          await GetCurrentLoaction().getCurrentLocation().then((
-            currentLocation,
-          ) {
-            if (currentLocation == null) {
-              print("Could not fetch location.");
-              return;
-            } else {
-              position = currentLocation;
-            }
-          });
-
-          if (!attendanceMap.values.any(
-                (attendance) => attendance.userId == userId,
-              ) &&
-              attendanceMap.values.any(
-                (attendance) => attendance.checkIn == DateTime.now(),
-              )) {
-            AttendanceStatus updatedStatus = setStatus(now);
-            final newKey =
-                (attendanceMap.isNotEmpty ? attendanceMap.keys.last : 0) + 1;
-
-            attendanceMap.putIfAbsent(
-              newKey,
-              () => AttendanceEntity(
-                id: newKey,
-                userId: userId,
-                checkIn: now,
-                checkOut: now,
-                latitude: position!.latitude!,
-                longitude: position!.longitude!,
-                status: updatedStatus,
-              ),
-            );
-
-            updateCheckedInStatus(userId, now);
-
-            print("${attendanceMap.keys} *******");
-          } else {
-            print("User available");
-          }
-        }
-      });
+      return await attendanceUseCases.saveAttendance.call(userId, checkInTime);
     } catch (e) {
-      print(e);
-    }
-
-    notifyListeners();
-  }
-
-  //UPDATE IS CHECKED IN
-  void updateCheckedInStatus(int userId, DateTime checkIn) {
-    isCheckedIn = attendanceMap.values.any(
-      (attendance) => attendance.userId == userId,
-    );
-
-    notifyListeners();
-  }
-
-  //UPDATE CHECK IN STATUS
-  AttendanceStatus setStatus(DateTime checkInTime) {
-    final cutoff = DateTime(
-      checkInTime.year,
-      checkInTime.month,
-      checkInTime.day,
-      9,
-      0,
-    );
-
-    if (checkInTime.isAfter(cutoff)) {
-      return AttendanceStatus.late;
-    } else {
-      return AttendanceStatus.ontime;
+      return Left(DatabaseFailure(errorMessage: "$e"));
     }
   }
+
+  Future<bool> isCheckedInProvider(int userId) async {
+    _isCheckedIn = await isCheckedInUseCase(repository).call(userId);
+    print("$_isCheckedIn *-*-*-");
+    notifyListeners();
+    return _isCheckedIn;
+  }
+
+  Future<Either<Failure, AttendanceEntity>> getAttendanceObj(int userId) async {
+    //return await getAttendanceObj(userId).call(userId);
+    final result = await attendanceUseCases.getAttendanceObj(
+      userId,
+      DateTime.now(),
+    );
+    notifyListeners();
+    return result.fold(
+      (failure) {
+        // Handle failure
+        return Left(GeneralFailure(errorMessage: "An Error Occured !"));
+      },
+      (entity) {
+        print("$entity ***");
+        // Success case: return the entity wrapped in Right
+        return Right(entity);
+      },
+    );
+  }
+  //   bool isCheckedIn = false;
+  //   Map<int, AttendanceEntity> attendanceMap = AttendanceData.attendanceMap;
+
+  //   //RETURN OBJECT FOR A USER ID
+  //   AttendanceEntity? getAttendanceObj(int userId) {
+  //     return AttendanceData.attendanceMap[userId];
+  //   }
+
+  //   //NEW SAVE ATTENDANCE RECORD
+
+  //   //ADD ATTENDANCE RECORD
+  //   void addAttendance(int userId, DateTime now) async {
+  //     LocationData? position;
+
+  //     try {
+  //       await LocalAuth().canAuthWithBioFunc().then((result) async {
+  //         if (result) {
+  //           print("User authenticated");
+
+  //           await GetCurrentLoaction().getCurrentLocation().then((
+  //             currentLocation,
+  //           ) {
+  //             if (currentLocation == null) {
+  //               print("Could not fetch location.");
+  //               return;
+  //             } else {
+  //               position = currentLocation;
+  //             }
+  //           });
+
+  //           if (!attendanceMap.values.any(
+  //                 (attendance) => attendance.userId == userId,
+  //               ) &&
+  //               attendanceMap.values.any(
+  //                 (attendance) => attendance.checkIn == DateTime.now(),
+  //               )) {
+  //             AttendanceStatus updatedStatus = setStatus(now);
+  //             final newKey =
+  //                 (attendanceMap.isNotEmpty ? attendanceMap.keys.last : 0) + 1;
+
+  //             attendanceMap.putIfAbsent(
+  //               newKey,
+  //               () => AttendanceEntity(
+  //                 id: newKey,
+  //                 userId: userId,
+  //                 checkIn: now,
+  //                 checkOut: now,
+  //                 latitude: position!.latitude!,
+  //                 longitude: position!.longitude!,
+  //                 status: updatedStatus,
+  //               ),
+  //             );
+
+  //             updateCheckedInStatus(userId, now);
+
+  //             print("${attendanceMap.keys} *******");
+  //           } else {
+  //             print("User available");
+  //           }
+  //         }
+  //       });
+  //     } catch (e) {
+  //       print(e);
+  //     }
+
+  //     notifyListeners();
+  //   }
+
+  //   //UPDATE IS CHECKED IN
+  //   void updateCheckedInStatus(int userId, DateTime checkIn) {
+  //     isCheckedIn = attendanceMap.values.any(
+  //       (attendance) => attendance.userId == userId,
+  //     );
+
+  //     notifyListeners();
+  //   }
+
+  //   //UPDATE CHECK IN STATUS
+  //   AttendanceStatus setStatus(DateTime checkInTime) {
+  //     final cutoff = DateTime(
+  //       checkInTime.year,
+  //       checkInTime.month,
+  //       checkInTime.day,
+  //       9,
+  //       0,
+  //     );
+
+  //     if (checkInTime.isAfter(cutoff)) {
+  //       return AttendanceStatus.late;
+  //     } else {
+  //       return AttendanceStatus.ontime;
+  //     }
+  //   }
 }
 // import 'package:local_auth/local_auth.dart';
 

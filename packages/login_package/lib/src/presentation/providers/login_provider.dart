@@ -11,11 +11,12 @@ import 'package:login_package/src/business/usecase/is_existing_user.dart';
 import 'package:login_package/src/data/datasource/user_local_datasource/user_local_datasource_impl.dart';
 import 'package:login_package/src/data/repository_impl/user_repository_impl.dart';
 
+UserEntity? user;
+
 class LoginProvider extends ChangeNotifier {
-  UserEntity? user;
   Failure? failure;
 
-  LoginProvider({required this.user, required this.failure});
+  LoginProvider();
 
   Future<Either<Failure?, UserEntity?>> eitherFailureOrLogin({
     required String email,

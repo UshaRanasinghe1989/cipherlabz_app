@@ -3,14 +3,9 @@ import 'package:color_package/color_package.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_resources/shared_resources.dart';
 
-class DisplayTodayWidget extends StatefulWidget {
+class DisplayTodayWidget extends StatelessWidget {
   const DisplayTodayWidget({super.key});
 
-  @override
-  State<DisplayTodayWidget> createState() => _DisplayTodayWidgetState();
-}
-
-class _DisplayTodayWidgetState extends State<DisplayTodayWidget> {
   String _getToday() {
     String formattedDate = DateFormat(
       "EEEE, d MMM yyyy",

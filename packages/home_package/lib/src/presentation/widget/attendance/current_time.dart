@@ -3,15 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_resources/shared_resources.dart';
 
-class DisplayCurrentTimeWidget extends StatefulWidget {
+class DisplayCurrentTimeWidget extends StatelessWidget {
   const DisplayCurrentTimeWidget({super.key});
 
-  @override
-  State<DisplayCurrentTimeWidget> createState() =>
-      _DisplayCurrentTimeWidgetState();
-}
-
-class _DisplayCurrentTimeWidgetState extends State<DisplayCurrentTimeWidget> {
   String _currentTime() {
     String formattedTime = DateFormat("hh.mm a").format(DateTime.now());
     return formattedTime;

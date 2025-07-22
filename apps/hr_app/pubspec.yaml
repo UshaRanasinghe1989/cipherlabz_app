@@ -34,6 +34,8 @@ dependencies:
     sdk: flutter
   shared_resources: 
     path: ../../packages/shared_resources
+  core: 
+    path: ../../packages/core
   splash:
     path: ../../packages/splash
   login_package:

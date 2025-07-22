@@ -1,3 +1,4 @@
+import 'package:attendance_package/attendance_package.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -7,6 +8,8 @@ import 'package:color_package/color_package.dart';
 import 'package:core/helpers/get_location.dart';
 //WIDGETS
 import 'package:attendance_package/src/presentation/widget/check_in_widget.dart';
+import 'package:login_package/login_package.dart';
+import 'package:provider/provider.dart';
 
 class MapWidget extends StatefulWidget {
   const MapWidget({super.key});
@@ -96,7 +99,7 @@ class _MapWidgetState extends State<MapWidget> {
       _currentLocation!.latitude!,
       _currentLocation!.longitude!,
     );
-
+    context.read<AttendanceProvider>().isCheckedInProvider(user!.id);
     return Stack(
       children: [
         Container(

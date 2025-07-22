@@ -1,5 +1,8 @@
-import 'package:attendance_package/src/enum/attendance_status.dart';
 import 'package:flutter/material.dart';
+//DATA
+import 'package:attendance_package/src/data/model/attendance_model.dart';
+//ENUM
+import 'package:attendance_package/src/enum/attendance_status.dart';
 
 class AttendanceEntity {
   final int id;
@@ -19,6 +22,18 @@ class AttendanceEntity {
     required this.longitude,
     this.status = AttendanceStatus.pending,
   });
+
+  //ENTITY => MODEL
+  AttendanceModel toModel() {
+    return AttendanceModel(
+      id: id,
+      userId: userId,
+      checkIn: checkIn,
+      checkOut: checkOut,
+      latitude: latitude,
+      longitude: longitude,
+    );
+  }
 
   void setStatus(DateTime checkIn) {
     TimeOfDay checkInTime = TimeOfDay.fromDateTime(checkIn);

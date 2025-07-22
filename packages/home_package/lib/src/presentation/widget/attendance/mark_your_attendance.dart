@@ -1,11 +1,14 @@
-import 'package:attendance_package/attendance_package.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_resources/shared_resources.dart';
-import 'package:color_package/color_package.dart';
+//PACKAGE
+import 'package:attendance_package/attendance_package.dart';
+//WIDGET
+import 'package:home_package/src/presentation/widget/attendance/attendance_time.dart';
 import 'current_time.dart';
 import 'today.dart';
+//RESOURCES
+import 'package:shared_resources/shared_resources.dart';
+import 'package:color_package/color_package.dart';
 
 class MarkYourAttendanceWidget extends StatelessWidget {
   const MarkYourAttendanceWidget({super.key});
@@ -103,17 +106,7 @@ class MarkYourAttendanceWidget extends StatelessWidget {
                                         fontSize: 15,
                                       ),
                                     ),
-                                    Text(
-                                      DateFormat("hh.mm a").format(
-                                        provider.getAttendanceObj(0)!.checkIn,
-                                      ),
-                                      style: TextStyle(
-                                        color: AppColors.white,
-                                        fontFamily: AppFonts.poppins,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15,
-                                      ),
-                                    ),
+                                    AttendanceTimeWidget(field: 'checkIn'),
                                   ],
                                 ),
                                 Text(
@@ -131,26 +124,7 @@ class MarkYourAttendanceWidget extends StatelessWidget {
                                         fontSize: 15,
                                       ),
                                     ),
-                                    Text(
-                                      provider.getAttendanceObj(0)?.checkOut !=
-                                              null
-                                          ? DateFormat("hh.mm a").format(
-                                              provider
-                                                  .getAttendanceObj(0)!
-                                                  .checkOut,
-                                            )
-                                          : DateFormat("hh.mm a").format(
-                                              provider
-                                                  .getAttendanceObj(0)!
-                                                  .checkIn,
-                                            ),
-                                      style: TextStyle(
-                                        color: AppColors.white,
-                                        fontFamily: AppFonts.poppins,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15,
-                                      ),
-                                    ),
+                                    AttendanceTimeWidget(field: "checkOut"),
                                   ],
                                 ),
                               ],

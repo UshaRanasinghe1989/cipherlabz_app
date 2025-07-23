@@ -1,4 +1,5 @@
 import 'package:color_package/color_package.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 //PACKAGES
@@ -33,14 +34,14 @@ class TopRowWidget extends StatelessWidget {
                     alignment: Alignment.topCenter,
                     child: Text(
                       maxLines: 1,
-                      attendanceProvider.isCheckedIn
+                      AttendanceHelper.isCheckedIn(user!.id)
                           ? "Hello ${user!.name.trim().split(' ').first} 👋"
                           : "Good morning ${user!.name.trim().split(' ').first} 👋",
                       style: TextStyle(
                         fontFamily: AppFonts.ls,
                         fontWeight: FontWeight.w400,
-                        fontSize: 28,
-                        color: AppColors.black,
+                        fontSize: 20,
+                        color: Colors.black,
                       ),
                     ),
                   ),

@@ -5,11 +5,15 @@ export 'package:attendance_package/src/presentation/provider/attendance_provider
 export 'package:attendance_package/src/business/usecase/save_attendance.dart';
 export 'package:attendance_package/src/business/usecase/get_attendance.dart';
 export 'package:attendance_package/src/business/usecase/is_checked_in.dart';
+export 'package:attendance_package/src/business/usecase/get_my_attendance.dart';
 export 'package:attendance_package/src/business/usecase/attendance_usecases.dart';
-
+//ENTITY
 export 'package:attendance_package/src/business/entity/attendance_entity.dart';
 export 'package:attendance_package/src/business/repository/attendance_repository.dart';
 //DATA
 export 'package:attendance_package/src/data/dummy_data/dummy_data.dart';
 export 'package:attendance_package/src/data/repository_impl/attendance_repository_impl.dart';
 export 'package:attendance_package/src/data/datasource/attendance_local_datasource.dart';
+export 'package:attendance_package/src/data/model/attendance_model.dart';
+//PAGES
+export 'package:attendance_package/src/presentation/page/attendance_detail_page.dart';

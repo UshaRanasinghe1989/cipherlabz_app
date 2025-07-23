@@ -45,7 +45,7 @@ class AttendanceMarkWidget extends StatelessWidget {
                   fontFamily: AppFonts.poppins,
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.black,
+                  color: Colors.black,
                 ),
               ),
             ),

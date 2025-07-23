@@ -1,14 +1,7 @@
-import 'package:attendance_package/attendance_package.dart';
-import 'package:core/helpers/get_location.dart';
 import 'package:flutter/material.dart';
 import 'package:dartz/dartz.dart';
-//BUSINESS
-import 'package:attendance_package/src/business/entity/attendance_entity.dart';
-import 'package:attendance_package/src/business/repository/attendance_repository.dart';
-import 'package:attendance_package/src/business/usecase/attendance_usecases.dart';
-import 'package:attendance_package/src/business/usecase/is_checked_in.dart';
-//DATA
-import 'package:attendance_package/src/data/datasource/attendance_local_datasource.dart';
+//ATTENDANCE PACKAGE
+import 'package:attendance_package/attendance_package.dart';
 //RESOURCES
 import 'package:core/core.dart';
 
@@ -19,6 +12,8 @@ class AttendanceProvider extends ChangeNotifier {
 
   bool _isCheckedIn = false;
   bool get isCheckedIn => _isCheckedIn;
+  List<AttendanceEntity> attendanceList = [];
+  Failure? failure;
 
   AttendanceProvider(this.repository, this.dataSource, this.attendanceUseCases);
 
@@ -31,13 +26,17 @@ class AttendanceProvider extends ChangeNotifier {
         LocalAuth(),
         GetCurrentLoaction(),
       ),
-      getAttendanceObj: GetAttendance(
+      getAttendanceObj: GetAttendanceUseCase(
         repository: AttendanceRepositoryImpl.repo(),
       ),
-      isCheckedIn: isCheckedInUseCase(AttendanceRepositoryImpl.repo()),
+      isCheckedIn: IsCheckedInUseCase(AttendanceRepositoryImpl.repo()),
+      getMyAttendance: GetMyAttendanceUseCase(
+        repository: AttendanceRepositoryImpl.repo(),
+      ),
     ),
   );
 
+  //SAVE ATTENDANCE
   Future<Either<Failure, AttendanceEntity>> saveAttendance(
     int userId,
     DateTime checkInTime,
@@ -50,13 +49,14 @@ class AttendanceProvider extends ChangeNotifier {
     }
   }
 
+  //IS CHECKED IN FOR THE DAY
   Future<bool> isCheckedInProvider(int userId) async {
-    _isCheckedIn = await isCheckedInUseCase(repository).call(userId);
-    print("$_isCheckedIn *-*-*-");
+    _isCheckedIn = await IsCheckedInUseCase(repository).call(userId);
     notifyListeners();
     return _isCheckedIn;
   }
 
+  //GET ATTENDANCE ENTITY OBJECT
   Future<Either<Failure, AttendanceEntity>> getAttendanceObj(int userId) async {
     //return await getAttendanceObj(userId).call(userId);
     final result = await attendanceUseCases.getAttendanceObj(
@@ -76,6 +76,25 @@ class AttendanceProvider extends ChangeNotifier {
       },
     );
   }
+
+  //GET MY ATTENDANCE LIST
+  Future<void> getMyAttendanceList(int myUserId, int numberOfDays) async {
+    final result = await attendanceUseCases.getMyAttendance.call(
+      myUserId,
+      numberOfDays,
+    );
+    notifyListeners();
+    return result.fold(
+      (failure) {
+        // Handle failure
+        failure = GeneralFailure(errorMessage: "An Error Occured !");
+      },
+      (entityList) {
+        attendanceList = entityList;
+      },
+    );
+  }
+
   //   bool isCheckedIn = false;
   //   Map<int, AttendanceEntity> attendanceMap = AttendanceData.attendanceMap;
 

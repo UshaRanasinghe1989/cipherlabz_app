@@ -21,4 +21,9 @@ abstract class AttendanceRepository {
 
   //GET LOCATION
   LocationData getLocation();
+
+  Future<Either<Failure, List<AttendanceEntity>>> getMyAttendance(
+    int myUserId,
+    int numberOfDays,
+  );
 }

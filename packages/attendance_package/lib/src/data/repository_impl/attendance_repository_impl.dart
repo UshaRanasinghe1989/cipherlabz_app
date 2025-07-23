@@ -55,4 +55,13 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
       return Left(GeneralFailure(errorMessage: "An Error Occurred!"));
     }
   }
+
+  //GET MY ATTENDANCE
+  @override
+  Future<Either<Failure, List<AttendanceEntity>>> getMyAttendance(
+    int myUserId,
+    int numberOfDays,
+  ) async {
+    return await dataSource.getMyAttendance(myUserId, numberOfDays);
+  }
 }

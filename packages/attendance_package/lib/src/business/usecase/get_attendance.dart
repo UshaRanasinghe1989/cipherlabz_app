@@ -3,10 +3,10 @@ import 'package:attendance_package/src/business/repository/attendance_repository
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 
-class GetAttendance {
+class GetAttendanceUseCase {
   final AttendanceRepository repository;
 
-  GetAttendance({required this.repository});
+  GetAttendanceUseCase({required this.repository});
 
   Future<Either<Failure, AttendanceEntity>> call(
     int userId,

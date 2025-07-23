@@ -1,3 +1,4 @@
+import 'package:attendance_package/attendance_package.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 //RESOURCES
@@ -16,7 +17,7 @@ class NavigationScreenWidget extends StatefulWidget {
 class _NavigationScreenWidgetWidgetState extends State<NavigationScreenWidget> {
   int _currentPageIndex = 0;
 
-  final List<Widget> pagesList = [HomePageWidget() /*AttendanceDetailPage()*/];
+  final List<Widget> pagesList = [HomePageWidget(), AttendanceDetailPage()];
 
   @override
   Widget build(BuildContext context) {

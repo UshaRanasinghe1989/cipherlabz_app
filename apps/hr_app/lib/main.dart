@@ -29,8 +29,8 @@ void main() {
         Provider<LocalAuth>(create: (_) => LocalAuth()),
         // 4. Provide GetCurrentLoaction
         Provider<GetCurrentLoaction>(create: (_) => GetCurrentLoaction()),
-        ProxyProvider<AttendanceRepository, isCheckedInUseCase>(
-          update: (_, repo, __) => isCheckedInUseCase(repo),
+        ProxyProvider<AttendanceRepository, IsCheckedInUseCase>(
+          update: (_, repo, __) => IsCheckedInUseCase(repo),
         ),
         // 5. Provide SaveAttendanceUseCase using repository, auth, location
         ProxyProvider3<
@@ -44,22 +44,35 @@ void main() {
         ),
 
         // 6. Provide GetAttendanceUseCase
-        ProxyProvider<AttendanceRepository, GetAttendance>(
-          update: (_, repo, __) => GetAttendance(repository: repo),
+        ProxyProvider<AttendanceRepository, GetAttendanceUseCase>(
+          update: (_, repo, __) => GetAttendanceUseCase(repository: repo),
+        ),
+        //PROVIDE GET MY ATTENDANCE USECASE
+        ProxyProvider<AttendanceRepository, GetMyAttendanceUseCase>(
+          update: (_, repo, __) => GetMyAttendanceUseCase(repository: repo),
         ),
 
         // 7. Provide AttendanceUseCases grouped
-        ProxyProvider3<
+        ProxyProvider4<
           SaveAttendanceUseCase,
-          GetAttendance,
-          isCheckedInUseCase,
+          GetAttendanceUseCase,
+          IsCheckedInUseCase,
+          GetMyAttendanceUseCase,
           AttendanceUseCases
         >(
-          update: (_, saveAttendance, getAttendance, isCheckedIn, __) =>
-              AttendanceUseCases(
+          update:
+              (
+                _,
+                saveAttendance,
+                getAttendance,
+                isCheckedIn,
+                getMyAttendance,
+                __,
+              ) => AttendanceUseCases(
                 saveAttendance: saveAttendance,
                 getAttendanceObj: getAttendance,
                 isCheckedIn: isCheckedIn,
+                getMyAttendance: getMyAttendance,
               ),
         ),
 

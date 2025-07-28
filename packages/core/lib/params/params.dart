@@ -2,8 +2,6 @@ class NoParams {}
 
 class TemplateParams {}
 
-enum UserCategory { superUser, regularUser }
-
 class UserParams {
   final String loginId;
   final String password;

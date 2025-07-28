@@ -1,0 +1,4 @@
+enum UserCategory{
+  superUser,
+  regularUser,
+}

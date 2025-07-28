@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 //RESOURCES PACKAGES
 import 'package:color_package/color_package.dart';
 //CUSTOM PACKAGES
 import 'package:splash/splash.dart';
-//PROVIDER
-import 'package:login_package/src/presentation/providers/login_provider.dart';
 //WIDGETS
 import 'package:login_package/src/presentation/widgets/forgot_password.dart';
 import 'package:login_package/src/presentation/widgets/login_page_img.dart';
@@ -91,22 +88,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                             //FORGOT PASSWORD
                             ForgotPasswordWidget(),
                             //SIGN IN
-                            Expanded(
-                              child: Consumer<LoginProvider>(
-                                builder:
-                                    (
-                                      BuildContext context,
-                                      LoginProvider provider,
-                                      Widget? child,
-                                    ) {
-                                      return SigninBtnWidget(
-                                        _emailController,
-                                        _passwordController,
-                                        formKey: _formKey,
-                                        provider: provider,
-                                      );
-                                    },
-                              ),
+                            SigninBtnWidget(
+                              _emailController,
+                              _passwordController,
+                              formKey: _formKey,
                             ),
                           ],
                         ),

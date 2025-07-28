@@ -15,7 +15,8 @@ dependencies:
   flutter_svg: ^2.0.7
   dartz: ^0.10.1
   shared_preferences: ^2.5.3  
-  intl: ^0.18.1
+  intl: ^0.18.1  
+  flutter_riverpod: ^2.6.1
   
   color_package:
     path: ../../packages/color_package
@@ -26,6 +27,8 @@ dependencies:
     
   splash: 
     path: ../../packages/splash
+  user_package: 
+    path: ../../packages/user_package
   attendance_package: 
     path: ../../packages/attendance_package
   home_package: 

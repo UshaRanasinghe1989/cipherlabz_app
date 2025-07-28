@@ -1,26 +1,46 @@
 import 'package:attendance_package/attendance_package.dart';
+import 'package:core/enum/user_category.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 //RESOURCES
 import 'package:color_package/color_package.dart';
 import 'package:home_package/home_package.dart';
 import 'package:shared_resources/shared_resources.dart';
+import 'package:login_package/login_package.dart';
 
-class NavigationScreenWidget extends StatefulWidget {
+class NavigationScreenWidget extends ConsumerStatefulWidget {
   const NavigationScreenWidget({super.key});
 
   @override
-  State<NavigationScreenWidget> createState() =>
-      _NavigationScreenWidgetWidgetState();
+  ConsumerState<NavigationScreenWidget> createState() =>
+      _NavigationScreenWidgetState();
 }
 
-class _NavigationScreenWidgetWidgetState extends State<NavigationScreenWidget> {
+class _NavigationScreenWidgetState
+    extends ConsumerState<NavigationScreenWidget> {
   int _currentPageIndex = 0;
 
-  final List<Widget> pagesList = [HomePageWidget(), AttendanceDetailPage()];
+  final List<Widget> pagesList = [
+    HomePageWidget(),
+    AttendanceDetailPage(),
+    //getAttendanceDetailWidget(),
+  ];
 
   @override
   Widget build(BuildContext context) {
+    final loginProviderValue = ref.watch(loginProvider);
+    final category = loginProviderValue.user?.category;
+
+    final pagesList = [
+      HomePageWidget(),
+      category == UserCategory.regularUser
+          ? AttendanceDetailPage()
+          : SuperUserWidgets(),
+      Placeholder(),
+      Placeholder(),
+    ];
+
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

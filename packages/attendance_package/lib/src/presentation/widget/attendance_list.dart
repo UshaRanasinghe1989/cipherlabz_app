@@ -1,26 +1,35 @@
 import 'package:attendance_package/attendance_package.dart';
 import 'package:attendance_package/src/presentation/widget/attendance_detail_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_package/login_package.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 
-class AttendanceListWidget extends StatefulWidget {
+class AttendanceListWidget extends ConsumerStatefulWidget {
   const AttendanceListWidget({super.key});
 
   @override
-  State<AttendanceListWidget> createState() => _AttendanceListWidgetState();
+  ConsumerState<AttendanceListWidget> createState() =>
+      _AttendanceListWidgetState();
 }
 
-class _AttendanceListWidgetState extends State<AttendanceListWidget> {
+class _AttendanceListWidgetState extends ConsumerState<AttendanceListWidget> {
   @override
   void initState() {
     super.initState();
-    final provider = Provider.of<AttendanceProvider>(context, listen: false);
-    provider.getMyAttendanceList(user!.id, 30);
+    //REFER LOGIN PROVIDER
+    final loginProviderRef = ref.watch(loginProvider);
+    final userId = loginProviderRef.user!.id;
+    //REFER ATTENDANCE PROVIDER
+    final attendanceProviderRef = ref.watch(attenda) //Provider.of<AttendanceProvider>(context, listen: false);
+    provider.getMyAttendanceList(userId, 30);
   }
 
   @override
   Widget build(BuildContext context) {
+    //GET REFERNCE TO ATTENDANCE PROVIDER
+    final attendanceProviderValue = ref.watch(attendanceProvider);
+
     return Expanded(
       child: Consumer<AttendanceProvider>(
         builder: (BuildContext context, AttendanceProvider provider, _) {

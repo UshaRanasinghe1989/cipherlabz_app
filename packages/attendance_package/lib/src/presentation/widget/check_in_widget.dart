@@ -1,5 +1,6 @@
 import 'package:core/helpers/local_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' hide Provider;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 //RESOURCES
@@ -11,7 +12,7 @@ import 'package:attendance_package/attendance_package.dart';
 //WIDGETS
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 
-class CheckInWidget extends StatelessWidget {
+class CheckInWidget extends ConsumerWidget {
   CheckInWidget({super.key});
 
   String _currentTime() {
@@ -20,9 +21,13 @@ class CheckInWidget extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    //REFER LOGIN PROVIDER
+    final loginProviderValue = ref.watch(loginProvider);
+    final userId = loginProviderValue.user!.id;
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AttendanceProvider>(context).isCheckedInProvider(user!.id);
+      Provider.of<AttendanceProvider>(context).isCheckedInProvider(userId);
     });
 
     return Positioned(
@@ -113,14 +118,14 @@ class CheckInWidget extends StatelessWidget {
                             }
 
                             await provider.saveAttendance(
-                              user!.id,
+                              userId,
                               DateTime.now(),
                             ); // <- await!
                             await provider.getAttendanceObj(
-                              user!.id,
+                              userId,
                             ); // <- await!
                             await provider.isCheckedInProvider(
-                              user!.id,
+                              userId,
                             ); // <- await!
                           } catch (e) {
                             print('Authentication error: $e');

@@ -1,5 +1,6 @@
 import 'package:attendance_package/attendance_package.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 //RESOURCES
@@ -11,14 +12,14 @@ import 'package:attendance_package/src/presentation/widget/check_in_widget.dart'
 import 'package:login_package/login_package.dart';
 import 'package:provider/provider.dart';
 
-class MapWidget extends StatefulWidget {
+class MapWidget extends ConsumerStatefulWidget {
   const MapWidget({super.key});
 
   @override
-  State<MapWidget> createState() => _MapWidgetState();
+  ConsumerState<MapWidget> createState() => _MapWidgetState();
 }
 
-class _MapWidgetState extends State<MapWidget> {
+class _MapWidgetState extends ConsumerState<MapWidget> {
   LocationData? _currentLocation;
   GoogleMapController? mapController;
   //LatLng currentLocation = const LatLng(6.7174624, 79.9066958);
@@ -91,6 +92,10 @@ class _MapWidgetState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
+    //REFER LOGIN PROVIDER
+    final loginProviderValue = ref.watch(loginProvider);
+    final userId = loginProviderValue.user!.id;
+
     if (_currentLocation == null) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -99,7 +104,7 @@ class _MapWidgetState extends State<MapWidget> {
       _currentLocation!.latitude!,
       _currentLocation!.longitude!,
     );
-    context.read<AttendanceProvider>().isCheckedInProvider(user!.id);
+    context.read<AttendanceProvider>().isCheckedInProvider(userId);
     return Stack(
       children: [
         Container(

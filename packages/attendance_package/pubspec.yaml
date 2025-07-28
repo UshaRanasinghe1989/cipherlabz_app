@@ -22,6 +22,7 @@ dependencies:
   cupertino_icons: ^1.0.8  
   location: ^5.0.0
   collection: ^1.19.1
+  flutter_riverpod: ^2.6.1
 
   color_package:
     path: ../../packages/color_package
@@ -29,7 +30,8 @@ dependencies:
     path: ../../packages/shared_resources
   core:
     path: ../../packages/core
-
+  user_package:
+    path: ../../packages/user_package
   login_package:
     path: ../../packages/login_package
 

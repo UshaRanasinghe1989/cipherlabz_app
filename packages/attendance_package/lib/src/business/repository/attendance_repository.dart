@@ -26,4 +26,8 @@ abstract class AttendanceRepository {
     int myUserId,
     int numberOfDays,
   );
+
+  Future<Either<Failure, List<AttendanceEntity>>> getEmployeeAttendanceList(
+    List<int> subordinateIdList,
+  );
 }

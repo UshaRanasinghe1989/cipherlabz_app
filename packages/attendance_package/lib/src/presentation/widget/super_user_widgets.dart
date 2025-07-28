@@ -1,4 +1,6 @@
 import 'package:attendance_package/src/presentation/widget/attendance_details_btn.dart';
+import 'package:attendance_package/src/presentation/widget/employee_attendance_list.dart';
+import 'package:attendance_package/src/presentation/widget/my_attendance_list.dart';
 import 'package:color_package/color_package.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +19,7 @@ class _SuperUserWidgetsState extends State<SuperUserWidgets> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      height: 500,
       child: Column(
         children: [
           Row(
@@ -94,6 +97,10 @@ class _SuperUserWidgetsState extends State<SuperUserWidgets> {
               ],
             ),
           ),
+          SizedBox(height: 20),
+          isSelectedMyAttendance
+              ? SuperUserAttendanceListWidget()
+              : EmployeeAttendanceListWidget(),
         ],
       ),
     );

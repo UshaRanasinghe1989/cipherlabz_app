@@ -2,25 +2,31 @@ import 'package:attendance_package/attendance_package.dart';
 import 'package:attendance_package/src/enum/attendance_status.dart';
 import 'package:color_package/color_package.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' hide Provider;
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:login_package/login_package.dart';
 import 'package:provider/provider.dart';
 
-class AttendanceDetailItem extends StatefulWidget {
+class AttendanceDetailItem extends ConsumerStatefulWidget {
   final AttendanceEntity entity;
   const AttendanceDetailItem({super.key, required this.entity});
 
   @override
-  State<AttendanceDetailItem> createState() => _AttendanceDetailItemState();
+  ConsumerState<AttendanceDetailItem> createState() =>
+      _AttendanceDetailItemState();
 }
 
-class _AttendanceDetailItemState extends State<AttendanceDetailItem> {
+class _AttendanceDetailItemState extends ConsumerState<AttendanceDetailItem> {
   @override
   void initState() {
+    //REFER LOGIN PROVIDER
+    final loginProviderValue = ref.watch(loginProvider);
+    final userId = loginProviderValue.user!.id;
+
     super.initState();
     final provider = Provider.of<AttendanceProvider>(context, listen: false);
-    provider.getMyAttendanceList(user!.id, 30);
+    provider.getMyAttendanceList(userId, 30);
   }
 
   @override
@@ -28,7 +34,7 @@ class _AttendanceDetailItemState extends State<AttendanceDetailItem> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20),
+        //margin: EdgeInsets.symmetric(horizontal: 20),
         child: Card(
           color: AppColors.white,
           shape: RoundedRectangleBorder(

@@ -4,7 +4,6 @@ import 'package:dartz/dartz.dart';
 import 'package:core/errors/failure.dart';
 import 'package:core/helpers/attendance_helper.dart';
 //PACKAGE
-import 'package:login_package/login_package.dart';
 import 'package:attendance_package/attendance_package.dart';
 
 class AttendanceLocalDataSource {
@@ -20,7 +19,7 @@ class AttendanceLocalDataSource {
           1;
       attendanceMap[newKey] = model.toEntity();
 
-      return getAttendanceObj(user!.id, DateTime.now());
+      return getAttendanceObj(model.id, DateTime.now());
     } catch (e) {
       return Left(DatabaseFailure(errorMessage: "$e"));
     }
@@ -54,11 +53,11 @@ class AttendanceLocalDataSource {
     int numberOfDays,
   ) async {
     Map<int, AttendanceEntity> attendanceMap = AttendanceData.attendanceMap;
-
+    //CREATE A LIST WITH LAST 30 DAY INCLUDING TODAY
     List<DateTime> last30DaysList = List.generate(numberOfDays, (i) {
       return DateTime.now().subtract(Duration(days: i));
     });
-
+    //CREATE ATTENDANCE ENTITY LIST
     List<AttendanceEntity> myAttendanceList = [];
     AttendanceEntity? obj = attendanceMap.values.firstWhereOrNull(
       (e) =>
@@ -73,5 +72,25 @@ class AttendanceLocalDataSource {
     return myAttendanceList.isNotEmpty
         ? Right(myAttendanceList)
         : Left(NullFailure(errorMessage: 'No date available !'));
+  }
+
+  //GET EMPLOYEE ATTENDANCE LIST
+  Future<Either<Failure, List<AttendanceEntity>>> getEmployeeAttendanceList(
+    List<int> subordinateIdList,
+  ) async {
+    List<AttendanceEntity> attendanceList = [];
+    for (int id in subordinateIdList) {
+      //GENERATE ATTENDANCE ENTITY LIST
+      attendanceList = await AttendanceData.attendanceMap.values
+          .where((e) => e.userId == id)
+          .toList();
+    }
+
+    if (attendanceList.isNotEmpty) {
+      print("Attendance List : ${attendanceList.length}");
+      return Right(attendanceList);
+    } else {
+      return Left(GeneralFailure(errorMessage: "No Date Available !"));
+    }
   }
 }

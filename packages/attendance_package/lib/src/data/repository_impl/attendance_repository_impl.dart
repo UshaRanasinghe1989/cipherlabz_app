@@ -64,4 +64,12 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
   ) async {
     return await dataSource.getMyAttendance(myUserId, numberOfDays);
   }
+
+  //GET EMPLOYEE ATTENDANCE LIST
+  @override
+  Future<Either<Failure, List<AttendanceEntity>>> getEmployeeAttendanceList(
+    List<int> subordinateIdList,
+  ) async {
+    return await dataSource.getEmployeeAttendanceList(subordinateIdList);
+  }
 }

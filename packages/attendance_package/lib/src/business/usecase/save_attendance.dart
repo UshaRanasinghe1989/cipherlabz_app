@@ -8,15 +8,13 @@ import 'package:attendance_package/src/data/dummy_data/dummy_data.dart';
 import 'package:attendance_package/src/enum/attendance_status.dart';
 //RESOURCES
 import 'package:core/core.dart';
-//HELPERS
-import 'package:core/helpers/get_location.dart';
 
 class SaveAttendanceUseCase {
   final AttendanceRepository repository;
   final LocalAuth localAuth;
-  final GetCurrentLoaction loaction;
+  final GetCurrentLoaction location;
 
-  SaveAttendanceUseCase(this.repository, this.localAuth, this.loaction);
+  SaveAttendanceUseCase(this.repository, this.localAuth, this.location);
 
   Future<Either<Failure, AttendanceEntity>> call(
     int userId,
@@ -28,7 +26,7 @@ class SaveAttendanceUseCase {
       // if (!canAuthenticate)
       //   return Left(AuthFailure(errorMessage: 'Local Authentication Failed !'));
       //GET CURRENT LOCATION
-      final currentLocation = await loaction.getCurrentLocation();
+      final currentLocation = await location.getCurrentLocation();
       if (currentLocation == null)
         return Left(LocationFailure(errorMessage: 'Location Failed !'));
 

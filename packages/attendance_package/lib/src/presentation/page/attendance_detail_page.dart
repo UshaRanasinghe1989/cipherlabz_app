@@ -27,8 +27,7 @@ class AttendanceDetailPage extends StatelessWidget {
                     AttendancePageTitle(),
                     user!.category == UserCategory.superUser
                         ? SuperUserWidgets()
-                        : Text(""),
-                    AttendanceListWidget(),
+                        : AttendanceListWidget(),
                   ],
                 );
               },

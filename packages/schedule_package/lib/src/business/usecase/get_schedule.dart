@@ -5,10 +5,10 @@ import 'package:core/core.dart';
 import 'package:schedule_package/src/business/entity/schedule_entity.dart';
 import 'package:schedule_package/src/business/repository/schedule_repository.dart';
 
-class GetSchedule {
+class GetScheduleUseCase {
   final ScheduleRepository scheduleRepository;
 
-  GetSchedule({required this.scheduleRepository});
+  GetScheduleUseCase({required this.scheduleRepository});
 
   Future<Either<Failure, List<ScheduleEntity>>> call({
     required ScheduleParams params,

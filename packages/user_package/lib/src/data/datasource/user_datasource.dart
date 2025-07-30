@@ -30,7 +30,6 @@ class UserDatasource {
           .where((user) => user.superiorId == superiorId)
           .map((user) => user.id)
           .toList();
-
       return Right(subordinateList);
     } catch (e) {
       return Left(GeneralFailure(errorMessage: e.toString()));

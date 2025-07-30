@@ -2,10 +2,10 @@
 export 'package:user_package/src/business/entity/user_entity.dart';
 export 'package:user_package/src/business/entity/report_to_entity.dart';
 //PROVIDERS
-export 'package:user_package/src/presentation/providers/user_datasource_provider.dart';
-export 'package:user_package/src/presentation/providers/user_repository_provider.dart';
-export 'package:user_package/src/presentation/providers/user_usecases_provider.dart';
-export 'package:user_package/src/presentation/providers/user_provider.dart';
+export 'package:user_package/src/application/providers/user_datasource_provider.dart';
+export 'package:user_package/src/application/providers/user_repository_provider.dart';
+export 'package:user_package/src/application/providers/user_usecases_provider.dart';
+export 'package:user_package/src/application/providers/user_provider.dart';
 //USECASES
 export 'package:user_package/src/business/usecase/get_subordinates_list.dart';
 export 'package:user_package/src/business/usecase/get_user.dart';
@@ -19,3 +19,7 @@ export 'package:user_package/src/data/datasource/user_local_datasource/user_loca
 //DUMMY DATA
 export 'package:user_package/src/data/dummy_data/dummy_data.dart';
 export 'package:user_package/src/data/dummy_data/report_to_data.dart';
+//NOTIFIER
+export 'package:user_package/src/application/notifiers/user_notifier.dart';
+//STATE
+export 'package:user_package/src/presentation/state/user_state.dart';

@@ -2,35 +2,16 @@ import 'package:attendance_package/attendance_package.dart';
 import 'package:attendance_package/src/enum/attendance_status.dart';
 import 'package:color_package/color_package.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart' hide Provider;
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:login_package/login_package.dart';
-import 'package:provider/provider.dart';
 
-class AttendanceDetailItem extends ConsumerStatefulWidget {
+class AttendanceDetailItem extends StatelessWidget {
   final AttendanceEntity entity;
   const AttendanceDetailItem({super.key, required this.entity});
 
   @override
-  ConsumerState<AttendanceDetailItem> createState() =>
-      _AttendanceDetailItemState();
-}
-
-class _AttendanceDetailItemState extends ConsumerState<AttendanceDetailItem> {
-  @override
-  void initState() {
-    //REFER LOGIN PROVIDER
-    final loginProviderValue = ref.watch(loginProvider);
-    final userId = loginProviderValue.user!.id;
-
-    super.initState();
-    final provider = Provider.of<AttendanceProvider>(context, listen: false);
-    provider.getMyAttendanceList(userId, 30);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    print("Check in : ${entity.checkIn}");
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Container(
@@ -40,10 +21,7 @@ class _AttendanceDetailItemState extends ConsumerState<AttendanceDetailItem> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
             side: BorderSide(
-              color: _getDetailCardBorderColor(
-                widget.entity.status,
-                widget.entity.checkIn,
-              ),
+              color: _getDetailCardBorderColor(entity.status, entity.checkIn),
               width: 1,
             ),
           ),
@@ -56,9 +34,9 @@ class _AttendanceDetailItemState extends ConsumerState<AttendanceDetailItem> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     //DISPLAY DATE
-                    todayText(widget.entity),
+                    todayText(entity),
                     //DISPLAY STATUS
-                    !_isSameDay(widget.entity.checkIn, DateTime.now())
+                    !_isSameDay(entity.checkIn, DateTime.now())
                         ? Container(
                             width: 100,
                             alignment: Alignment.center,
@@ -69,20 +47,16 @@ class _AttendanceDetailItemState extends ConsumerState<AttendanceDetailItem> {
                             decoration: BoxDecoration(
                               //CUSTOMIZED STATUS
                               //STATUS BACKGROUND COLOR
-                              color: _getStatusBackgroundColor(
-                                widget.entity.status,
-                              ),
+                              color: _getStatusBackgroundColor(entity.status),
                               borderRadius: BorderRadius.all(
                                 Radius.circular(20),
                               ),
                             ),
                             child: Text(
-                              statusString(widget.entity.status),
+                              statusString(entity.status),
                               style: TextStyle(
                                 //STATUS FONT COLOR
-                                color: _getStatusFontColor(
-                                  widget.entity.status,
-                                ),
+                                color: _getStatusFontColor(entity.status),
                                 fontFamily: "Poppins",
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
@@ -110,14 +84,14 @@ class _AttendanceDetailItemState extends ConsumerState<AttendanceDetailItem> {
                                 //CHECK IN BORDER COLOR
                                 border: Border.all(
                                   color: _getCheckInIconBorderColor(
-                                    widget.entity.status,
-                                    widget.entity.checkIn,
+                                    entity.status,
+                                    entity.checkIn,
                                   ),
                                 ),
                                 borderRadius: BorderRadius.circular(50),
                                 //CHECK IN ICON BACKGROUND COLOR
                                 color: _getCheckInIconBackgroundColor(
-                                  widget.entity.checkIn,
+                                  entity.checkIn,
                                 ),
                               ),
                               child: SvgPicture.asset(
@@ -127,8 +101,8 @@ class _AttendanceDetailItemState extends ConsumerState<AttendanceDetailItem> {
                                 colorFilter: ColorFilter.mode(
                                   //CHECK IN ICON COLOR
                                   _getCheckInIconColor(
-                                    widget.entity.status,
-                                    widget.entity.checkIn,
+                                    entity.status,
+                                    entity.checkIn,
                                   ),
                                   BlendMode.srcIn,
                                 ),
@@ -137,10 +111,7 @@ class _AttendanceDetailItemState extends ConsumerState<AttendanceDetailItem> {
                             SizedBox(width: 5),
                             //CHECK IN TIME
                             Text(
-                              getCheckInTime(
-                                widget.entity.checkIn,
-                                widget.entity.status,
-                              ),
+                              getCheckInTime(entity.checkIn, entity.status),
                               //formattedTime(widget.entity.checkIn),
                               style: TextStyle(
                                 fontFamily: "Poppins",
@@ -170,16 +141,16 @@ class _AttendanceDetailItemState extends ConsumerState<AttendanceDetailItem> {
                                 //CHECK OUT ICON BORDER COLOR
                                 border: Border.all(
                                   color: _getCheckOutIconBorderColor(
-                                    widget.entity.status,
-                                    widget.entity.checkOut,
-                                    widget.entity.checkIn,
+                                    entity.status,
+                                    entity.checkOut,
+                                    entity.checkIn,
                                   ),
                                 ),
                                 //CHECK OUT ICON BACKGROUND COLOR
                                 color: _getCheckOutIconBackgroundColor(
-                                  widget.entity.status,
-                                  widget.entity.checkIn,
-                                  widget.entity.checkOut,
+                                  entity.status,
+                                  entity.checkIn,
+                                  entity.checkOut,
                                 ),
                               ),
                               child: SvgPicture.asset(
@@ -189,9 +160,9 @@ class _AttendanceDetailItemState extends ConsumerState<AttendanceDetailItem> {
                                 colorFilter: ColorFilter.mode(
                                   //CHECK OUT ICON COLOR
                                   _getCheckOutIconColor(
-                                    widget.entity.status,
-                                    widget.entity.checkIn,
-                                    widget.entity.checkOut,
+                                    entity.status,
+                                    entity.checkIn,
+                                    entity.checkOut,
                                   ),
                                   BlendMode.srcIn,
                                 ),
@@ -200,18 +171,15 @@ class _AttendanceDetailItemState extends ConsumerState<AttendanceDetailItem> {
                             SizedBox(width: 5),
                             //DISPLAY CHECK OUT TIME
                             Text(
-                              (_isSameTime(
-                                        widget.entity.checkIn,
-                                        widget.entity.checkOut,
-                                      ) &&
+                              (_isSameTime(entity.checkIn, entity.checkOut) &&
                                       _isSameDay(
-                                        widget.entity.checkIn,
+                                        entity.checkIn,
                                         DateTime.now(),
                                       ))
                                   ? "" //DONT DISPLAY TODAY PENDING CHECK OUT TIME
                                   : getCheckOutTime(
-                                      widget.entity.checkOut,
-                                      widget.entity.status,
+                                      entity.checkOut,
+                                      entity.status,
                                     ),
                               style: TextStyle(
                                 fontFamily: "Poppins",
@@ -358,7 +326,6 @@ class _AttendanceDetailItemState extends ConsumerState<AttendanceDetailItem> {
   }
 
   //CHECK IN ICON
-  //CHECK IN ICON BORDER COLOR
   Color _getCheckInIconBorderColor(AttendanceStatus status, DateTime checkIn) {
     //TODAY RECORD
     if (_isSameDay(checkIn, DateTime.now())) {
@@ -408,7 +375,6 @@ class _AttendanceDetailItemState extends ConsumerState<AttendanceDetailItem> {
   }
 
   //CHECK OUT ICON
-  //CHECK OUT ICON BORDER COLOR
   Color _getCheckOutIconBorderColor(
     AttendanceStatus status,
     DateTime checkOut,

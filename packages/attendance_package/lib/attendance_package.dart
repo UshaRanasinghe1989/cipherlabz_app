@@ -32,6 +32,7 @@ export 'package:attendance_package/src/presentation/widget/employee_attendance_l
 export 'package:attendance_package/src/presentation/widget/map_widget.dart';
 export 'package:attendance_package/src/presentation/widget/my_attendance_list.dart';
 export 'package:attendance_package/src/presentation/widget/super_user_widgets.dart';
+export 'package:attendance_package/src/presentation/widget/employee_attendance_detail_item.dart';
 //STATE
 export 'package:attendance_package/src/presentation/state/attendance_state.dart';
 //NOTIFIERS

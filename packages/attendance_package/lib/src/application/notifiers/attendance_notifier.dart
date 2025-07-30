@@ -6,19 +6,19 @@ import 'package:dartz/dartz.dart';
 import 'package:user_package/user_package.dart';
 
 class AttendanceNotifier extends Notifier<AttendanceState> {
-  late final AttendanceUseCases attendanceUseCases;
+  late final AttendanceUseCases _attendanceUseCases = ref.read(
+    attendanceUseCasesProvider,
+  );
 
   @override
   AttendanceState build() {
-    // You can use ref.watch(...) here to get useCases
-    attendanceUseCases = ref.watch(attendanceUseCasesProvider);
     return AttendanceState();
   }
 
   //SAVE ATTENDANCE
   Future<void> saveAttendance(int userId, DateTime checkInTime) async {
     state = state.copyWith(isLoading: true);
-    final Either<Failure, AttendanceEntity> result = await attendanceUseCases
+    final Either<Failure, AttendanceEntity> result = await _attendanceUseCases
         .saveAttendance
         .call(userId, checkInTime);
 
@@ -40,7 +40,7 @@ class AttendanceNotifier extends Notifier<AttendanceState> {
   Future<void> fetchAttendance(int userId, DateTime date) async {
     state = state.copyWith(isLoading: true);
 
-    final Either<Failure, AttendanceEntity> result = await attendanceUseCases
+    final Either<Failure, AttendanceEntity> result = await _attendanceUseCases
         .getAttendanceObj
         .call(userId, date);
 
@@ -62,7 +62,7 @@ class AttendanceNotifier extends Notifier<AttendanceState> {
   Future<void> getMyAttendanceList(int myUserId, int numberOfDays) async {
     state = state.copyWith(isLoading: true);
 
-    final result = await attendanceUseCases.getMyAttendance.call(
+    final result = await _attendanceUseCases.getMyAttendance.call(
       myUserId,
       numberOfDays,
     );
@@ -82,26 +82,34 @@ class AttendanceNotifier extends Notifier<AttendanceState> {
 
   //GET EMPLOYEE ATTENDANCE LIST
   Future<void> getEmployeeAttendanceList(int superiorId) async {
+    final result;
     state = state.copyWith(isLoading: true);
-
-    final List<int> susubordinateList = ref.watch(userProvider).subordinateList;
+    //GET SUBORDINATE ID LIST
+    await ref.read(userProvider.notifier).getSubordinateList(superiorId);
+    final List<int>? list = await ref.watch(userProvider).subordinateList;
 
     //CALL USECASE METHOS
-    final result = await attendanceUseCases.getEmployeeAttendance.call(
-      susubordinateList,
-    );
-    result.fold(
-      (failure) => state = state.copyWith(
+    if (list != null && list.isNotEmpty) {
+      result = await _attendanceUseCases.getEmployeeAttendance.call(list);
+
+      result.fold(
+        (failure) => state = state.copyWith(
+          isLoading: false,
+          failure: failure,
+          employeeAttendanceList: null,
+        ),
+        (list) => state = state.copyWith(
+          isLoading: false,
+          failure: null,
+          employeeAttendanceList: list,
+        ),
+      );
+    } else {
+      state = state.copyWith(
         isLoading: false,
-        failure: failure,
-        employeeAttendanceList: null,
-      ),
-      (list) => state = state.copyWith(
-        isLoading: false,
-        failure: null,
-        employeeAttendanceList: list,
-      ),
-    );
+        failure: GeneralFailure(errorMessage: 'No subordinates found'),
+      );
+    }
   }
 
   // //IS CHECKED IN FOR THE DAY

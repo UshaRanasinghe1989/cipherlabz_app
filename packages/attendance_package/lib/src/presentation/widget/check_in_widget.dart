@@ -1,8 +1,7 @@
 import 'package:core/helpers/local_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart' hide Provider;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 //RESOURCES
 import 'package:shared_resources/shared_resources.dart';
 import 'package:color_package/color_package.dart';
@@ -23,12 +22,11 @@ class CheckInWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     //REFER LOGIN PROVIDER
-    final loginProviderValue = ref.watch(loginProvider);
+    final loginProviderValue = ref.read(loginProvider);
     final userId = loginProviderValue.user!.id;
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AttendanceProvider>(context).isCheckedInProvider(userId);
-    });
+    //ATTENDANCE REF
+    final attendanceProviderRef = ref.read(attendanceProvider.notifier);
 
     return Positioned(
       top: 325,
@@ -80,64 +78,41 @@ class CheckInWidget extends ConsumerWidget {
                 horizontal: 20.0,
                 vertical: 10.0,
               ),
-              child: Consumer2<AttendanceProvider, LoginProvider>(
-                builder:
-                    (
-                      BuildContext context,
-                      AttendanceProvider provider,
-                      LoginProvider LoginProvider,
-                      Widget? child,
-                    ) {
-                      return SwipeButton.expand(
-                        thumb: Icon(
-                          Icons.arrow_forward,
-                          color: AppColors.blue0085FF,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        activeTrackColor: AppColors.blue0085FF,
-                        activeThumbColor: AppColors.white,
-                        thumbPadding: EdgeInsets.all(5.0),
-                        height: 50,
-                        child: Text(
-                          provider.isCheckedIn
-                              ? "Swipe to Check Out"
-                              : "Swipe to Check In",
-                          style: TextStyle(color: AppColors.white),
-                        ),
-                        onSwipe: () async {
-                          try {
-                            final bool authenticated = await LocalAuth()
-                                .canAuthWithBioFunc();
-                            if (!authenticated) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Authentication failed'),
-                                ),
-                              );
-                              return;
-                            }
-
-                            await provider.saveAttendance(
-                              userId,
-                              DateTime.now(),
-                            ); // <- await!
-                            await provider.getAttendanceObj(
-                              userId,
-                            ); // <- await!
-                            await provider.isCheckedInProvider(
-                              userId,
-                            ); // <- await!
-                          } catch (e) {
-                            print('Authentication error: $e');
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Error during authentication'),
-                              ),
-                            );
-                          }
-                        },
+              child: SwipeButton.expand(
+                thumb: Icon(Icons.arrow_forward, color: AppColors.blue0085FF),
+                borderRadius: BorderRadius.circular(20),
+                activeTrackColor: AppColors.blue0085FF,
+                activeThumbColor: AppColors.white,
+                thumbPadding: EdgeInsets.all(5.0),
+                height: 50,
+                child: Text(
+                  loginProviderValue.user != null
+                      ? "Swipe to Check Out"
+                      : "Swipe to Check In",
+                  style: TextStyle(color: AppColors.white),
+                ),
+                onSwipe: () async {
+                  try {
+                    final bool authenticated = await LocalAuth()
+                        .canAuthWithBioFunc();
+                    if (!authenticated) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Authentication failed')),
                       );
-                    },
+                      return;
+                    }
+
+                    await attendanceProviderRef.saveAttendance(
+                      userId,
+                      DateTime.now(),
+                    );
+                  } catch (e) {
+                    print('Authentication error: $e');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Error during authentication')),
+                    );
+                  }
+                },
               ),
             ),
           ],

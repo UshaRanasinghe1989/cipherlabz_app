@@ -1,37 +1,61 @@
 import 'package:attendance_package/attendance_package.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:login_package/login_package.dart';
 
-class EmployeeAttendanceListWidget extends StatefulWidget {
+class EmployeeAttendanceListWidget extends ConsumerStatefulWidget {
   const EmployeeAttendanceListWidget({super.key});
 
   @override
-  State<EmployeeAttendanceListWidget> createState() => _MyWidgetState();
+  ConsumerState<EmployeeAttendanceListWidget> createState() =>
+      _EmployeeAttendanceListWidgetState();
 }
 
-class _MyWidgetState extends State<EmployeeAttendanceListWidget> {
+class _EmployeeAttendanceListWidgetState
+    extends ConsumerState<EmployeeAttendanceListWidget> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final loginState = ref.read(loginProvider);
+      final user = loginState.user;
+
+      if (user != null) {
+        final superiorId = user.id;
+        ref
+            .read(attendanceProvider.notifier)
+            .getEmployeeAttendanceList(superiorId);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Consumer<AttendanceProvider>(
-        builder: (BuildContext context, AttendanceProvider provider, _) {
-          if (provider.attendanceList.isEmpty && provider.failure == null) {
-            //IN PROGRESS
-            return Center(child: CircularProgressIndicator());
-          } else if (provider.failure != null) {
-            //FAILURE
-            return Center(child: Text(provider.failure.toString()));
-          } else {
-            return ListView.builder(
-              itemCount: provider.attendanceList.length,
-              itemBuilder: (context, index) {
-                final item = provider.attendanceList[index];
-                //return AttendanceDetailItem(entity: item);
-              },
-            );
-          }
+    //REFER ATTENDANCE STATE
+    final attendanceState = ref.watch(attendanceProvider);
+    final empAttendanceList = attendanceState.employeeAttendanceList;
+
+    if (empAttendanceList != null && empAttendanceList.isNotEmpty) {
+      print("called");
+      return ListView.builder(
+        itemCount: empAttendanceList.length,
+        itemBuilder: (context, index) {
+          final item = empAttendanceList[index];
+          return EmployeeAttendanceDetailItem(entity: item);
         },
-      ),
-    );
+      );
+    } else if (attendanceState.isLoading == true &&
+        attendanceState.failure == null) {
+      //IN PROGRESS
+      return Center(child: CircularProgressIndicator());
+    } else if (attendanceState.failure != null) {
+      print("Hello");
+      //FAILURE
+      return Center(child: Text(attendanceState.failure.toString()));
+    } else {
+      return const Center(
+        child: Text("No employee attendance data available."),
+      );
+    }
   }
 }

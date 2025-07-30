@@ -1,5 +1,4 @@
 import 'package:attendance_package/attendance_package.dart';
-import 'package:attendance_package/src/application/providers/attendance_repository_provider.dart';
 import 'package:attendance_package/src/application/providers/local_auth_provider.dart';
 import 'package:attendance_package/src/application/providers/location_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

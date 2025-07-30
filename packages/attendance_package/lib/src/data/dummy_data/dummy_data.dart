@@ -6,8 +6,8 @@ class AttendanceData {
     0: AttendanceEntity(
       id: 0,
       userId: 1,
-      checkIn: DateTime(2025, 7, 1, 8, 45),
-      checkOut: DateTime(2025, 7, 1, 17, 15),
+      checkIn: DateTime(2025, 7, 29, 8, 45),
+      checkOut: DateTime(2025, 7, 29, 17, 15),
       latitude: 6.9271,
       longitude: 79.8612,
       status: AttendanceStatus.ontime,
@@ -15,8 +15,8 @@ class AttendanceData {
     1: AttendanceEntity(
       id: 1,
       userId: 0,
-      checkIn: DateTime(2025, 7, 2, 9, 45),
-      checkOut: DateTime(2025, 7, 2, 17, 15),
+      checkIn: DateTime(2025, 7, 29, 9, 45),
+      checkOut: DateTime(2025, 7, 29, 17, 15),
       latitude: 6.9271,
       longitude: 79.8612,
       status: AttendanceStatus.late,
@@ -24,11 +24,11 @@ class AttendanceData {
     2: AttendanceEntity(
       id: 2,
       userId: 1,
-      checkIn: DateTime(2025, 7, 3, 00, 00),
-      checkOut: DateTime(2025, 7, 3, 00, 00),
+      checkIn: DateTime(2025, 7, 29, 9, 45),
+      checkOut: DateTime(2025, 7, 29, 17, 15),
       latitude: 6.9271,
       longitude: 79.8612,
-      status: AttendanceStatus.leave,
+      status: AttendanceStatus.late,
     ),
   };
 }

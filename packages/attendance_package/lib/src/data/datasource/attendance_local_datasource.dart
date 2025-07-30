@@ -85,9 +85,7 @@ class AttendanceLocalDataSource {
           .where((e) => e.userId == id)
           .toList();
     }
-
     if (attendanceList.isNotEmpty) {
-      print("Attendance List : ${attendanceList.length}");
       return Right(attendanceList);
     } else {
       return Left(GeneralFailure(errorMessage: "No Date Available !"));

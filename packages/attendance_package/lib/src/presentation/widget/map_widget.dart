@@ -9,8 +9,6 @@ import 'package:color_package/color_package.dart';
 import 'package:core/helpers/get_location.dart';
 //WIDGETS
 import 'package:attendance_package/src/presentation/widget/check_in_widget.dart';
-import 'package:login_package/login_package.dart';
-import 'package:provider/provider.dart';
 
 class MapWidget extends ConsumerStatefulWidget {
   const MapWidget({super.key});
@@ -24,13 +22,6 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
   GoogleMapController? mapController;
   //LatLng currentLocation = const LatLng(6.7174624, 79.9066958);
   BitmapDescriptor customMarker = BitmapDescriptor.defaultMarker;
-
-  //Set<Marker> markersSet = {};
-
-  // final LatLng _center = const LatLng(
-  //   6.9271,
-  //   79.8612,
-  // ); // Example: Colombo, Sri Lanka
 
   @override
   void initState() {
@@ -92,10 +83,6 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    //REFER LOGIN PROVIDER
-    final loginProviderValue = ref.watch(loginProvider);
-    final userId = loginProviderValue.user!.id;
-
     if (_currentLocation == null) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -104,7 +91,7 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
       _currentLocation!.latitude!,
       _currentLocation!.longitude!,
     );
-    context.read<AttendanceProvider>().isCheckedInProvider(userId);
+
     return Stack(
       children: [
         Container(

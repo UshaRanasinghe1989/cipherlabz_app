@@ -38,4 +38,7 @@ class AppColors {
   static const pinkFF000463 = Color.fromRGBO(255, 0, 4, 0.63); //#FF000463
   static const greyD9D9D9 = Color(0XFFD9D9D9); //#D9D9D9
   static const greyE9D4D563 = Color.fromRGBO(233, 212, 213, 0.63); //#E9D4D563
+
+  //EMPLOYEE ATTENDANCE LIST COLORS
+  static const grey605E6E = Color(0XFF605E6E); //#605E6E
 }

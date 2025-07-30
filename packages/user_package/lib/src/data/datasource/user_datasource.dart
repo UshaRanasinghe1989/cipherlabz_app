@@ -28,8 +28,9 @@ class UserDatasource {
     try {
       final subordinateList = ReportToData.reporTotList
           .where((user) => user.superiorId == superiorId)
-          .map((user) => user.id)
+          .map((user) => user.subordinateId)
           .toList();
+      print("subordinateList : $subordinateList");
       return Right(subordinateList);
     } catch (e) {
       return Left(GeneralFailure(errorMessage: e.toString()));

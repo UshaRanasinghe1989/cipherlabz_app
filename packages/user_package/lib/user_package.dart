@@ -23,3 +23,5 @@ export 'package:user_package/src/data/dummy_data/report_to_data.dart';
 export 'package:user_package/src/application/notifiers/user_notifier.dart';
 //STATE
 export 'package:user_package/src/presentation/state/user_state.dart';
+//MODEL
+export 'package:user_package/src/data/model/user_model.dart';

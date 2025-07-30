@@ -7,7 +7,7 @@ class AttendanceState {
   final AttendanceEntity? attendance;
   final AttendanceEntity? lastSaved;
   final List<AttendanceEntity>? myAttendanceList;
-  final List<AttendanceEntity>? employeeAttendanceList;
+  final List<EmployeeAttendanceEntity>? employeeAttendanceList;
 
   AttendanceState({
     this.isLoading = false,
@@ -24,7 +24,7 @@ class AttendanceState {
     AttendanceEntity? attendance,
     AttendanceEntity? lastSaved,
     List<AttendanceEntity>? myAttendanceList,
-    List<AttendanceEntity>? employeeAttendanceList,
+    List<EmployeeAttendanceEntity>? employeeAttendanceList,
   }) {
     return AttendanceState(
       isLoading: isLoading ?? this.isLoading,

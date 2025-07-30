@@ -1,3 +1,4 @@
+import 'package:attendance_package/attendance_package.dart';
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:location/location.dart';
@@ -27,7 +28,6 @@ abstract class AttendanceRepository {
     int numberOfDays,
   );
 
-  Future<Either<Failure, List<AttendanceEntity>>> getEmployeeAttendanceList(
-    List<int> subordinateIdList,
-  );
+  Future<Either<Failure, List<EmployeeAttendanceEntity>>>
+  getEmployeeAttendanceList(List<int> subordinateIdList);
 }

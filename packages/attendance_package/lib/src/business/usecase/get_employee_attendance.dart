@@ -7,7 +7,7 @@ class GetEmployeeAttendanceUseCase {
 
   GetEmployeeAttendanceUseCase({required this.repository});
 
-  Future<Either<Failure, List<AttendanceEntity>>> call(
+  Future<Either<Failure, List<EmployeeAttendanceEntity>>> call(
     List<int> subordinateIdList,
   ) async {
     print("GET EMPLOYEE ATTENDANCE LIST-usecase");

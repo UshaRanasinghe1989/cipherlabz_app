@@ -31,6 +31,7 @@ class _SuperUserWidgetsState extends ConsumerState<SuperUserWidgets> {
       right: false,
       maintainBottomViewPadding: true,
       child: Container(
+        color: AppColors.white,
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           children: [

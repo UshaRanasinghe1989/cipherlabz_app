@@ -8,13 +8,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class EmployeeAttendanceDetailItem extends ConsumerWidget {
-  final AttendanceEntity entity;
+  final EmployeeAttendanceEntity entity;
 
   const EmployeeAttendanceDetailItem({super.key, required this.entity});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print("Subordinate Id : ${entity.id}");
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Container(
@@ -24,7 +23,10 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
             side: BorderSide(
-              color: _getDetailCardBorderColor(entity.status, entity.checkIn),
+              color: _getDetailCardBorderColor(
+                entity.attendanceEntity.status,
+                entity.attendanceEntity.checkIn,
+              ),
               width: 1,
             ),
           ),
@@ -37,7 +39,17 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
                 Column(
                   children: [
                     //SUBORDINATE NAME
-                    Text(entity.id.toString()),
+                    Text(
+                      entity.userEntity.name,
+                      style: TextStyle(
+                        color: _getEmployeeNameColor(
+                          entity.attendanceEntity.status,
+                        ),
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                      ),
+                    ),
                     SizedBox(height: 10),
                     //CHECK IN ICON
                     Row(
@@ -53,14 +65,14 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
                             //CHECK IN BORDER COLOR
                             border: Border.all(
                               color: _getCheckInIconBorderColor(
-                                entity.status,
-                                entity.checkIn,
+                                entity.attendanceEntity.status,
+                                entity.attendanceEntity.checkIn,
                               ),
                             ),
                             borderRadius: BorderRadius.circular(50),
                             //CHECK IN ICON BACKGROUND COLOR
                             color: _getCheckInIconBackgroundColor(
-                              entity.checkIn,
+                              entity.attendanceEntity.checkIn,
                             ),
                           ),
                           child: SvgPicture.asset(
@@ -70,8 +82,7 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
                             colorFilter: ColorFilter.mode(
                               //CHECK IN ICON COLOR
                               _getCheckInIconColor(
-                                entity.status,
-                                entity.checkIn,
+                                entity.attendanceEntity.status,
                               ),
                               BlendMode.srcIn,
                             ),
@@ -80,7 +91,10 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
                         SizedBox(width: 5),
                         //CHECK IN TIME
                         Text(
-                          getCheckInTime(entity.checkIn, entity.status),
+                          getCheckInTime(
+                            entity.attendanceEntity.checkIn,
+                            entity.attendanceEntity.status,
+                          ),
                           //formattedTime(widget.entity.checkIn),
                           style: TextStyle(
                             fontFamily: "Poppins",
@@ -106,14 +120,18 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
                       decoration: BoxDecoration(
                         //CUSTOMIZED STATUS
                         //STATUS BACKGROUND COLOR
-                        color: _getStatusBackgroundColor(entity.status),
+                        color: _getStatusBackgroundColor(
+                          entity.attendanceEntity.status,
+                        ),
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                       child: Text(
-                        statusString(entity.status),
+                        statusString(entity.attendanceEntity.status),
                         style: TextStyle(
                           //STATUS FONT COLOR
-                          color: _getStatusFontColor(entity.status),
+                          color: _getStatusFontColor(
+                            entity.attendanceEntity.status,
+                          ),
                           fontFamily: "Poppins",
                           fontWeight: FontWeight.w600,
                           fontSize: 12,
@@ -135,16 +153,16 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
                             //CHECK OUT ICON BORDER COLOR
                             border: Border.all(
                               color: _getCheckOutIconBorderColor(
-                                entity.status,
-                                entity.checkOut,
-                                entity.checkIn,
+                                entity.attendanceEntity.status,
+                                entity.attendanceEntity.checkOut,
+                                entity.attendanceEntity.checkIn,
                               ),
                             ),
                             //CHECK OUT ICON BACKGROUND COLOR
                             color: _getCheckOutIconBackgroundColor(
-                              entity.status,
-                              entity.checkIn,
-                              entity.checkOut,
+                              entity.attendanceEntity.status,
+                              entity.attendanceEntity.checkIn,
+                              entity.attendanceEntity.checkOut,
                             ),
                           ),
                           child: SvgPicture.asset(
@@ -154,9 +172,9 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
                             colorFilter: ColorFilter.mode(
                               //CHECK OUT ICON COLOR
                               _getCheckOutIconColor(
-                                entity.status,
-                                entity.checkIn,
-                                entity.checkOut,
+                                entity.attendanceEntity.status,
+                                entity.attendanceEntity.checkIn,
+                                entity.attendanceEntity.checkOut,
                               ),
                               BlendMode.srcIn,
                             ),
@@ -166,10 +184,19 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
                         SizedBox(width: 5),
                         //DISPLAY CHECK OUT TIME
                         Text(
-                          (_isSameTime(entity.checkIn, entity.checkOut) &&
-                                  _isSameDay(entity.checkIn, DateTime.now()))
+                          (_isSameTime(
+                                    entity.attendanceEntity.checkIn,
+                                    entity.attendanceEntity.checkOut,
+                                  ) &&
+                                  _isSameDay(
+                                    entity.attendanceEntity.checkIn,
+                                    DateTime.now(),
+                                  ))
                               ? "" //DONT DISPLAY TODAY PENDING CHECK OUT TIME
-                              : getCheckOutTime(entity.checkOut, entity.status),
+                              : getCheckOutTime(
+                                  entity.attendanceEntity.checkOut,
+                                  entity.attendanceEntity.status,
+                                ),
                           style: TextStyle(
                             fontFamily: "Poppins",
                             fontWeight: FontWeight.w500,
@@ -235,7 +262,7 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
     return DateFormat("hh.mm a").format(value).toLowerCase();
   }
 
-  //CHECK OUT ICON COLOR
+  //CONTAINER BORDER COLOR
   Color _getDetailCardBorderColor(AttendanceStatus status, DateTime checkIn) {
     //OLD RECORDS
     switch (status) {
@@ -250,14 +277,29 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
     }
   }
 
+  //EMPLOYEE NAME COLOR
+  Color _getEmployeeNameColor(AttendanceStatus status) {
+    //OLD RECORDS
+    switch (status) {
+      case AttendanceStatus.ontime:
+        return AppColors.black; //#000000
+      case AttendanceStatus.late:
+        return AppColors.pinkE40079; //#E40079
+      case AttendanceStatus.leave:
+        return AppColors.grey605E6E; //#605E6E
+      default:
+        return Colors.transparent;
+    }
+  }
+
   //STATUS BACKGROUND COLOR
   Color _getStatusBackgroundColor(AttendanceStatus status) {
     if (AttendanceStatus.ontime == status) {
-      return AppColors.blue0085FF;
+      return AppColors.blue0590DF; //#0590DF
     } else if (AttendanceStatus.late == status) {
-      return AppColors.pinkF8A8AB;
+      return AppColors.pinkE40079; //#E40079
     } else if (AttendanceStatus.leave == status) {
-      return AppColors.grey3F3D56;
+      return AppColors.grey3F3D56; //#3F3D56
     } else {
       return AppColors.white;
     }
@@ -265,27 +307,18 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
 
   //STATUS FONT COLOR
   Color _getStatusFontColor(AttendanceStatus status) {
-    if (AttendanceStatus.late == status) {
-      return AppColors.red;
-    } else {
-      return AppColors.white;
-    }
+    return AppColors.white;
   }
 
   //CHECK IN ICON
   Color _getCheckInIconBorderColor(AttendanceStatus status, DateTime checkIn) {
-    //TODAY RECORD
-    if (_isSameDay(checkIn, DateTime.now())) {
-      return AppColors.blue0085FF;
-    }
-    //OLD RECORDS
     switch (status) {
       case AttendanceStatus.ontime:
-        return AppColors.blue0085FF;
+        return AppColors.greyD9D9D9; //#D9D9D9
       case AttendanceStatus.late:
-        return AppColors.pinkFF000463;
+        return AppColors.pinkE40079; //#E40079
       case AttendanceStatus.leave:
-        return AppColors.grey3F3D56;
+        return AppColors.grey3F3D56; //#3F3D56
       default:
         return Colors.transparent;
     }
@@ -293,29 +326,18 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
 
   //CHECK IN ICON BACKGROUND COLOR
   Color _getCheckInIconBackgroundColor(DateTime checkIn) {
-    //TODAY
-    if (_isSameDay(checkIn, DateTime.now())) {
-      return AppColors.blue0085FF;
-    } else {
-      //OLD RECORDS
-      return AppColors.white;
-    }
+    return AppColors.greyD9D9D9;
   }
 
   //CHECK IN ICON COLOR
-  Color _getCheckInIconColor(AttendanceStatus status, DateTime checkIn) {
-    //TODAY
-    if (_isSameDay(checkIn, DateTime.now())) {
-      return AppColors.white;
-    }
-    //OLD RECORDS
+  Color _getCheckInIconColor(AttendanceStatus status) {
     switch (status) {
       case AttendanceStatus.ontime:
-        return AppColors.blue0085FF;
+        return AppColors.blue0085FF; //#0085FF
       case AttendanceStatus.late:
-        return AppColors.pinkFF000463;
+        return AppColors.pinkE40079; //#E40079
       case AttendanceStatus.leave:
-        return AppColors.grey3F3D56;
+        return AppColors.grey3F3D56; //#3F3D56
       default:
         return Colors.transparent;
     }
@@ -327,28 +349,15 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
     DateTime checkOut,
     DateTime checkIn,
   ) {
-    //TODAY
-    if (_isSameDay(checkIn, DateTime.now()) &&
-        AttendanceStatus.pending != status) {
-      //CHECK OUT PENDING
-      if (_isSameDay(checkIn, checkOut)) {
-        return AppColors.greyD9D9D9;
-      } else {
-        //CHECKED OUT
-        return AppColors.blue0085FF;
-      }
-    } else {
-      //OLD RECORDS
-      switch (status) {
-        case AttendanceStatus.ontime:
-          return AppColors.blue0085FF;
-        case AttendanceStatus.late:
-          return Colors.transparent;
-        case AttendanceStatus.leave:
-          return AppColors.grey3F3D56;
-        default:
-          return Colors.transparent;
-      }
+    switch (status) {
+      case AttendanceStatus.ontime:
+        return AppColors.greyD9D9D9; //#D9D9D9
+      case AttendanceStatus.late:
+        return AppColors.pinkE40079; //#E40079
+      case AttendanceStatus.leave:
+        return AppColors.grey3F3D56; //#3F3D56
+      default:
+        return Colors.transparent;
     }
   }
 
@@ -358,20 +367,7 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
     DateTime checkOut,
     DateTime checkIn,
   ) {
-    //TODAY
-    if (_isSameDay(checkIn, DateTime.now()) &&
-        AttendanceStatus.pending != status) {
-      //CHECK OUT PENDING
-      if (_isSameDay(checkIn, checkOut)) {
-        return AppColors.greyD9D9D9;
-      } else {
-        //CHECKED OUT
-        return AppColors.blue0085FF;
-      }
-    } else {
-      //OLD RECORDS
-      return AppColors.white;
-    }
+    return AppColors.greyD9D9D9;
   }
 
   //CHECK OUT ICON COLOR
@@ -380,22 +376,15 @@ class EmployeeAttendanceDetailItem extends ConsumerWidget {
     DateTime checkOut,
     DateTime checkIn,
   ) {
-    //TODAY
-    if (_isSameDay(checkIn, DateTime.now()) &&
-        AttendanceStatus.pending != status) {
-      return AppColors.white;
-    } else {
-      //OLD RECORDS
-      switch (status) {
-        case AttendanceStatus.ontime:
-          return AppColors.blue0085FF;
-        case AttendanceStatus.late:
-          return AppColors.blue0085FF;
-        case AttendanceStatus.leave:
-          return AppColors.grey3F3D56;
-        default:
-          return Colors.transparent;
-      }
+    switch (status) {
+      case AttendanceStatus.ontime:
+        return AppColors.blue0085FF; //#0085FF
+      case AttendanceStatus.late:
+        return AppColors.pinkE40079; //#E40079
+      case AttendanceStatus.leave:
+        return AppColors.grey3F3D56; //#3F3D56
+      default:
+        return Colors.transparent;
     }
   }
 }

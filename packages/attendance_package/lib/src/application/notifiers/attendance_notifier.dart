@@ -85,8 +85,9 @@ class AttendanceNotifier extends Notifier<AttendanceState> {
     final result;
     state = state.copyWith(isLoading: true);
     //GET SUBORDINATE ID LIST
-    await ref.read(userProvider.notifier).getSubordinateList(superiorId);
-    final List<int>? list = await ref.watch(userProvider).subordinateList;
+    final userNotifier = ref.read(userProvider.notifier);
+    await userNotifier.getSubordinateList(superiorId);
+    final List<int>? list = ref.read(userProvider).subordinateList;
 
     //CALL USECASE METHOS
     if (list != null && list.isNotEmpty) {

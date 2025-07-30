@@ -1,3 +1,4 @@
+import 'package:attendance_package/attendance_package.dart';
 import 'package:dartz/dartz.dart';
 //SHARED RESOURCES
 import 'package:core/errors/failure.dart';
@@ -67,9 +68,8 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
 
   //GET EMPLOYEE ATTENDANCE LIST
   @override
-  Future<Either<Failure, List<AttendanceEntity>>> getEmployeeAttendanceList(
-    List<int> subordinateIdList,
-  ) async {
+  Future<Either<Failure, List<EmployeeAttendanceEntity>>>
+  getEmployeeAttendanceList(List<int> subordinateIdList) async {
     return await dataSource.getEmployeeAttendanceList(subordinateIdList);
   }
 }

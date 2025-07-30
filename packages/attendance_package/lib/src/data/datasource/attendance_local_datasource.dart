@@ -5,6 +5,7 @@ import 'package:core/errors/failure.dart';
 import 'package:core/helpers/attendance_helper.dart';
 //PACKAGE
 import 'package:attendance_package/attendance_package.dart';
+import 'package:user_package/user_package.dart';
 
 class AttendanceLocalDataSource {
   Future<Either<Failure, AttendanceEntity>> insertAttendance(
@@ -65,28 +66,49 @@ class AttendanceLocalDataSource {
           last30DaysList.any((d) => AttendanceHelper.isSameDay(d, e.checkIn)),
     );
     if (obj != null) {
-      print("Userid: ${obj.userId} checkin : ${obj.checkIn} ");
       myAttendanceList.add(obj);
     }
-    print("myAttendanceList length: ${myAttendanceList.length}");
     return myAttendanceList.isNotEmpty
         ? Right(myAttendanceList)
         : Left(NullFailure(errorMessage: 'No date available !'));
   }
 
   //GET EMPLOYEE ATTENDANCE LIST
-  Future<Either<Failure, List<AttendanceEntity>>> getEmployeeAttendanceList(
-    List<int> subordinateIdList,
-  ) async {
-    List<AttendanceEntity> attendanceList = [];
+  Future<Either<Failure, List<EmployeeAttendanceEntity>>>
+  getEmployeeAttendanceList(List<int> subordinateIdList) async {
+    List<EmployeeAttendanceEntity> employeeAttendanceList = [];
     for (int id in subordinateIdList) {
-      //GENERATE ATTENDANCE ENTITY LIST
-      attendanceList = await AttendanceData.attendanceMap.values
-          .where((e) => e.userId == id)
-          .toList();
+      //GET ATTENDANCE ENTITY
+      AttendanceEntity? attendanceEntity;
+      try {
+        final list = AttendanceData.attendanceMap.values
+            .where((e) => e.userId == id)
+            .toList();
+        if (list.isEmpty) {
+          continue;
+        }
+        attendanceEntity = list.first;
+      } catch (e) {
+        continue;
+      }
+      //GET USER ENTITY
+      UserEntity userEntity;
+      try {
+        userEntity = await UserSet.usersSet.firstWhere((e) => e.id == id);
+      } catch (e) {
+        continue;
+      }
+      //ADD DATA TO EMPLOYEE ATTENDANCE LIST
+      employeeAttendanceList.add(
+        EmployeeAttendanceEntity(
+          userEntity: userEntity,
+          attendanceEntity: attendanceEntity,
+        ),
+      );
     }
-    if (attendanceList.isNotEmpty) {
-      return Right(attendanceList);
+    if (employeeAttendanceList.isNotEmpty) {
+      print("employeeAttendanceList length: ${employeeAttendanceList.length}");
+      return Right(employeeAttendanceList);
     } else {
       return Left(GeneralFailure(errorMessage: "No Date Available !"));
     }

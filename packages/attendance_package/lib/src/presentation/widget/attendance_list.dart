@@ -32,7 +32,6 @@ class _AttendanceListWidgetState extends ConsumerState<AttendanceListWidget> {
     final attendanceState = ref.watch(attendanceProvider);
     final myAttendanceList = attendanceState.myAttendanceList;
     if (myAttendanceList != null) {
-      print("List view is not null");
       return ListView.builder(
         itemCount: myAttendanceList.length,
         itemBuilder: (context, index) {

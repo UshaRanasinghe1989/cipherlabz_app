@@ -4,6 +4,7 @@ export 'package:attendance_package/src/data/repository_impl/attendance_repositor
 export 'package:attendance_package/src/data/datasource/attendance_local_datasource.dart';
 //MODEL
 export 'package:attendance_package/src/data/model/attendance_model.dart';
+export 'package:attendance_package/src/data/model/employee_attendance_model.dart';
 //BUSINESS - USECASES
 export 'package:attendance_package/src/business/usecase/save_attendance.dart';
 export 'package:attendance_package/src/business/usecase/get_attendance.dart';
@@ -13,6 +14,8 @@ export 'package:attendance_package/src/business/usecase/attendance_usecases.dart
 export 'package:attendance_package/src/business/usecase/get_employee_attendance.dart';
 //ENTITY
 export 'package:attendance_package/src/business/entity/attendance_entity.dart';
+export 'package:attendance_package/src/business/entity/employee_attendance_entity.dart';
+//REPOSITORY
 export 'package:attendance_package/src/business/repository/attendance_repository.dart';
 //PAGES
 export 'package:attendance_package/src/presentation/page/mark_attendance_page.dart';

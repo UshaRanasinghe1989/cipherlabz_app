@@ -36,7 +36,6 @@ class _EmployeeAttendanceListWidgetState
     final empAttendanceList = attendanceState.employeeAttendanceList;
 
     if (empAttendanceList != null && empAttendanceList.isNotEmpty) {
-      print("called");
       return ListView.builder(
         itemCount: empAttendanceList.length,
         itemBuilder: (context, index) {
@@ -49,7 +48,6 @@ class _EmployeeAttendanceListWidgetState
       //IN PROGRESS
       return Center(child: CircularProgressIndicator());
     } else if (attendanceState.failure != null) {
-      print("Hello");
       //FAILURE
       return Center(child: Text(attendanceState.failure.toString()));
     } else {

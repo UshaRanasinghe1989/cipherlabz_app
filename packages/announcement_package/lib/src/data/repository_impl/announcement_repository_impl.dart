@@ -1,3 +1,4 @@
+import 'package:announcement_package/src/data/datasource/announcement_datasource.dart';
 import 'package:dartz/dartz.dart';
 //CORE
 import 'package:core/errors/failure.dart';
@@ -11,11 +12,12 @@ import 'package:announcement_package/src/data/dummy_data/dummy_data.dart';
 AnnouncementEntity? announcementEntity;
 
 class AnnouncementRepositoryImpl implements AnnouncementRepository {
-  final AnnouncementLocalDataSource localDataSource;
+  final AnnouncementDatasource datasource;
+  //final AnnouncementLocalDataSource localDataSource;
   // final UserRemoteDatasource remoteDatasource;
   // final NetworkInfo networkInfo;
 
-  AnnouncementRepositoryImpl({required this.localDataSource});
+  AnnouncementRepositoryImpl({required this.datasource});
 
   // @override
   // Future<Either<Failure, AnnouncementModel>> getAnnouncement() async {
@@ -41,17 +43,7 @@ class AnnouncementRepositoryImpl implements AnnouncementRepository {
   // }
 
   @override
-  Future<Either<Failure?, List<AnnouncementEntity>>> getAnnouncement() async {
-    try {
-      List<AnnouncementEntity> list = AnnouncementData.announcementsList;
-      print("${list.length}**********");
-      if (list.isNotEmpty) {
-        return Right(list);
-      } else {
-        return Left(NullFailure(errorMessage: "No announcements found!"));
-      }
-    } catch (e) {
-      return Left(NullFailure(errorMessage: "No announcements found !"));
-    }
+  Future<Either<Failure?, List<AnnouncementEntity>>> getAnnouncements() async {
+    return await datasource.getAnnouncements();
   }
 }

@@ -5,5 +5,5 @@ import 'package:core/core.dart';
 import 'package:announcement_package/src/business/entity/announcement_entity.dart';
 
 abstract class AnnouncementRepository {
-  Future<Either<Failure?, List<AnnouncementEntity>>> getAnnouncement();
+  Future<Either<Failure?, List<AnnouncementEntity>>> getAnnouncements();
 }

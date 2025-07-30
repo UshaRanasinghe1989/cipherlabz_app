@@ -3,12 +3,12 @@ import 'package:announcement_package/src/business/repository/announcement_reposi
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 
-class GetAnnouncements {
+class GetAnnouncementsUseCase {
   final AnnouncementRepository repository;
 
-  GetAnnouncements({required this.repository});
+  GetAnnouncementsUseCase({required this.repository});
 
   Future<Either<Failure?, List<AnnouncementEntity>>> call() async {
-    return await repository.getAnnouncement();
+    return await repository.getAnnouncements();
   }
 }

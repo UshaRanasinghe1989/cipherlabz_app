@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+//APP COLORS
 import 'package:color_package/color_package.dart';
+//PAGES
 import 'package:login_package/src/presentation/pages/navigation_screen.dart';
-import 'package:login_package/src/presentation/providers/login_provider.dart';
-import 'package:provider/provider.dart';
+//PROVIDERS
+import 'package:login_package/src/application/providers/login_provider.dart';
 
-class SigninBtnWidget extends StatelessWidget {
+class SigninBtnWidget extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
-  final LoginProvider provider;
   final TextEditingController email, password;
 
   SigninBtnWidget(
@@ -14,11 +16,13 @@ class SigninBtnWidget extends StatelessWidget {
     this.password, {
     super.key,
     required this.formKey,
-    required this.provider,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loginState = ref.watch(loginProvider);
+    final loginNotifier = ref.read(loginProvider.notifier);
+
     return Padding(
       //SIGN IN BUTTON
       padding: const EdgeInsets.symmetric(vertical: 35.0),
@@ -30,30 +34,20 @@ class SigninBtnWidget extends StatelessWidget {
             // the form is invalid.
             if (formKey.currentState!.validate()) {
               try {
-                final loginProvider = Provider.of<LoginProvider>(
-                  context,
-                  listen: false,
-                );
-
-                final result = await loginProvider.eitherFailureOrLogin(
+                await loginNotifier.login(
                   email: email.text,
                   password: password.text,
                 );
-                result.fold(
-                  (failure) => ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text("Failed !!"))),
-                  (user) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(const SnackBar(content: Text("Success!")));
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NavigationScreenWidget(),
-                      ),
-                    );
-                  },
+                loginState.isLoading
+                    ? CircularProgressIndicator()
+                    : ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(const SnackBar(content: Text("Success!")));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NavigationScreenWidget(),
+                  ),
                 );
               } on Exception catch (e) {
                 print("Login error: $e");
@@ -72,7 +66,7 @@ class SigninBtnWidget extends StatelessWidget {
           child: const Text(
             'Sign in',
             style: TextStyle(
-              color: Color(0XFFFFFFFF),
+              color: AppColors.white,
               fontSize: 20,
               fontFamily: "Poppins",
               fontWeight: FontWeight.w700,

@@ -1,0 +1,1 @@
+enum LeaveTypes { casual, annual }

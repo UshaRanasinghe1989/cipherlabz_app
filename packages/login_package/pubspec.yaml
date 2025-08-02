@@ -28,6 +28,8 @@ dependencies:
     path: ../../packages/attendance_package
   home_package:
     path: ../../packages/home_package
+  leave_package:
+    path: ../../packages/leave_package
 dev_dependencies:
   flutter_test:
     sdk: flutter

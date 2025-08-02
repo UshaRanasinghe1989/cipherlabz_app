@@ -8,6 +8,7 @@ import 'package:color_package/color_package.dart';
 import 'package:home_package/home_package.dart';
 import 'package:shared_resources/shared_resources.dart';
 import 'package:login_package/login_package.dart';
+import 'package:leave_package/leave_package.dart';
 
 class NavigationScreenWidget extends ConsumerStatefulWidget {
   const NavigationScreenWidget({super.key});
@@ -24,7 +25,7 @@ class _NavigationScreenWidgetState
   final List<Widget> pagesList = [
     HomePageWidget(),
     AttendanceDetailPage(),
-    //getAttendanceDetailWidget(),
+    MyLeavePage(),
   ];
 
   @override
@@ -37,7 +38,7 @@ class _NavigationScreenWidgetState
       category == UserCategory.regularUser
           ? AttendanceDetailPage()
           : SuperUserWidgets(),
-      Placeholder(),
+      MyLeavePage(),
       Placeholder(),
     ];
 

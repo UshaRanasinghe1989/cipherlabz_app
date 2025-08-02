@@ -41,4 +41,11 @@ class AppColors {
 
   //EMPLOYEE ATTENDANCE LIST COLORS
   static const grey605E6E = Color(0XFF605E6E); //#605E6E
+
+  //LEAVE COLORS
+  static const green00A354 = Color(0XFF00A354); //#00A354
+
+  //DONUT CHART COLORS
+  static const blue94D7FC = Color(0XFF94D7FC); //#94D7FC
+  static const blue0090FF = Color(0XFF0090FF); //#0090FF
 }

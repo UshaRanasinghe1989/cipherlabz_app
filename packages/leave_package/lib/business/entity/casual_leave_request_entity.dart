@@ -7,7 +7,7 @@ class CasualLeaveRequestEntity {
   final DateTime fromDate;
   final DateTime toDate;
   final String reason;
-  final AttachmentEntity attachment;
+  final AttachmentEntity? attachment;
   final LeaveRequestStatus status;
 
   CasualLeaveRequestEntity({
@@ -17,7 +17,7 @@ class CasualLeaveRequestEntity {
     required this.fromDate,
     required this.toDate,
     required this.reason,
-    required this.attachment,
+    this.attachment,
     required this.status,
   });
 
@@ -29,7 +29,7 @@ class CasualLeaveRequestEntity {
       fromDate: fromDate,
       toDate: toDate,
       reason: reason,
-      attachment: attachment.toModel(),
+      attachment: attachment?.toModel(),
       status: status,
     );
   }

@@ -7,7 +7,7 @@ class AnnualLeaveRequestEntity {
   final DateTime fromDate;
   final DateTime toDate;
   final String reason;
-  final AttachmentEntity attachment;
+  final AttachmentEntity? attachment;
   final LeaveRequestStatus status;
 
   AnnualLeaveRequestEntity({
@@ -29,7 +29,7 @@ class AnnualLeaveRequestEntity {
       fromDate: fromDate,
       toDate: toDate,
       reason: reason,
-      attachment: attachment.toModel(),
+      attachment: attachment?.toModel(),
       status: status,
     );
   }

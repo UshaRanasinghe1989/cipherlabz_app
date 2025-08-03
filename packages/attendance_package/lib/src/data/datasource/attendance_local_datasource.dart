@@ -107,7 +107,6 @@ class AttendanceLocalDataSource {
       );
     }
     if (employeeAttendanceList.isNotEmpty) {
-      print("employeeAttendanceList length: ${employeeAttendanceList.length}");
       return Right(employeeAttendanceList);
     } else {
       return Left(GeneralFailure(errorMessage: "No Date Available !"));

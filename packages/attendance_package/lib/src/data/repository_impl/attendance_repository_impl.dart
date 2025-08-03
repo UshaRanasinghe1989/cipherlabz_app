@@ -2,18 +2,12 @@ import 'package:attendance_package/attendance_package.dart';
 import 'package:dartz/dartz.dart';
 //SHARED RESOURCES
 import 'package:core/errors/failure.dart';
-//BUSINESS
-import 'package:attendance_package/src/business/entity/attendance_entity.dart';
-import 'package:attendance_package/src/business/repository/attendance_repository.dart';
-//DATA
-import 'package:attendance_package/src/data/datasource/attendance_local_datasource.dart';
 //LOCATION
 import 'package:location_platform_interface/location_platform_interface.dart';
 
 class AttendanceRepositoryImpl implements AttendanceRepository {
-  AttendanceLocalDataSource dataSource = AttendanceLocalDataSource();
+  AttendanceLocalDataSource dataSource;
 
-  AttendanceRepositoryImpl.repo();
   AttendanceRepositoryImpl({required this.dataSource});
 
   @override

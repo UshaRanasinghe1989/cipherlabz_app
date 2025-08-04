@@ -11,7 +11,6 @@ class AttendanceDetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Check in : ${entity.checkIn}");
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Container(

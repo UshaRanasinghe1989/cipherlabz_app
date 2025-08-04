@@ -1,51 +1,71 @@
+import 'package:logger/logger.dart';
 import 'package:core/core.dart';
-import 'package:dartz/dartz.dart';
 import 'package:leave_package/leave_package.dart';
 
 class LeaveDatasourceImpl implements LeaveDataSource {
+  final logger = Logger();
+
+  //GET MY ANNUAL LEAVE REQUESTS
   @override
-  Future<Either<Failure, List<dynamic>>> getMyLeaveRequests(int userId) async {
-    DateTime now = DateTime.now();
-    DateTime fromDate = DateTime(now.year, now.month, now.day);
+  Future<List<AnnualLeaveRequestModel>> getMyAnnualLeaveRequests(
+    int userId,
+    DateTime fromDate,
+  ) async {
+    try {
+      final annualLeaveList = AnnualLeaveRequestList.annualLeaveList;
 
-    final casualLeaveList = CasualLeaveRequestList.casualLeaveList;
-    final annualLeaveList = AnnualLeaveRequestList.annualLeaveList;
-    //MY CASUAL LEAVES LIST
-    List<CasualLeaveRequestModel> myCasualLeaveList = [];
-    if (casualLeaveList.isNotEmpty) {
-      myCasualLeaveList = casualLeaveList
-          .where(
-            (e) =>
-                e.userId == userId &&
-                DatetimeHelpers.isSameDay(e.fromDate, fromDate),
-          )
-          .toList();
+      //MY ANNUAL LEAVES LIST
+      List<AnnualLeaveRequestModel> myAnnualLeaveList = [];
+      if (annualLeaveList.isNotEmpty) {
+        myAnnualLeaveList = annualLeaveList
+            .where(
+              (e) =>
+                  e.userId == userId &&
+                  DatetimeHelpers.isAfterDateOnly(e.fromDate, fromDate),
+            )
+            .toList();
+      }
+      logger.i("datasource:myAnnualLeaveList - ${myAnnualLeaveList.length}");
+      return myAnnualLeaveList;
+    } catch (e, stack) {
+      logger.w(
+        "Exception in getMyAnnualLeaveRequests",
+        error: e,
+        stackTrace: stack,
+      );
+      rethrow;
     }
-    //MY ANNUAL LEAVES LIST
-    List<AnnualLeaveRequestModel> myAnnualLeaveList = [];
-    if (annualLeaveList.isNotEmpty) {
-      myAnnualLeaveList = annualLeaveList
-          .where(
-            (e) =>
-                e.userId == userId &&
-                DatetimeHelpers.isSameDay(e.fromDate, fromDate),
-          )
-          .toList();
-    }
-    //CASUAL + ANNUAL LEAVES LIST
-    final myAllLeaveList = <dynamic>[];
-    if (myCasualLeaveList.isNotEmpty) {
-      myAllLeaveList.addAll(myCasualLeaveList);
-    }
+  }
 
-    if (myAnnualLeaveList.isNotEmpty) {
-      myAllLeaveList.addAll(myAnnualLeaveList);
-    }
+  //GET MY CASUAL LEAVE REQUESTS
+  @override
+  Future<List<CasualLeaveRequestModel>> getMyCasualLeaveRequests(
+    int userId,
+    DateTime fromDate,
+  ) async {
+    try {
+      final casualLeaveList = CasualLeaveRequestList.casualLeaveList;
 
-    if (myAllLeaveList.isNotEmpty) {
-      return Right(myAllLeaveList);
-    } else {
-      return Left(GeneralFailure(errorMessage: "Failed"));
+      //MY CASUAL LEAVES LIST
+      List<CasualLeaveRequestModel> myCasualLeaveList = [];
+      if (casualLeaveList.isNotEmpty) {
+        myCasualLeaveList = casualLeaveList
+            .where(
+              (e) =>
+                  e.userId == userId &&
+                  DatetimeHelpers.isAfterDateOnly(e.fromDate, fromDate),
+            )
+            .toList();
+      }
+      logger.i("datasource:myCasualLeaveList - ${myCasualLeaveList.length}");
+      return myCasualLeaveList;
+    } catch (e, stack) {
+      logger.w(
+        "Exception in getMyCasualLeaveRequests",
+        error: e,
+        stackTrace: stack,
+      );
+      rethrow;
     }
   }
 }

@@ -1,6 +1,14 @@
-import 'package:dartz/dartz.dart';
-import 'package:core/core.dart';
+import 'package:leave_package/leave_package.dart';
 
 abstract class LeaveDataSource {
-  Future<Either<Failure, List<dynamic>>> getMyLeaveRequests(int userId);
+  //GET MY CASUAL LEAVES LIST
+  Future<List<CasualLeaveRequestModel>> getMyCasualLeaveRequests(
+    int userId,
+    DateTime fromDate,
+  );
+  //GET MY ANNUAL LEAVES LIST
+  Future<List<AnnualLeaveRequestModel>> getMyAnnualLeaveRequests(
+    int userId,
+    DateTime fromDate,
+  );
 }

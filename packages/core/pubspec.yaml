@@ -14,6 +14,7 @@ dependencies:
   local_auth: ^2.3.0  
   location: ^5.0.0
   google_maps_flutter: ^2.5.0
+  intl: ^0.18.1
 
   attendance_package: 
     path: ../../packages/attendance_package

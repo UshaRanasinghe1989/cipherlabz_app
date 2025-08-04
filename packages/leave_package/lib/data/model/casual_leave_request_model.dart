@@ -20,17 +20,4 @@ class CasualLeaveRequestModel {
     this.attachment,
     required this.status,
   });
-
-  CasualLeaveRequestEntity toEntity() {
-    return CasualLeaveRequestEntity(
-      id: id,
-      userId: userId,
-      leaveType: leaveType,
-      fromDate: fromDate,
-      toDate: toDate,
-      reason: reason,
-      attachment: attachment?.toEntity(),
-      status: status,
-    );
-  }
 }

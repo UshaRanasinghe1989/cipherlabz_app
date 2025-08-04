@@ -20,17 +20,4 @@ class AnnualLeaveRequestModel {
     this.attachment,
     required this.status,
   });
-
-  AnnualLeaveRequestEntity toEntity() {
-    return AnnualLeaveRequestEntity(
-      id: id,
-      userId: userId,
-      leaveType: leaveType,
-      fromDate: fromDate,
-      toDate: toDate,
-      reason: reason,
-      attachment: attachment?.toEntity(),
-      status: status,
-    );
-  }
 }

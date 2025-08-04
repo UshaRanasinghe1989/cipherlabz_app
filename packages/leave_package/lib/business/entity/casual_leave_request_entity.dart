@@ -1,6 +1,6 @@
 import 'package:leave_package/leave_package.dart';
 
-class CasualLeaveRequestEntity {
+class CasualLeaveRequestEntity implements LeaveRequestEntity {
   final int id;
   final int userId;
   final LeaveTypes leaveType;
@@ -20,17 +20,4 @@ class CasualLeaveRequestEntity {
     this.attachment,
     required this.status,
   });
-
-  CasualLeaveRequestModel toModel() {
-    return CasualLeaveRequestModel(
-      id: id,
-      userId: userId,
-      leaveType: leaveType,
-      fromDate: fromDate,
-      toDate: toDate,
-      reason: reason,
-      attachment: attachment?.toModel(),
-      status: status,
-    );
-  }
 }

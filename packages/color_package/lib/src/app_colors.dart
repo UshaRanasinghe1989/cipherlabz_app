@@ -48,4 +48,14 @@ class AppColors {
   //DONUT CHART COLORS
   static const blue94D7FC = Color(0XFF94D7FC); //#94D7FC
   static const blue0090FF = Color(0XFF0090FF); //#0090FF
+
+  //LEAVE REQUEST DETAILS COLORS
+  static const greyEAEAEA = Color(0XFFEAEAEA); //#EAEAEA
+  static const orangeF0C083 = Color(0XFFF0C083); //#F0C083
+  static const green00BC61 = Color(0XFF00BC61); //#00BC61
+
+  static const orangeFFF0DC = Color(0XFFFFF0DC); //#FFF0DC
+  static const green00A3543D = Color.fromRGBO(0, 163, 84, 0.24); //#00A3543D
+  static const pinkE4007912 = Color.fromRGBO(228, 0, 121, 0.07); //#E4007912
+  static const grey00000091 = Color.fromRGBO(0, 0, 0, 0.57); //#00000091
 }

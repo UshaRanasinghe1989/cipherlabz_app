@@ -9,7 +9,8 @@ extension CasualLeaveModelMapper on CasualLeaveRequestModel {
       leaveType: leaveType,
       fromDate: fromDate,
       toDate: toDate,
-      reason: reason,
+      reason: reason ?? "",
+      attachment: attachment?.toEntity(),
       status: status,
     );
   }
@@ -24,7 +25,8 @@ extension CasualLeaveEntityMapper on CasualLeaveRequestEntity {
       leaveType: leaveType,
       fromDate: fromDate,
       toDate: toDate,
-      reason: reason,
+      reason: reason ?? "",
+      attachment: attachment?.toModel(),
       status: status,
     );
   }
@@ -39,7 +41,8 @@ extension AnnualLeaveModelMapper on AnnualLeaveRequestModel {
       leaveType: leaveType,
       fromDate: fromDate,
       toDate: toDate,
-      reason: reason,
+      reason: reason ?? "",
+      attachment: attachment?.toEntity(),
       status: status,
     );
   }
@@ -54,7 +57,8 @@ extension AnnualLeaveEntityMapper on AnnualLeaveRequestEntity {
       leaveType: leaveType,
       fromDate: fromDate,
       toDate: toDate,
-      reason: reason,
+      reason: reason ?? "",
+      attachment: attachment?.toModel(),
       status: status,
     );
   }

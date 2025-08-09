@@ -1,5 +1,6 @@
 import 'package:color_package/color_package.dart';
 import 'package:flutter/material.dart';
+import 'package:leave_package/presentation/pages/apply_leave_page.dart';
 
 class ApplyLeaveBtn extends StatelessWidget {
   const ApplyLeaveBtn({super.key});
@@ -7,7 +8,7 @@ class ApplyLeaveBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => print("Apply Leave"),
+      onPressed: () => _onPressedApplyLeaveBtn(context),
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.all(20),
         backgroundColor: AppColors.white,
@@ -41,6 +42,14 @@ class ApplyLeaveBtn extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  //WHEN PRESS APPLY LEAVE BUTTON
+  void _onPressedApplyLeaveBtn(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ApplyLeavePage()),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:leave_package/application/providers/leave_provider.dart';
 import 'package:leave_package/leave_package.dart';
 
 class LeaveNotifier extends Notifier<LeaveState> {
@@ -29,6 +30,31 @@ class LeaveNotifier extends Notifier<LeaveState> {
         failure: null,
         myLeaveList: list,
       ),
+    );
+  }
+
+  //SAVE LEAVE REQUEST
+  Future<void> saveLeaveRequest({
+    required int userId,
+    required LeaveTypes leaveType,
+    required DateTime fromDate,
+    required DateTime toDate,
+    String? reason,
+    AttachmentEntity? attachment,
+  }) async {
+    //LOADING
+    state = state.copyWith(isLoading: true);
+    //GET RESULT
+    final Either<Failure, LeaveRequestEntity> result = await _leaveUseCases
+        .saveLeaveRequestUseCase
+        .call(userId, leaveType, fromDate, toDate, reason, attachment);
+
+    state = result.fold(
+      (failure) => state.copyWith(isLoading: false, failure: failure), //FAILD
+      (leaveRequest) => state.copyWith(
+        isLoading: false,
+        leaveRequestEntity: leaveRequest,
+      ), //SUCCESS - LEAVE REQUEST ENTITY
     );
   }
 }

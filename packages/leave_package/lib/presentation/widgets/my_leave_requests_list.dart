@@ -46,14 +46,14 @@ class _MyLeaveRequestsListState extends ConsumerState<MyLeaveRequestsList> {
       return const Center(child: Text("No leave records found"));
     }
 
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: list.length,
-      itemBuilder: (context, index) {
-        final item = list[index];
-        return MyLeaveRequestItem(entity: item);
-      },
+    return Expanded(
+      child: ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (context, index) {
+          final item = list[index];
+          return MyLeaveRequestItem(entity: item);
+        },
+      ),
     );
   }
 }

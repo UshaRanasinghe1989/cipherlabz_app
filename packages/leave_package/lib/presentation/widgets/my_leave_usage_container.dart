@@ -11,8 +11,7 @@ class MyLeaveUsageWidget extends StatelessWidget {
     //MY LEAVE USAGE CONTAINER
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 250,
-      margin: EdgeInsets.symmetric(vertical: 75, horizontal: 10),
+      margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10),
       decoration: BoxDecoration(
         color: AppColors.white,
         border: Border.all(color: AppColors.pinkE40079), //#E40079

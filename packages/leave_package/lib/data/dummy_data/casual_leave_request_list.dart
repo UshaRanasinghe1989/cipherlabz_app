@@ -10,7 +10,7 @@ class CasualLeaveRequestList {
       toDate: DateTime(2025, 8, 10),
       reason: "Personal",
       attachment: null,
-      status: LeaveRequestStatus.pending,
+      status: LeaveRequestStatus.approved,
     ),
     CasualLeaveRequestModel(
       id: 0,
@@ -20,7 +20,7 @@ class CasualLeaveRequestList {
       toDate: DateTime(2025, 8, 11),
       reason: "Personal",
       attachment: null,
-      status: LeaveRequestStatus.approved,
+      status: LeaveRequestStatus.rejected,
     ),
     CasualLeaveRequestModel(
       id: 0,
@@ -30,7 +30,7 @@ class CasualLeaveRequestList {
       toDate: DateTime(2025, 8, 12),
       reason: "Personal",
       attachment: null,
-      status: LeaveRequestStatus.rejected,
+      status: LeaveRequestStatus.approved,
     ),
   ];
 }

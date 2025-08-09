@@ -6,7 +6,7 @@ class CasualLeaveRequestEntity implements LeaveRequestEntity {
   final LeaveTypes leaveType;
   final DateTime fromDate;
   final DateTime toDate;
-  final String reason;
+  final String? reason;
   final AttachmentEntity? attachment;
   final LeaveRequestStatus status;
 
@@ -16,7 +16,7 @@ class CasualLeaveRequestEntity implements LeaveRequestEntity {
     required this.leaveType,
     required this.fromDate,
     required this.toDate,
-    required this.reason,
+    this.reason,
     this.attachment,
     required this.status,
   });

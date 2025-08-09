@@ -6,7 +6,7 @@ abstract class LeaveRequestEntity {
   LeaveTypes get leaveType;
   DateTime get fromDate;
   DateTime get toDate;
-  String get reason;
+  String? get reason;
   AttachmentEntity? get attachment;
   LeaveRequestStatus get status;
 }

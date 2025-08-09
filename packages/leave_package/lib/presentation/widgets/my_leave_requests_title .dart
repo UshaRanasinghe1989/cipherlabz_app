@@ -6,13 +6,17 @@ class MyLeaveRequestsTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      "My Leave Requests",
-      style: TextStyle(
-        color: AppColors.black, //#0590DF
-        fontFamily: "Poppins",
-        fontWeight: FontWeight.w500,
-        fontSize: 15,
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
+      alignment: Alignment.topLeft,
+      child: const Text(
+        "My Leave Requests",
+        style: TextStyle(
+          color: AppColors.black, //#0590DF
+          fontFamily: "Poppins",
+          fontWeight: FontWeight.w500,
+          fontSize: 15,
+        ),
       ),
     );
   }

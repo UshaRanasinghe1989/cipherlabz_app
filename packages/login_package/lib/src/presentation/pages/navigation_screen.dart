@@ -67,7 +67,9 @@ class _NavigationScreenWidgetState
               width: 20,
               height: 20,
               colorFilter: ColorFilter.mode(
-                AppColors.gray7C7A82, //#7C7A82
+                _currentPageIndex == 2
+                    ? AppColors.blue0085FF
+                    : AppColors.gray7C7A82,
                 BlendMode.srcIn,
               ),
             ),
@@ -79,7 +81,9 @@ class _NavigationScreenWidgetState
               width: 20,
               height: 20,
               colorFilter: ColorFilter.mode(
-                AppColors.gray7C7A82, //#7C7A82
+                _currentPageIndex == 3
+                    ? AppColors.blue0085FF
+                    : AppColors.gray7C7A82,
                 BlendMode.srcIn,
               ),
             ),

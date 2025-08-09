@@ -58,4 +58,9 @@ class AppColors {
   static const green00A3543D = Color.fromRGBO(0, 163, 84, 0.24); //#00A3543D
   static const pinkE4007912 = Color.fromRGBO(228, 0, 121, 0.07); //#E4007912
   static const grey00000091 = Color.fromRGBO(0, 0, 0, 0.57); //#00000091
+
+  //LEAVE APPLY FORM COLORS
+  static const grey3F3D56E3 = Color.fromRGBO(63, 61, 86, 0.89); //#3F3D56E3
+  static const grey6F6F6F = Color(0XFF6F6F6F); //#6F6F6F
+  static const grey7C7A82 = Color(0XFF7C7A82); //#7C7A82
 }

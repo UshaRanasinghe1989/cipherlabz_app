@@ -1,4 +1,5 @@
 import 'package:attendance_package/src/presentation/widget/map_widget.dart';
+import 'package:color_package/color_package.dart';
 import 'package:flutter/material.dart';
 
 class MarkAttendancePageWidget extends StatefulWidget {
@@ -23,14 +24,22 @@ class _MarkAttendancePageWidgetState extends State<MarkAttendancePageWidget> {
           margin: EdgeInsets.all(10.0),
           child: Column(
             children: [
-              //CHILD 1
+              //BACK
               Align(
                 alignment: Alignment(-0.9, 1.0),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Text("< Back"),
+                  child: Text(
+                    "< Back",
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontFamily: "Poppins",
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
                 ),
               ),
               //CHILD 2

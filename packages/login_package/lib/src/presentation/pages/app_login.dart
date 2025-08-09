@@ -31,9 +31,6 @@ class _LoginWidgetState extends State<LoginWidget> {
     return SafeArea(
       top: true,
       bottom: true,
-      left: false,
-      right: false,
-      maintainBottomViewPadding: true,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         //appBar: AppBar(title: const Text("HR App")),

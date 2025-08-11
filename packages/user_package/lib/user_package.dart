@@ -25,3 +25,5 @@ export 'package:user_package/src/application/notifiers/user_notifier.dart';
 export 'package:user_package/src/presentation/state/user_state.dart';
 //MODEL
 export 'package:user_package/src/data/model/user_model.dart';
+export 'package:user_package/src/data/model/report_to_model.dart';
+export 'package:user_package/src/data/model/user_model_extensions.dart';

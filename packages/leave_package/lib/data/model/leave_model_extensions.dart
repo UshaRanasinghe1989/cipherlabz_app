@@ -1,4 +1,5 @@
 import 'package:leave_package/leave_package.dart';
+import 'package:user_package/user_package.dart';
 
 //CASUAL LEAVE MODEL => ENTITY
 extension CasualLeaveModelMapper on CasualLeaveRequestModel {
@@ -82,6 +83,26 @@ extension AttachmentEntityMapper on AttachmentEntity {
       name: name,
       mimeType: mimeType,
       base64Data: base64Data,
+    );
+  }
+}
+
+//LEAVE REQUEST WITH USER ENTITY => MODEL
+extension LeaveRequestWithUserEntityMapper on LeaveRequestWithUserEntity {
+  LeaveRequestWithUserModel toModel() {
+    return LeaveRequestWithUserModel(
+      userModel: userEntity.toModel(),
+      leaveRequestEntity: leaveRequestEntity,
+    );
+  }
+}
+
+//LEAVE REQUEST WITH USER MODEL => ENTITY
+extension LeaveRequestWithUserModelMapper on LeaveRequestWithUserModel {
+  LeaveRequestWithUserEntity toEntity() {
+    return LeaveRequestWithUserEntity(
+      userEntity: userModel.toEntity(),
+      leaveRequestEntity: leaveRequestEntity,
     );
   }
 }

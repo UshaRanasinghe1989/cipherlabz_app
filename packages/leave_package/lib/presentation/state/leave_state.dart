@@ -5,7 +5,8 @@ class LeaveState {
   final bool isLoading;
   final Failure? failure;
   final LeaveRequestEntity? leaveRequestEntity;
-  final List<LeaveRequestEntity>? myLeaveList;
+  final List<LeaveRequestEntity>? leaveList;
+  final List<LeaveRequestWithUserEntity>? leaveWithUserList;
   final List<CasualLeaveRequestEntity>? casualLeaveRequestList;
   final List<AnnualLeaveRequestEntity>? annualLeaveRequestList;
 
@@ -13,7 +14,8 @@ class LeaveState {
     this.isLoading = false,
     this.failure,
     this.leaveRequestEntity,
-    this.myLeaveList,
+    this.leaveList,
+    this.leaveWithUserList,
     this.casualLeaveRequestList,
     this.annualLeaveRequestList,
   });
@@ -22,7 +24,8 @@ class LeaveState {
     bool? isLoading,
     Failure? failure,
     LeaveRequestEntity? leaveRequestEntity,
-    List<LeaveRequestEntity>? myLeaveList,
+    List<LeaveRequestEntity>? leaveList,
+    List<LeaveRequestWithUserEntity>? leaveWithUserList,
     List<CasualLeaveRequestEntity>? casualLeaveRequestList,
     List<AnnualLeaveRequestEntity>? annualLeaveRequestList,
   }) {
@@ -30,7 +33,8 @@ class LeaveState {
       isLoading: isLoading ?? this.isLoading,
       failure: failure,
       leaveRequestEntity: leaveRequestEntity,
-      myLeaveList: myLeaveList ?? this.myLeaveList,
+      leaveList: leaveList ?? this.leaveList,
+      leaveWithUserList: leaveWithUserList ?? this.leaveWithUserList,
       casualLeaveRequestList:
           casualLeaveRequestList ?? this.casualLeaveRequestList,
       annualLeaveRequestList:

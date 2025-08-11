@@ -39,30 +39,32 @@ class AnnualLeaveDatasourceImpl implements AnnualLeaveDatasource {
 
   @override
   Future<List<AnnualLeaveRequestModel>> getAnnualLeaveRequestsByStatus(
-    int userId,
     DateTime fromDate,
     DateTime toDate,
+    LeaveRequestStatus leaveRequestStatus,
   ) async {
     try {
       final annualLeaveList = AnnualLeaveRequestList.annualLeaveList;
 
       //MY ANNUAL LEAVES LIST
-      List<AnnualLeaveRequestModel> myAnnualLeaveList = [];
+      List<AnnualLeaveRequestModel> annualLeaveListByStatus = [];
       if (annualLeaveList.isNotEmpty) {
-        myAnnualLeaveList = annualLeaveList
+        annualLeaveListByStatus = annualLeaveList
             .where(
               (e) =>
-                  e.userId == userId &&
                   DatetimeHelpers.isBetween(fromDate, toDate, e.fromDate) &&
-                  DatetimeHelpers.isBetween(fromDate, toDate, e.toDate),
+                  DatetimeHelpers.isBetween(fromDate, toDate, e.toDate) &&
+                  e.status == leaveRequestStatus,
             )
             .toList();
       }
-      logger.i("datasource:myAnnualLeaveList - ${myAnnualLeaveList.length}");
-      return myAnnualLeaveList;
+      logger.i(
+        "datasource:annualLeaveListByStatus - ${annualLeaveListByStatus.length}",
+      );
+      return annualLeaveListByStatus;
     } catch (e, stack) {
       logger.w(
-        "Exception in getMyAnnualLeaveRequests",
+        "Exception in getAnnualLeaveRequestsByStatus",
         error: e,
         stackTrace: stack,
       );

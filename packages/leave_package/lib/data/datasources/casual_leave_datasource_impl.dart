@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:dartz/dartz.dart';
 import 'package:leave_package/leave_package.dart';
 import 'package:logger/logger.dart';
 
@@ -41,32 +40,32 @@ class CasualLeaveDatasourceImpl implements CasualLeaveDatasource {
 
   @override
   Future<List<CasualLeaveRequestModel>> getCasualLeaveRequestsByStatus(
-    int userId,
     DateTime fromDate,
     DateTime toDate,
+    LeaveRequestStatus leaveRequestStatus,
   ) async {
     try {
       final casualLeaveList = CasualLeaveRequestList.casualLeaveList;
 
       //MY CASUAL LEAVES LIST
-      List<CasualLeaveRequestModel> myCasualLeaveList = [];
+      List<CasualLeaveRequestModel> casualLeaveListByStatus = [];
       if (casualLeaveList.isNotEmpty) {
-        myCasualLeaveList = casualLeaveList
+        casualLeaveListByStatus = casualLeaveList
             .where(
               (e) =>
-                  e.userId == userId &&
                   DatetimeHelpers.isBetween(fromDate, toDate, e.fromDate) &&
-                  DatetimeHelpers.isBetween(fromDate, toDate, e.toDate),
+                  DatetimeHelpers.isBetween(fromDate, toDate, e.toDate) &&
+                  e.status == leaveRequestStatus,
             )
             .toList();
       }
       logger.i(
-        "datasource:myCasualLeaveList - ${myCasualLeaveList.length} - ${DateTime.now()}",
+        "datasource:casualLeaveListByStatus - ${casualLeaveListByStatus.length} - ${DateTime.now()}",
       );
-      return myCasualLeaveList;
+      return casualLeaveListByStatus;
     } catch (e, stack) {
       logger.w(
-        "Exception in getMyCasualLeaveRequests",
+        "Exception in getCasualLeaveRequestsByStatus",
         error: e,
         stackTrace: stack,
       );

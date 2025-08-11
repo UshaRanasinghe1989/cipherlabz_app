@@ -10,32 +10,27 @@ class MyLeavePage extends StatelessWidget {
     return SafeArea(
       top: true,
       bottom: true,
-      left: false,
-      right: false,
-      maintainBottomViewPadding: true,
       child: Scaffold(
         backgroundColor: AppColors.white,
-        body: Column(
-          children: [
-            //PAGE TITLE & ADD LEAVE BUTTON
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                //PAGE TITLE
-                IgnorePointer(child: LeavePageTitle()),
-                //ADD LEAVE BUTTON
-                Positioned(
-                  top: 50,
-                  left: MediaQuery.of(context).size.width / 2 - 90,
-                  child: Center(child: ApplyLeaveBtn()),
-                ),
-              ],
-            ),
-            SizedBox(height: 60),
-            SizedBox(height: 250, child: MyLeaveUsageWidget()),
-            SizedBox(height: 20),
-            SizedBox(height: 300, child: MyLeaveRequests()),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              //PAGE TITLE
+              //IgnorePointer(child: LeavePageTitle()),
+              LeavePageTitle(),
+              //ADD LEAVE BUTTON
+              // Positioned(
+              //   top: 50,
+              //   left: MediaQuery.of(context).size.width / 2 - 90,
+              //   child: Center(child: ApplyLeaveBtn()),
+              // ),
+              Center(child: ApplyLeaveBtn()),
+              SizedBox(height: 10),
+              SizedBox(height: 250, child: MyLeaveUsageWidget()),
+              SizedBox(height: 20),
+              SizedBox(height: 200, child: MyLeaveRequests()),
+            ],
+          ),
         ),
       ),
     );

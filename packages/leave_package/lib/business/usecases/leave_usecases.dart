@@ -3,16 +3,12 @@ import 'package:leave_package/leave_package.dart';
 
 class LeaveUsecases {
   final GetMyLeaveRequestsUseCase getMyLeaveRequestsUseCase;
-  final GetCasualLeaveRequestsByStatusUseCase
-  getCasualLeaveRequestsByStatusUseCase;
-  final GetAnnualLeaveRequestsByStatusUseCase
-  getAnnualLeaveRequestsByStatusUseCase;
+  final GetLeaveRequestsByStatusUseCase getLeaveRequestsByStatusUseCase;
   final SaveLeaveRequestUseCase saveLeaveRequestUseCase;
 
   LeaveUsecases({
     required this.getMyLeaveRequestsUseCase,
-    required this.getCasualLeaveRequestsByStatusUseCase,
-    required this.getAnnualLeaveRequestsByStatusUseCase,
+    required this.getLeaveRequestsByStatusUseCase,
     required this.saveLeaveRequestUseCase,
   });
 }

@@ -7,21 +7,14 @@ abstract class LeaveRepository {
   Future<Either<Failure, List<LeaveRequestEntity>>> getMyLeaveRequests(
     int userId,
   );
-  //GET CASUAL LEAVE REQUESTS
-  Future<Either<Failure, List<LeaveRequestEntity>>>
-  getCasualLeaveRequestsByStatus(
-    int userId,
+  //GET LEAVE REQUESTS BY STATUS
+  Future<Either<Failure, List<LeaveRequestWithUserEntity>>>
+  getLeaveRequestsByStatus(
     DateTime fromDate,
     DateTime toDate,
+    LeaveRequestStatus leaveRequestStatus,
   );
-  //GET ANNUAL LEAVE REQUESTS
-  Future<Either<Failure, List<LeaveRequestEntity>>>
-  getAnnualLeaveRequestsByStatus(
-    int userId,
-    DateTime fromDate,
-    DateTime toDate,
-  );
-
+  //SAVE LEAVE REQUEST
   Future<Either<Failure, LeaveRequestEntity>> saveLeaveRequest(
     int userId,
     LeaveTypes leaveType,

@@ -8,9 +8,9 @@ abstract class AnnualLeaveDatasource {
   );
   //GET LEAVE REQUESTS BY STATUS AND DATE RANGE
   Future<List<AnnualLeaveRequestModel>> getAnnualLeaveRequestsByStatus(
-    int userId,
     DateTime fromDate,
     DateTime toDate,
+    LeaveRequestStatus leaveRequestStatus,
   );
   //SAVE ANNUAL LEAVE REQUEST
   Future<AnnualLeaveRequestModel> saveLeaveRequest(

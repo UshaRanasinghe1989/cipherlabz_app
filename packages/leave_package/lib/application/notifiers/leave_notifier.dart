@@ -1,7 +1,6 @@
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:leave_package/application/providers/leave_provider.dart';
 import 'package:leave_package/leave_package.dart';
 
 class LeaveNotifier extends Notifier<LeaveState> {
@@ -23,12 +22,12 @@ class LeaveNotifier extends Notifier<LeaveState> {
       (failure) => state = state.copyWith(
         isLoading: false,
         failure: failure,
-        myLeaveList: null,
+        leaveList: null,
       ),
       (list) => state = state.copyWith(
         isLoading: false,
         failure: null,
-        myLeaveList: list,
+        leaveList: list,
       ),
     );
   }
@@ -55,6 +54,35 @@ class LeaveNotifier extends Notifier<LeaveState> {
         isLoading: false,
         leaveRequestEntity: leaveRequest,
       ), //SUCCESS - LEAVE REQUEST ENTITY
+    );
+  }
+
+  //GET LEAVE REQUESTS BY STATUS
+  Future<void> getLeaveRequestsByStatus(
+    DateTime fromDate,
+    DateTime toDate,
+    LeaveRequestStatus leaveRequestStatus,
+  ) async {
+    state = state.copyWith(isLoading: true);
+
+    final Either<Failure, List<LeaveRequestWithUserEntity>> result =
+        await _leaveUseCases.getLeaveRequestsByStatusUseCase.call(
+          fromDate,
+          toDate,
+          leaveRequestStatus,
+        );
+
+    result.fold(
+      (failure) => state = state.copyWith(
+        isLoading: false,
+        failure: failure,
+        leaveWithUserList: null,
+      ),
+      (list) => state = state.copyWith(
+        isLoading: false,
+        failure: null,
+        leaveWithUserList: list,
+      ),
     );
   }
 }

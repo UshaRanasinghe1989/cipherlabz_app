@@ -9,10 +9,9 @@ final leaveUseCasesProvider = Provider<LeaveUsecases>((ref) {
     getMyLeaveRequestsUseCase: GetMyLeaveRequestsUseCase(
       leaveRepository: repository,
     ),
-    getCasualLeaveRequestsByStatusUseCase:
-        GetCasualLeaveRequestsByStatusUseCase(leaveRepository: repository),
-    getAnnualLeaveRequestsByStatusUseCase:
-        GetAnnualLeaveRequestsByStatusUseCase(leaveRepository: repository),
+    getLeaveRequestsByStatusUseCase: GetLeaveRequestsByStatusUseCase(
+      leaveRepository: repository,
+    ),
     saveLeaveRequestUseCase: SaveLeaveRequestUseCase(
       leaveRepository: repository,
     ),

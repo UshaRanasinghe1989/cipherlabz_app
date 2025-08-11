@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:leave_package/leave_package.dart';
 import 'package:logger/logger.dart';
+import 'package:user_package/user_package.dart';
 
 class LeaveRepositoryImpl implements LeaveRepository {
   final logger = Logger();
@@ -69,74 +70,7 @@ class LeaveRepositoryImpl implements LeaveRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, List<LeaveRequestEntity>>>
-  getCasualLeaveRequestsByStatus(
-    int userId,
-    DateTime fromDate,
-    DateTime toDate,
-  ) async {
-    //GET MY CASUAL LEAVE REQUESTS LIST
-    List<CasualLeaveRequestModel> leaveList = await casualLeaveDatasource
-        .getCasualLeaveRequestsByStatus(userId, fromDate, toDate);
-
-    //MODEL MAP
-    List<CasualLeaveRequestEntity> leaveEntityList = leaveList
-        .map((e) => e.toEntity())
-        .toList();
-
-    try {
-      if (leaveEntityList.isNotEmpty) {
-        logger.i("leaveEntityList count : ${leaveEntityList.length} ");
-        return Right(leaveEntityList);
-      } else {
-        return Left(GeneralFailure(errorMessage: "No leave records found"));
-      }
-    } catch (e, stack) {
-      logger.w(
-        "Exception in getCasualLeaveRequestsByStatus",
-        error: e,
-        stackTrace: stack,
-        time: DateTime.now(),
-      );
-      return Left(GeneralFailure(errorMessage: "Unexpected error occurred"));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<LeaveRequestEntity>>>
-  getAnnualLeaveRequestsByStatus(
-    int userId,
-    DateTime fromDate,
-    DateTime toDate,
-  ) async {
-    //GET ANNUAL LEAVE REQUESTS LIST
-    List<AnnualLeaveRequestModel> leaveList = await annualLeaveDatasource
-        .getAnnualLeaveRequestsByStatus(userId, fromDate, toDate);
-
-    //MODEL MAP
-    List<AnnualLeaveRequestEntity> leaveEntityList = leaveList
-        .map((e) => e.toEntity())
-        .toList();
-
-    try {
-      if (leaveEntityList.isNotEmpty) {
-        logger.i("leaveEntityList count : ${leaveEntityList.length} ");
-        return Right(leaveEntityList);
-      } else {
-        return Left(GeneralFailure(errorMessage: "No leave records found"));
-      }
-    } catch (e, stack) {
-      logger.w(
-        "Exception in getAnnualLeaveRequestsByStatus",
-        error: e,
-        stackTrace: stack,
-        time: DateTime.now(),
-      );
-      return Left(GeneralFailure(errorMessage: "Unexpected error occurred"));
-    }
-  }
-
+  //SAVE LEAVE REQUESTS
   @override
   Future<Either<Failure, LeaveRequestEntity>> saveLeaveRequest(
     int userId,
@@ -215,5 +149,89 @@ class LeaveRepositoryImpl implements LeaveRepository {
       );
       return Left(GeneralFailure(errorMessage: "Unexpected error occurred"));
     }
+  }
+
+  //GET LEAVE REQUESTS BY STATUS
+  @override
+  Future<Either<Failure, List<LeaveRequestWithUserEntity>>>
+  getLeaveRequestsByStatus(
+    DateTime fromDate,
+    DateTime toDate,
+    LeaveRequestStatus leaveRequestStatus,
+  ) async {
+    //GET MY CASUAL LEAVE REQUESTS LIST
+    List<CasualLeaveRequestModel> casualLeaveList = await casualLeaveDatasource
+        .getCasualLeaveRequestsByStatus(fromDate, toDate, leaveRequestStatus);
+
+    //MODEL MAP
+    List<CasualLeaveRequestEntity> casualLeaveEntityList = casualLeaveList
+        .map((e) => e.toEntity())
+        .toList();
+    //GET LeaveRequestWithUserEntity LIST FOR CASUAL LEAVE REQUESTS
+    List<LeaveRequestWithUserEntity> casualList = _getLeaveRequestWithUserList(
+      casualLeaveEntityList,
+    );
+
+    //GET MY ANNUAL LEAVE REQUESTS LIST
+    List<AnnualLeaveRequestModel> annualLeaveList = await annualLeaveDatasource
+        .getAnnualLeaveRequestsByStatus(fromDate, toDate, leaveRequestStatus);
+
+    //MODEL MAP
+    List<AnnualLeaveRequestEntity> annualLeaveEntityList = annualLeaveList
+        .map((e) => e.toEntity())
+        .toList();
+
+    //GET LeaveRequestWithUserEntity LIST FOR ANNUAL LEAVE REQUESTS
+    List<LeaveRequestWithUserEntity> annualList = _getLeaveRequestWithUserList(
+      annualLeaveEntityList,
+    );
+
+    //CASUAL + ANNUAL LEAVE LISTS BY STATUS
+    try {
+      final allLeaveListByStatus = <LeaveRequestWithUserEntity>[];
+      if (casualList.isNotEmpty) {
+        allLeaveListByStatus.addAll(casualList);
+        logger.i("casualList count : ${casualList.length} ");
+      }
+
+      if (annualList.isNotEmpty) {
+        allLeaveListByStatus.addAll(annualList);
+        logger.i("annualList count : ${annualList.length} ");
+      }
+
+      if (allLeaveListByStatus.isNotEmpty) {
+        logger.i(
+          "allLeaveListByStatus count : ${allLeaveListByStatus.length} ",
+        );
+        return Right(allLeaveListByStatus);
+      } else {
+        return Left(GeneralFailure(errorMessage: "No leave records found"));
+      }
+    } catch (e, stack) {
+      logger.w(
+        "Exception in getLeaveRequestsByStatus",
+        error: e,
+        stackTrace: stack,
+        time: DateTime.now(),
+      );
+      return Left(GeneralFailure(errorMessage: "Unexpected error occurred"));
+    }
+  }
+
+  List<LeaveRequestWithUserEntity> _getLeaveRequestWithUserList(
+    List<LeaveRequestEntity> leaveEntityList,
+  ) {
+    final usersSet = UserSet.usersSet;
+    return leaveEntityList.map((leave) {
+      final matchingUser = usersSet.firstWhere(
+        (user) => user.id == leave.userId,
+        //orElse: () => UserEntity(id: -1, name: 'Unknown'), // fallback if not found
+      );
+
+      return LeaveRequestWithUserEntity(
+        leaveRequestEntity: leave,
+        userEntity: matchingUser,
+      );
+    }).toList();
   }
 }

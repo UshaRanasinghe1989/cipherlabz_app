@@ -8,9 +8,9 @@ abstract class CasualLeaveDatasource {
   );
   //GET LEAVE REQUESTS BY STATUS AND DATE RANGE
   Future<List<CasualLeaveRequestModel>> getCasualLeaveRequestsByStatus(
-    int userId,
     DateTime fromDate,
     DateTime toDate,
+    LeaveRequestStatus leaveRequestStatus,
   );
 
   Future<CasualLeaveRequestModel> saveLeaveRequest(

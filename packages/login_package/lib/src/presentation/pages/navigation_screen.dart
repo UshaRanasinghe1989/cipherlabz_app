@@ -38,7 +38,9 @@ class _NavigationScreenWidgetState
       category == UserCategory.regularUser
           ? AttendanceDetailPage()
           : SuperUserWidgets(),
-      MyLeavePage(),
+      category == UserCategory.regularUser
+          ? MyLeavePage()
+          : SuperUserLeaveWidgets(),
       Placeholder(),
     ];
 

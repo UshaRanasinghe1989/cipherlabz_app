@@ -63,4 +63,11 @@ class AppColors {
   static const grey3F3D56E3 = Color.fromRGBO(63, 61, 86, 0.89); //#3F3D56E3
   static const grey6F6F6F = Color(0XFF6F6F6F); //#6F6F6F
   static const grey7C7A82 = Color(0XFF7C7A82); //#7C7A82
+
+  //SUPER USER LEAVE PAGE COLORS
+  static const pinkFF0087 = Color(0XFFFF0087); //#FF0087
+  static const yellowF0C083 = Color(0XFFF0C083); //#F0C083
+
+  //APPROVE / REJECT LEAVE COLORS
+  static const redDE3F3F = Color(0XFFDE3F3F); //#DE3F3F
 }

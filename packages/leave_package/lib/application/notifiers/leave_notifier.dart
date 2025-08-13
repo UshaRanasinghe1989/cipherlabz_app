@@ -59,6 +59,7 @@ class LeaveNotifier extends Notifier<LeaveState> {
 
   //GET LEAVE REQUESTS BY STATUS
   Future<void> getLeaveRequestsByStatus(
+    List<int> subordinateIdList,
     DateTime fromDate,
     DateTime toDate,
     LeaveRequestStatus leaveRequestStatus,
@@ -67,6 +68,7 @@ class LeaveNotifier extends Notifier<LeaveState> {
 
     final Either<Failure, List<LeaveRequestWithUserEntity>> result =
         await _leaveUseCases.getLeaveRequestsByStatusUseCase.call(
+          subordinateIdList,
           fromDate,
           toDate,
           leaveRequestStatus,
@@ -82,6 +84,52 @@ class LeaveNotifier extends Notifier<LeaveState> {
         isLoading: false,
         failure: null,
         leaveWithUserList: list,
+      ),
+    );
+  }
+
+  //REJECT LEAVE REQUEST
+  Future<void> rejectLeaveRequest(LeaveRequestEntity leaveRequestEntity) async {
+    state = state.copyWith(isLoading: true);
+
+    final Either<Failure, LeaveRequestEntity> result = await _leaveUseCases
+        .rejectLeaveRequestUseCase
+        .call(leaveRequestEntity);
+
+    result.fold(
+      (failure) => state = state.copyWith(
+        isLoading: false,
+        failure: failure,
+        leaveRequestEntity: null,
+      ),
+      (entity) => state = state.copyWith(
+        isLoading: false,
+        failure: null,
+        leaveRequestEntity: entity,
+      ),
+    );
+  }
+
+  //APPROVE LEAVE REQUEST
+  Future<void> approveLeaveRequest(
+    LeaveRequestEntity leaveRequestEntity,
+  ) async {
+    state = state.copyWith(isLoading: true);
+
+    final Either<Failure, LeaveRequestEntity> result = await _leaveUseCases
+        .approveLeaveRequestUseCase
+        .call(leaveRequestEntity);
+
+    result.fold(
+      (failure) => state = state.copyWith(
+        isLoading: false,
+        failure: failure,
+        leaveRequestEntity: null,
+      ),
+      (entity) => state = state.copyWith(
+        isLoading: false,
+        failure: null,
+        leaveRequestEntity: entity,
       ),
     );
   }

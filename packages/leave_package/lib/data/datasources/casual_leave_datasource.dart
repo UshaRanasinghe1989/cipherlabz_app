@@ -1,3 +1,5 @@
+import 'package:core/errors/failure.dart';
+import 'package:dartz/dartz.dart';
 import 'package:leave_package/leave_package.dart';
 
 abstract class CasualLeaveDatasource {
@@ -8,12 +10,21 @@ abstract class CasualLeaveDatasource {
   );
   //GET LEAVE REQUESTS BY STATUS AND DATE RANGE
   Future<List<CasualLeaveRequestModel>> getCasualLeaveRequestsByStatus(
+    List<int> subordinateIdList,
     DateTime fromDate,
     DateTime toDate,
     LeaveRequestStatus leaveRequestStatus,
   );
-
+  //SAVE LEAVE REQUEST
   Future<CasualLeaveRequestModel> saveLeaveRequest(
+    CasualLeaveRequestModel casualLeaveRequestModel,
+  );
+  //REJECT LEAVE REQUEST
+  Future<CasualLeaveRequestModel> rejectLeaveRequest(
+    CasualLeaveRequestModel casualLeaveRequestModel,
+  );
+  //APPROVE LEAVE REQUEST
+  Future<CasualLeaveRequestModel> approveLeaveRequest(
     CasualLeaveRequestModel casualLeaveRequestModel,
   );
 }

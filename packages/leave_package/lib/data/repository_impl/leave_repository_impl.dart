@@ -155,13 +155,19 @@ class LeaveRepositoryImpl implements LeaveRepository {
   @override
   Future<Either<Failure, List<LeaveRequestWithUserEntity>>>
   getLeaveRequestsByStatus(
+    List<int> subordinateIdList,
     DateTime fromDate,
     DateTime toDate,
     LeaveRequestStatus leaveRequestStatus,
   ) async {
     //GET MY CASUAL LEAVE REQUESTS LIST
     List<CasualLeaveRequestModel> casualLeaveList = await casualLeaveDatasource
-        .getCasualLeaveRequestsByStatus(fromDate, toDate, leaveRequestStatus);
+        .getCasualLeaveRequestsByStatus(
+          subordinateIdList,
+          fromDate,
+          toDate,
+          leaveRequestStatus,
+        );
 
     //MODEL MAP
     List<CasualLeaveRequestEntity> casualLeaveEntityList = casualLeaveList
@@ -174,7 +180,12 @@ class LeaveRepositoryImpl implements LeaveRepository {
 
     //GET MY ANNUAL LEAVE REQUESTS LIST
     List<AnnualLeaveRequestModel> annualLeaveList = await annualLeaveDatasource
-        .getAnnualLeaveRequestsByStatus(fromDate, toDate, leaveRequestStatus);
+        .getAnnualLeaveRequestsByStatus(
+          subordinateIdList,
+          fromDate,
+          toDate,
+          leaveRequestStatus,
+        );
 
     //MODEL MAP
     List<AnnualLeaveRequestEntity> annualLeaveEntityList = annualLeaveList
@@ -215,6 +226,42 @@ class LeaveRepositoryImpl implements LeaveRepository {
         time: DateTime.now(),
       );
       return Left(GeneralFailure(errorMessage: "Unexpected error occurred"));
+    }
+  }
+
+  //REJECT LEAVE REQUEST
+  @override
+  Future<Either<Failure, LeaveRequestEntity>> rejectLeaveRequest(
+    LeaveRequestEntity leaveRequestEntity,
+  ) async {
+    if (leaveRequestEntity.leaveType == LeaveTypes.annual) {
+      AnnualLeaveRequestModel leaveRequestModel = await annualLeaveDatasource
+          .rejectLeaveRequest(leaveRequestEntity.toAnnualModel());
+
+      return Right(leaveRequestModel.toEntity());
+    } else {
+      CasualLeaveRequestModel leaveRequestModel = await casualLeaveDatasource
+          .rejectLeaveRequest(leaveRequestEntity.toCasualModel());
+
+      return Right(leaveRequestModel.toEntity());
+    }
+  }
+
+  //APPROVE LEAVE REQUEST
+  @override
+  Future<Either<Failure, LeaveRequestEntity>> approveLeaveRequest(
+    LeaveRequestEntity leaveRequestEntity,
+  ) async {
+    if (leaveRequestEntity.leaveType == LeaveTypes.annual) {
+      AnnualLeaveRequestModel leaveRequestModel = await annualLeaveDatasource
+          .approveLeaveRequest(leaveRequestEntity.toAnnualModel());
+
+      return Right(leaveRequestModel.toEntity());
+    } else {
+      CasualLeaveRequestModel leaveRequestModel = await casualLeaveDatasource
+          .approveLeaveRequest(leaveRequestEntity.toCasualModel());
+
+      return Right(leaveRequestModel.toEntity());
     }
   }
 

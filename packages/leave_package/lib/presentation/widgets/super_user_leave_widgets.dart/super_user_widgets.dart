@@ -20,7 +20,10 @@ class _SuperUserLeaveWidgetsState extends ConsumerState<SuperUserLeaveWidgets> {
       children: [
         Center(child: ApplyLeaveBtn()),
         SizedBox(height: 5),
-        SizedBox(height: 250, child: MyLeaveUsageWidget()),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.25,
+          child: MyLeaveUsageWidget(),
+        ),
         SizedBox(height: 5),
         Expanded(child: MyLeaveRequests()),
       ],
@@ -28,7 +31,7 @@ class _SuperUserLeaveWidgetsState extends ConsumerState<SuperUserLeaveWidgets> {
   }
 
   Widget getEmployeeLeaveList() {
-    return Expanded(child: PendingLeaveRequestsContainer());
+    return PendingLeaveRequestsContainer();
   }
 
   @override

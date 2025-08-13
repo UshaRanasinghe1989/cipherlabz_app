@@ -55,11 +55,15 @@ export 'package:leave_package/data/repository_impl/leave_repository_impl.dart';
 export 'package:leave_package/business/usecases/leave_usecases.dart';
 export 'package:leave_package/business/usecases/get_my_leave_requests.dart';
 export 'package:leave_package/business/usecases/get_leave_requests_by_status.dart';
+export 'package:leave_package/business/usecases/save_leave_request.dart';
+export 'package:leave_package/business/usecases/reject_leave_request.dart';
+export 'package:leave_package/business/usecases/approve_leave_request.dart';
 //PROVIDERS
 export 'package:leave_package/application/providers/casual_leave_datasource_provider.dart';
 export 'package:leave_package/application/providers/annual_leave_datasource_provider.dart';
 export 'package:leave_package/application/providers/leave_repository_provider.dart';
 export 'package:leave_package/application/providers/leave_usecases_provider.dart';
+export 'package:leave_package/application/providers/leave_provider.dart';
 //EXTENSION - MODEL MAPPER
 export 'package:leave_package/data/model/leave_model_extensions.dart';
 //STATE

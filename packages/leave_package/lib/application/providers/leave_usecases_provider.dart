@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:leave_package/business/usecases/approve_leave_request.dart';
+import 'package:leave_package/business/usecases/reject_leave_request.dart';
 import 'package:leave_package/business/usecases/save_leave_request.dart';
 import 'package:leave_package/leave_package.dart';
 
@@ -13,6 +15,12 @@ final leaveUseCasesProvider = Provider<LeaveUsecases>((ref) {
       leaveRepository: repository,
     ),
     saveLeaveRequestUseCase: SaveLeaveRequestUseCase(
+      leaveRepository: repository,
+    ),
+    rejectLeaveRequestUseCase: RejectLeaveRequestUseCase(
+      leaveRepository: repository,
+    ),
+    approveLeaveRequestUseCase: ApproveLeaveRequestUseCase(
       leaveRepository: repository,
     ),
   );

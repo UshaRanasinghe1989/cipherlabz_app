@@ -8,11 +8,13 @@ class GetLeaveRequestsByStatusUseCase {
   GetLeaveRequestsByStatusUseCase({required this.leaveRepository});
 
   Future<Either<Failure, List<LeaveRequestWithUserEntity>>> call(
+    List<int> subordinateIdList,
     DateTime fromDate,
     DateTime toDate,
     LeaveRequestStatus leaveRequestStatus,
   ) async {
     return await leaveRepository.getLeaveRequestsByStatus(
+      subordinateIdList,
       fromDate,
       toDate,
       leaveRequestStatus,

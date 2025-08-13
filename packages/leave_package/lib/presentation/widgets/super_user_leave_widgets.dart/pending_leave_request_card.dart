@@ -2,11 +2,18 @@ import 'package:color_package/color_package.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:leave_package/application/providers/leave_provider.dart';
 import 'package:leave_package/leave_package.dart';
 
 class PendingLeaveRequestCard extends ConsumerWidget {
   final LeaveRequestWithUserEntity entity;
-  PendingLeaveRequestCard({super.key, required this.entity});
+  final VoidCallback onReload;
+
+  PendingLeaveRequestCard({
+    super.key,
+    required this.entity,
+    required this.onReload,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,7 +51,12 @@ class PendingLeaveRequestCard extends ConsumerWidget {
               children: [
                 ElevatedButton.icon(
                   icon: Icon(Icons.cancel_outlined, color: AppColors.white),
-                  onPressed: () => print("Rejected pressed"),
+                  onPressed: () async {
+                    await ref
+                        .read(leaveProvider.notifier)
+                        .rejectLeaveRequest(entity.leaveRequestEntity);
+                    onReload();
+                  },
                   label: Text(
                     "Reject",
                     style: TextStyle(
@@ -71,7 +83,12 @@ class PendingLeaveRequestCard extends ConsumerWidget {
                     Icons.check_circle_outline,
                     color: AppColors.white,
                   ),
-                  onPressed: () => print("Approve pressed"),
+                  onPressed: () async {
+                    await ref
+                        .read(leaveProvider.notifier)
+                        .rejectLeaveRequest(entity.leaveRequestEntity);
+                    onReload();
+                  },
                   label: Text(
                     "Approve",
                     style: TextStyle(

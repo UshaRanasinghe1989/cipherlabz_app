@@ -10,6 +10,7 @@ abstract class LeaveRepository {
   //GET LEAVE REQUESTS BY STATUS
   Future<Either<Failure, List<LeaveRequestWithUserEntity>>>
   getLeaveRequestsByStatus(
+    List<int> subordinateIdList,
     DateTime fromDate,
     DateTime toDate,
     LeaveRequestStatus leaveRequestStatus,
@@ -22,5 +23,13 @@ abstract class LeaveRepository {
     DateTime toDate,
     String? reason,
     AttachmentEntity? attachment,
+  );
+  //REJECT LEAVE REQUEST
+  Future<Either<Failure, LeaveRequestEntity>> rejectLeaveRequest(
+    LeaveRequestEntity leaveRequestEntity,
+  );
+  //APPROVE LEAVE REQUEST
+  Future<Either<Failure, LeaveRequestEntity>> approveLeaveRequest(
+    LeaveRequestEntity leaveRequestEntity,
   );
 }

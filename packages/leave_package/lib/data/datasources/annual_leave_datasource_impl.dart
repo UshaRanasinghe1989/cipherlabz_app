@@ -39,17 +39,24 @@ class AnnualLeaveDatasourceImpl implements AnnualLeaveDatasource {
 
   @override
   Future<List<AnnualLeaveRequestModel>> getAnnualLeaveRequestsByStatus(
+    List<int> subordinateIdList,
     DateTime fromDate,
     DateTime toDate,
     LeaveRequestStatus leaveRequestStatus,
   ) async {
     try {
       final annualLeaveList = AnnualLeaveRequestList.annualLeaveList;
-
+      final subordinatesAnnualLeaveList = await _getSubordinatesAnnualLeaveList(
+        subordinateIdList,
+        annualLeaveList,
+      );
+      logger.i(
+        "subordinatesAnnualLeaveList ${subordinatesAnnualLeaveList.length} ***",
+      );
       //MY ANNUAL LEAVES LIST
       List<AnnualLeaveRequestModel> annualLeaveListByStatus = [];
       if (annualLeaveList.isNotEmpty) {
-        annualLeaveListByStatus = annualLeaveList
+        annualLeaveListByStatus = subordinatesAnnualLeaveList
             .where(
               (e) =>
                   DatetimeHelpers.isBetween(fromDate, toDate, e.fromDate) &&
@@ -94,5 +101,88 @@ class AnnualLeaveDatasourceImpl implements AnnualLeaveDatasource {
       logger.w("Exception in saveLeaveRequest", error: e, stackTrace: stack);
       rethrow;
     }
+  }
+
+  //REJECT ANNUAL LEAVE
+  @override
+  Future<AnnualLeaveRequestModel> rejectLeaveRequest(
+    AnnualLeaveRequestModel annualLeaveRequestModel,
+  ) async {
+    try {
+      final list = AnnualLeaveRequestList.annualLeaveList;
+      AnnualLeaveRequestModel? updatedModel;
+      //MY CASUAL LEAVES LIST
+      if (list.isNotEmpty) {
+        for (var i = 0; i < list.length; i++) {
+          final e = list[i];
+          if (annualLeaveRequestModel.userId == e.userId &&
+              annualLeaveRequestModel.fromDate == e.fromDate &&
+              annualLeaveRequestModel.toDate == e.toDate &&
+              e.status == LeaveRequestStatus.pending) {
+            updatedModel = e.copyWith(status: LeaveRequestStatus.rejected);
+
+            list[i] = updatedModel;
+            break;
+          }
+        }
+      }
+
+      logger.i(
+        "datasource:Annual leave request model - ${annualLeaveRequestModel} - ${DateTime.now()}",
+      );
+      return annualLeaveRequestModel;
+    } catch (e, stack) {
+      logger.w("Leave request did not find", error: e, stackTrace: stack);
+      rethrow;
+    }
+  }
+
+  //APPROVE LEAVE REQUEST
+  @override
+  Future<AnnualLeaveRequestModel> approveLeaveRequest(
+    AnnualLeaveRequestModel annualLeaveRequestModel,
+  ) async {
+    try {
+      final list = AnnualLeaveRequestList.annualLeaveList;
+      AnnualLeaveRequestModel? updatedModel;
+      //MY CASUAL LEAVES LIST
+      if (list.isNotEmpty) {
+        for (var i = 0; i < list.length; i++) {
+          final e = list[i];
+          if (annualLeaveRequestModel.userId == e.userId &&
+              annualLeaveRequestModel.fromDate == e.fromDate &&
+              annualLeaveRequestModel.toDate == e.toDate &&
+              e.status == LeaveRequestStatus.pending) {
+            updatedModel = e.copyWith(status: LeaveRequestStatus.approved);
+
+            list[i] = updatedModel;
+            break;
+          }
+        }
+      }
+
+      logger.i(
+        "datasource:Annual leave request model - ${annualLeaveRequestModel} - ${DateTime.now()}",
+      );
+      return annualLeaveRequestModel;
+    } catch (e, stack) {
+      logger.w("Leave request did not find", error: e, stackTrace: stack);
+      rethrow;
+    }
+  }
+
+  //GET SUBORDINATES CASUAL LEAVE REQUESTS
+  Future<List<AnnualLeaveRequestModel>> _getSubordinatesAnnualLeaveList(
+    List<int> subordinateIdList,
+    List<AnnualLeaveRequestModel> annualLeaveList,
+  ) async {
+    List<AnnualLeaveRequestModel> list = [];
+    for (int subordinateId in subordinateIdList) {
+      final matches = annualLeaveList
+          .where((e) => e.userId == subordinateId)
+          .toList();
+      list.addAll(matches);
+    }
+    return list;
   }
 }

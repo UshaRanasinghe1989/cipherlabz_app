@@ -106,3 +106,31 @@ extension LeaveRequestWithUserModelMapper on LeaveRequestWithUserModel {
     );
   }
 }
+
+//LEAVE REQUEST ENTITY => CASUAL LEAVE MODEL
+extension CasualLeaveRequestEntityMapper on LeaveRequestEntity {
+  CasualLeaveRequestModel toCasualModel() {
+    return CasualLeaveRequestModel(
+      id: id,
+      userId: userId,
+      leaveType: leaveType,
+      fromDate: fromDate,
+      toDate: toDate,
+      status: status,
+    );
+  }
+}
+
+//LEAVE REQUEST ENTITY => ANNUAL LEAVE MODEL
+extension AnnualLeaveRequestEntityMapper on LeaveRequestEntity {
+  AnnualLeaveRequestModel toAnnualModel() {
+    return AnnualLeaveRequestModel(
+      id: id,
+      userId: userId,
+      leaveType: leaveType,
+      fromDate: fromDate,
+      toDate: toDate,
+      status: status,
+    );
+  }
+}

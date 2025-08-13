@@ -23,6 +23,16 @@ class DatetimeHelpers {
     DateTime date1 = DateTime(fromDate.year, fromDate.month, fromDate.day);
     DateTime date2 = DateTime(toDate.year, toDate.month, toDate.day);
 
-    return date1.difference(date2).inDays;
+    return date2.difference(date1).inDays + 1;
+  }
+
+  //IS BETWEEN
+  static bool isBetween(
+    DateTime startDate,
+    DateTime endDate,
+    DateTime checkDate,
+  ) {
+    return (isSameDay(startDate, checkDate) || checkDate.isAfter(startDate)) &&
+        (isSameDay(endDate, checkDate) || checkDate.isBefore(endDate));
   }
 }

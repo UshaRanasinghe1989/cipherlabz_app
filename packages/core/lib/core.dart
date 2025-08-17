@@ -6,3 +6,5 @@ export 'helpers/attendance_helper.dart';
 export 'helpers/datetime_helpers.dart';
 export 'helpers/get_location.dart';
 export 'enum/user_category.dart';
+export 'package:core/helpers/calendar_helper.dart';
+export 'package:core/dummy_data/holidays_list.dart';

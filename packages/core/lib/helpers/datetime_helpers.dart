@@ -18,6 +18,10 @@ class DatetimeHelpers {
     return DateFormat("d MMMM yyyy").format(date);
   }
 
+  static String monthDate(DateTime date) {
+    return DateFormat("MMMM dd").format(date);
+  }
+
   //DATE DIFFERENCE
   static int differenceDays({required fromDate, required toDate}) {
     DateTime date1 = DateTime(fromDate.year, fromDate.month, fromDate.day);

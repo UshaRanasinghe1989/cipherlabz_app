@@ -113,6 +113,30 @@ class AttendanceNotifier extends Notifier<AttendanceState> {
     }
   }
 
+  //GET EMPLOYEE ATTENDANCE LIST FOR THE YEAR
+  Future<void> getEmpAttendanceCurrentYearList(
+    int empId,
+    DateTime fromDate,
+    DateTime toDate,
+  ) async {
+    state = state.copyWith(isLoading: true);
+
+    final result = await _attendanceUseCases.getEmpAttendanceCurrentYearUseCase
+        .call(empId, fromDate, toDate);
+    result.fold(
+      (failure) => state = state.copyWith(
+        isLoading: false,
+        failure: failure,
+        empAttendanceList: null,
+      ),
+      (list) => state = state.copyWith(
+        isLoading: false,
+        failure: null,
+        empAttendanceList: list,
+      ),
+    );
+  }
+
   // //IS CHECKED IN FOR THE DAY
   // Future<bool> isCheckedInProvider(int userId) async {
   //   _isCheckedIn = await IsCheckedInUseCase(repository).call(userId);

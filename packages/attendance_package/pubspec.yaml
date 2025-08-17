@@ -22,8 +22,8 @@ dependencies:
   cupertino_icons: ^1.0.8  
   location: ^5.0.0
   collection: ^1.19.1
-  flutter_riverpod: ^2.6.1
-
+  flutter_riverpod: ^2.6.1  
+  logger: ^2.6.1
   color_package:
     path: ../../packages/color_package
   shared_resources:
@@ -34,6 +34,8 @@ dependencies:
     path: ../../packages/user_package
   login_package:
     path: ../../packages/login_package
+  employee_reports_package:
+    path: ../../packages/employee_reports_package
 
 dev_dependencies:
   flutter_test:

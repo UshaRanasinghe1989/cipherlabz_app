@@ -2,8 +2,6 @@ import 'package:attendance_package/attendance_package.dart';
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:location/location.dart';
-//BUSINESS
-import 'package:attendance_package/src/business/entity/attendance_entity.dart';
 
 abstract class AttendanceRepository {
   //SAVE ATTENDANCE
@@ -22,12 +20,18 @@ abstract class AttendanceRepository {
 
   //GET LOCATION
   LocationData getLocation();
-
+  //GET USER ATTENDANCE
   Future<Either<Failure, List<AttendanceEntity>>> getMyAttendance(
     int myUserId,
     int numberOfDays,
   );
-
+  //GET EMPLOYEE ATTENDANCE
+  Future<Either<Failure, List<AttendanceEntity>>> getEmpAttendanceCurrentYear(
+    int empId,
+    DateTime fromDate,
+    DateTime toDate,
+  );
+  //GET SUBORDINATE USER - ATTENDANCE LIST
   Future<Either<Failure, List<EmployeeAttendanceEntity>>>
   getEmployeeAttendanceList(List<int> subordinateIdList);
 }

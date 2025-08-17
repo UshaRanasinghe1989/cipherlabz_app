@@ -1,6 +1,7 @@
 import 'package:attendance_package/attendance_package.dart';
 import 'package:attendance_package/src/application/providers/local_auth_provider.dart';
 import 'package:attendance_package/src/application/providers/location_provider.dart';
+import 'package:attendance_package/src/business/usecase/get_emp_attendance_current_year.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final attendanceUseCasesProvider = Provider<AttendanceUseCases>((ref) {
@@ -18,5 +19,8 @@ final attendanceUseCasesProvider = Provider<AttendanceUseCases>((ref) {
     isCheckedIn: IsCheckedInUseCase(repository),
     getMyAttendance: GetMyAttendanceUseCase(repository: repository),
     getEmployeeAttendance: GetEmployeeAttendanceUseCase(repository: repository),
+    getEmpAttendanceCurrentYearUseCase: GetEmpAttendanceCurrentYearUseCase(
+      repository: repository,
+    ),
   );
 });

@@ -7,6 +7,7 @@ class AttendanceState {
   final AttendanceEntity? attendance;
   final AttendanceEntity? lastSaved;
   final List<AttendanceEntity>? myAttendanceList;
+  final List<AttendanceEntity>? empAttendanceList;
   final List<EmployeeAttendanceEntity>? employeeAttendanceList;
 
   AttendanceState({
@@ -15,6 +16,7 @@ class AttendanceState {
     this.attendance,
     this.lastSaved,
     this.myAttendanceList,
+    this.empAttendanceList,
     this.employeeAttendanceList,
   });
 
@@ -24,6 +26,7 @@ class AttendanceState {
     AttendanceEntity? attendance,
     AttendanceEntity? lastSaved,
     List<AttendanceEntity>? myAttendanceList,
+    List<AttendanceEntity>? empAttendanceList,
     List<EmployeeAttendanceEntity>? employeeAttendanceList,
   }) {
     return AttendanceState(
@@ -32,6 +35,7 @@ class AttendanceState {
       attendance: attendance ?? this.attendance,
       lastSaved: lastSaved ?? this.lastSaved,
       myAttendanceList: myAttendanceList ?? myAttendanceList,
+      empAttendanceList: empAttendanceList ?? empAttendanceList,
       employeeAttendanceList: employeeAttendanceList ?? employeeAttendanceList,
     );
   }

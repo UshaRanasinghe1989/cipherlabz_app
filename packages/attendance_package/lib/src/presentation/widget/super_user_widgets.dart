@@ -1,5 +1,6 @@
 import 'package:attendance_package/attendance_package.dart';
 import 'package:color_package/color_package.dart';
+import 'package:employee_reports_package/employee_reports_package.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,9 +28,6 @@ class _SuperUserWidgetsState extends ConsumerState<SuperUserWidgets> {
     return SafeArea(
       top: true,
       bottom: true,
-      left: false,
-      right: false,
-      maintainBottomViewPadding: true,
       child: Container(
         color: AppColors.white,
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -71,49 +69,73 @@ class _SuperUserWidgetsState extends ConsumerState<SuperUserWidgets> {
             ),
             SizedBox(height: 20),
             //EMPLOYEE HISTORY BUTTON
-            Container(
-              width: 250,
-              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 0.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.blue0590DF),
-                borderRadius: BorderRadius.circular(23),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.black00000040,
-                    blurRadius: 5,
-                    offset: Offset(0, 4), // x, y
-                    spreadRadius: 1,
-                  ),
-                  BoxShadow(
-                    color: AppColors.white,
-                    blurRadius: 1,
-                    offset: Offset(0, 0), // x, y
-                    spreadRadius: 0,
-                  ),
-                ],
+            ElevatedButton.icon(
+              onPressed: () => _navigateToEmployeeHistoryPage(),
+              label: Text(
+                "Employees History",
+                style: TextStyle(
+                  color: AppColors.blue0590DF,
+                  fontFamily: "Poppins",
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: null,
-                    icon: Icon(
-                      Icons.visibility_outlined,
-                      color: AppColors.blue0590DF,
-                    ),
-                  ),
-                  Text(
-                    "Employees History",
-                    style: TextStyle(
-                      color: AppColors.blue0590DF,
-                      fontFamily: "Poppins",
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
+              icon: Icon(
+                Icons.visibility_outlined,
+                color: AppColors.blue0590DF,
+              ),
+              style: ElevatedButton.styleFrom(
+                elevation: 2,
+                backgroundColor: AppColors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadiusGeometry.circular(10),
+                ),
+                side: BorderSide(color: AppColors.blue0590DF),
               ),
             ),
+            // Container(
+            //   width: 250,
+            //   padding: EdgeInsets.symmetric(horizontal: 5, vertical: 0.0),
+            //   decoration: BoxDecoration(
+            //     border: Border.all(color: AppColors.blue0590DF),
+            //     borderRadius: BorderRadius.circular(23),
+            //     boxShadow: [
+            //       BoxShadow(
+            //         color: AppColors.black00000040,
+            //         blurRadius: 5,
+            //         offset: Offset(0, 4), // x, y
+            //         spreadRadius: 1,
+            //       ),
+            //       BoxShadow(
+            //         color: AppColors.white,
+            //         blurRadius: 1,
+            //         offset: Offset(0, 0), // x, y
+            //         spreadRadius: 0,
+            //       ),
+            //     ],
+            //   ),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       IconButton(
+            //         onPressed: null,
+            //         icon: Icon(
+            //           Icons.visibility_outlined,
+            //           color: AppColors.blue0590DF,
+            //         ),
+            //       ),
+            //       Text(
+            //         "Employees History",
+            //         style: TextStyle(
+            //           color: AppColors.blue0590DF,
+            //           fontFamily: "Poppins",
+            //           fontSize: 15,
+            //           fontWeight: FontWeight.w500,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             SizedBox(height: 20),
             Expanded(
               child: isSelectedMyAttendance
@@ -123,6 +145,13 @@ class _SuperUserWidgetsState extends ConsumerState<SuperUserWidgets> {
           ],
         ),
       ),
+    );
+  }
+
+  void _navigateToEmployeeHistoryPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EmployeeHistoryPage()),
     );
   }
 }

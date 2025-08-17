@@ -5,9 +5,11 @@ import 'package:core/errors/failure.dart';
 import 'package:core/helpers/attendance_helper.dart';
 //PACKAGE
 import 'package:attendance_package/attendance_package.dart';
+import 'package:logger/logger.dart';
 import 'package:user_package/user_package.dart';
 
 class AttendanceLocalDataSource {
+  final logger = Logger();
   Future<Either<Failure, AttendanceEntity>> insertAttendance(
     AttendanceModel model,
   ) async {
@@ -18,7 +20,7 @@ class AttendanceLocalDataSource {
               ? (attendanceMap.keys.toList()..sort()).last
               : 0) +
           1;
-      attendanceMap[newKey] = model.toEntity();
+      attendanceMap[newKey] = model;
 
       return getAttendanceObj(model.id, DateTime.now());
     } catch (e) {
@@ -106,6 +108,28 @@ class AttendanceLocalDataSource {
         ),
       );
     }
+    if (employeeAttendanceList.isNotEmpty) {
+      return Right(employeeAttendanceList);
+    } else {
+      return Left(GeneralFailure(errorMessage: "No Date Available !"));
+    }
+  }
+
+  //GET EMPLOYEE ATTENDANCE LIST FOR THE YEAR
+  Future<Either<Failure, List<AttendanceModel>>> getEmpAttendanceCurrentYear(
+    int empId,
+    DateTime fromDate,
+    DateTime toDate,
+  ) async {
+    List<AttendanceModel> employeeAttendanceList = [];
+    try {
+      employeeAttendanceList = AttendanceData.attendanceMap.values
+          .where((e) => e.userId == empId)
+          .toList();
+    } catch (e) {
+      logger.i(e);
+    }
+
     if (employeeAttendanceList.isNotEmpty) {
       return Right(employeeAttendanceList);
     } else {

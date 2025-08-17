@@ -1,9 +1,9 @@
-import 'package:attendance_package/src/business/entity/attendance_entity.dart';
+import 'package:attendance_package/attendance_package.dart';
 import 'package:attendance_package/src/enum/attendance_status.dart';
 
 class AttendanceData {
-  static Map<int, AttendanceEntity> attendanceMap = {
-    0: AttendanceEntity(
+  static Map<int, AttendanceModel> attendanceMap = {
+    0: AttendanceModel(
       id: 0,
       userId: 1,
       checkIn: DateTime(2025, 8, 10, 8, 45),
@@ -12,7 +12,7 @@ class AttendanceData {
       longitude: 79.8612,
       status: AttendanceStatus.ontime,
     ),
-    1: AttendanceEntity(
+    1: AttendanceModel(
       id: 1,
       userId: 2,
       checkIn: DateTime(2025, 8, 10, 9, 45),
@@ -21,7 +21,7 @@ class AttendanceData {
       longitude: 79.8612,
       status: AttendanceStatus.late,
     ),
-    2: AttendanceEntity(
+    2: AttendanceModel(
       id: 2,
       userId: 0,
       checkIn: DateTime(2025, 8, 10, 0, 0),

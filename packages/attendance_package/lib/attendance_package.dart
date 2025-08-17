@@ -5,6 +5,7 @@ export 'package:attendance_package/src/data/datasource/attendance_local_datasour
 //MODEL
 export 'package:attendance_package/src/data/model/attendance_model.dart';
 export 'package:attendance_package/src/data/model/employee_attendance_model.dart';
+export 'package:attendance_package/src/data/model/attendance_model_extensions.dart';
 //BUSINESS - USECASES
 export 'package:attendance_package/src/business/usecase/save_attendance.dart';
 export 'package:attendance_package/src/business/usecase/get_attendance.dart';
@@ -12,6 +13,7 @@ export 'package:attendance_package/src/business/usecase/is_checked_in.dart';
 export 'package:attendance_package/src/business/usecase/get_my_attendance.dart';
 export 'package:attendance_package/src/business/usecase/attendance_usecases.dart';
 export 'package:attendance_package/src/business/usecase/get_employee_attendance.dart';
+export 'package:attendance_package/src/business/usecase/get_emp_attendance_current_year.dart';
 //ENTITY
 export 'package:attendance_package/src/business/entity/attendance_entity.dart';
 export 'package:attendance_package/src/business/entity/employee_attendance_entity.dart';

@@ -31,6 +31,8 @@ dependencies:
     path: ../../packages/login_package
   attendance_package:
     path: ../../packages/attendance_package
+  leave_package:
+    path: ../../packages/leave_package
 
 dev_dependencies:
   flutter_test:

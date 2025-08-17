@@ -70,4 +70,7 @@ class AppColors {
 
   //APPROVE / REJECT LEAVE COLORS
   static const redDE3F3F = Color(0XFFDE3F3F); //#DE3F3F
+
+  //EMPLOYEE HISTORY COLORS
+  static const greyCBCBCBB0 = Color.fromRGBO(203, 203, 203, 0.69); //#CBCBCBB0
 }

@@ -5,12 +5,14 @@ class UserState {
   final bool? isLoading;
   final Failure? failure;
   final UserEntity? user;
+  final UserEntity? employee;
   final List<int>? subordinateList;
 
   UserState({
     this.isLoading = false,
     this.failure,
     this.user,
+    this.employee,
     this.subordinateList,
   });
 
@@ -18,12 +20,14 @@ class UserState {
     bool? isLoading,
     Failure? failure,
     UserEntity? user,
+    UserEntity? employee,
     List<int>? subordinateList,
   }) {
     return UserState(
       isLoading: isLoading ?? this.isLoading,
       failure: failure,
       user: user ?? this.user,
+      employee: employee ?? this.employee,
       subordinateList: subordinateList ?? this.subordinateList,
     );
   }

@@ -32,6 +32,11 @@ class UserRepositoryImpl implements UserRepository {
     return await datasource.getSubordinateList(superiorId);
   }
 
+  @override
+  Future<Either<Failure, UserEntity>> getEmployee(int userId) async {
+    return await datasource.getEmployee(userId: userId);
+  }
+
   // @override
   // Future<Either<Failure, UserModel>> getUser({
   //   required UserParams params,

@@ -53,4 +53,26 @@ class UserNotifier extends Notifier<UserState> {
           state = state.copyWith(isLoading: false, failure: null, user: entity),
     );
   }
+
+  //FETCH USER
+  Future<void> getEmployee(int userId) async {
+    state = state.copyWith(isLoading: true);
+
+    final Either<Failure, UserEntity> result = await userUseCases
+        .getEmployeeUseCase
+        .call(userId: userId);
+
+    result.fold(
+      (failure) => state = state.copyWith(
+        isLoading: false,
+        failure: failure,
+        employee: null,
+      ),
+      (entity) => state = state.copyWith(
+        isLoading: false,
+        failure: null,
+        employee: entity,
+      ),
+    );
+  }
 }

@@ -9,6 +9,7 @@ extension UserModelMapper on UserModel {
       email: email,
       loginId: loginId,
       name: name,
+      jobRole: jobRole,
       password: password,
     );
   }
@@ -22,6 +23,7 @@ extension UserEntityMapper on UserEntity {
       email: email,
       loginId: loginId,
       name: name,
+      jobRole: jobRole,
       password: password,
     );
   }

@@ -11,4 +11,6 @@ abstract class UserRepository {
   Future<Either<Failure, UserEntity>> getUser({required UserParams params});
   //GET SUBORDINATES LIST
   Future<Either<Failure, List<int>>> getSubordinateList(int superiorId);
+  //GET EMPLOYEE
+  Future<Either<Failure, UserEntity>> getEmployee(int userId);
 }

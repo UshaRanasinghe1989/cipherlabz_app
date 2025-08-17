@@ -36,4 +36,21 @@ class UserDatasource {
       return Left(GeneralFailure(errorMessage: e.toString()));
     }
   }
+
+  //GET USER ENTITY OBJECT
+  Future<Either<Failure, UserModel>> getEmployee({required userId}) async {
+    try {
+      final userModel = UserSet.usersSet.firstWhereOrNull(
+        (user) => user.id == userId,
+      );
+
+      if (userModel != null) {
+        return Right(userModel);
+      } else {
+        return Left(NullFailure(errorMessage: "Null failure !"));
+      }
+    } catch (e) {
+      return Left(GeneralFailure(errorMessage: e.toString()));
+    }
+  }
 }

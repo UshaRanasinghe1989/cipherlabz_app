@@ -6,6 +6,7 @@ class UserEntity {
   final String name;
   final UserCategory category;
   final String loginId;
+  final String jobRole;
   final String password;
 
   const UserEntity({
@@ -14,6 +15,7 @@ class UserEntity {
     required this.name,
     required this.category,
     required this.loginId,
+    required this.jobRole,
     required this.password,
   });
 }

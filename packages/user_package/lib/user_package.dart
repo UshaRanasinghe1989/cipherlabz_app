@@ -10,6 +10,7 @@ export 'package:user_package/src/application/providers/user_provider.dart';
 export 'package:user_package/src/business/usecase/get_subordinates_list.dart';
 export 'package:user_package/src/business/usecase/get_user.dart';
 export 'package:user_package/src/business/usecase/user_usecases.dart';
+export 'package:user_package/src/business/usecase/get_employee.dart';
 //REPOSITORY
 export 'package:user_package/src/business/repository/user_repository.dart';
 export 'package:user_package/src/data/repository_impl/user_repository_impl.dart';

@@ -52,7 +52,7 @@ class CasualLeaveDatasourceImpl implements CasualLeaveDatasource {
         casualLeaveList,
       );
       logger.i(
-        "subordinatesCasualLeaveList ${subordinatesCasualLeaveList.length} ***",
+        "subordinatesCasualLeaveList ${subordinatesCasualLeaveList.length} ${fromDate} , ${toDate}",
       );
       //SUBORDINATES CASUAL LEAVES LIST
       List<CasualLeaveRequestModel> casualLeaveListByStatus = [];
@@ -185,6 +185,7 @@ class CasualLeaveDatasourceImpl implements CasualLeaveDatasource {
           .toList();
       list.addAll(matches);
     }
+    logger.i("_getSubordinatesCasualLeaveList result : ${list.length}");
     return list;
   }
 }

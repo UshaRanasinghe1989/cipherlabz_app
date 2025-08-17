@@ -1,5 +1,3 @@
-import 'package:core/errors/failure.dart';
-import 'package:dartz/dartz.dart';
 import 'package:leave_package/leave_package.dart';
 
 abstract class CasualLeaveDatasource {

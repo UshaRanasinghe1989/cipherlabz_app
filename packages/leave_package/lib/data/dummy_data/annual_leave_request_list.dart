@@ -10,7 +10,7 @@ class AnnualLeaveRequestList {
       toDate: DateTime(2025, 12, 30),
       reason: "Personal",
       attachment: null,
-      status: LeaveRequestStatus.pending,
+      status: LeaveRequestStatus.approved,
     ),
     AnnualLeaveRequestModel(
       id: 0,
@@ -20,7 +20,7 @@ class AnnualLeaveRequestList {
       toDate: DateTime(2025, 12, 7),
       reason: "Personal",
       attachment: null,
-      status: LeaveRequestStatus.pending,
+      status: LeaveRequestStatus.approved,
     ),
     AnnualLeaveRequestModel(
       id: 0,
@@ -30,7 +30,7 @@ class AnnualLeaveRequestList {
       toDate: DateTime(2025, 12, 20),
       reason: "Personal",
       attachment: null,
-      status: LeaveRequestStatus.pending,
+      status: LeaveRequestStatus.approved,
     ),
   ];
 }

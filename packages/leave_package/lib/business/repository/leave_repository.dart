@@ -15,6 +15,13 @@ abstract class LeaveRepository {
     DateTime toDate,
     LeaveRequestStatus leaveRequestStatus,
   );
+  //GET LEAVE REQUESTS BY STATUS
+  Future<Either<Failure, List<LeaveRequestEntity>>> getEmpLeaveRequestsByStatus(
+    List<int> subordinateIdList,
+    DateTime fromDate,
+    DateTime toDate,
+    LeaveRequestStatus leaveRequestStatus,
+  );
   //SAVE LEAVE REQUEST
   Future<Either<Failure, LeaveRequestEntity>> saveLeaveRequest(
     int userId,

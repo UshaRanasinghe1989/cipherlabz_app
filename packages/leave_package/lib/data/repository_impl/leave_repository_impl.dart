@@ -265,6 +265,74 @@ class LeaveRepositoryImpl implements LeaveRepository {
     }
   }
 
+  @override
+  Future<Either<Failure, List<LeaveRequestEntity>>> getEmpLeaveRequestsByStatus(
+    List<int> subordinateIdList,
+    DateTime fromDate,
+    DateTime toDate,
+    LeaveRequestStatus leaveRequestStatus,
+  ) async {
+    //GET MY CASUAL LEAVE REQUESTS LIST
+    List<CasualLeaveRequestModel> casualLeaveList = await casualLeaveDatasource
+        .getCasualLeaveRequestsByStatus(
+          subordinateIdList,
+          fromDate,
+          toDate,
+          leaveRequestStatus,
+        );
+
+    //MODEL MAP
+    List<CasualLeaveRequestEntity> casualLeaveEntityList = casualLeaveList
+        .map((e) => e.toEntity())
+        .toList();
+
+    //GET MY ANNUAL LEAVE REQUESTS LIST
+    List<AnnualLeaveRequestModel> annualLeaveList = await annualLeaveDatasource
+        .getAnnualLeaveRequestsByStatus(
+          subordinateIdList,
+          fromDate,
+          toDate,
+          leaveRequestStatus,
+        );
+
+    //MODEL MAP
+    List<AnnualLeaveRequestEntity> annualLeaveEntityList = annualLeaveList
+        .map((e) => e.toEntity())
+        .toList();
+
+    //CASUAL + ANNUAL LEAVE LISTS BY STATUS
+    try {
+      final allLeaveListByStatus = <LeaveRequestEntity>[];
+      if (casualLeaveEntityList.isNotEmpty) {
+        allLeaveListByStatus.addAll(casualLeaveEntityList);
+        logger.i("casualList count : ${casualLeaveEntityList.length} ");
+      }
+
+      if (annualLeaveEntityList.isNotEmpty) {
+        allLeaveListByStatus.addAll(annualLeaveEntityList);
+        logger.i("annualList count : ${annualLeaveEntityList.length} ");
+      }
+
+      if (allLeaveListByStatus.isNotEmpty) {
+        logger.i(
+          "allLeaveListByStatus count : ${allLeaveListByStatus.length} ",
+        );
+        return Right(allLeaveListByStatus);
+      } else {
+        logger.i("leave_repository_impl : No leave records found");
+        return Left(GeneralFailure(errorMessage: "No leave records found"));
+      }
+    } catch (e, stack) {
+      logger.w(
+        "Exception in getLeaveRequestsByStatus",
+        error: e,
+        stackTrace: stack,
+        time: DateTime.now(),
+      );
+      return Left(GeneralFailure(errorMessage: "Unexpected error occurred"));
+    }
+  }
+
   List<LeaveRequestWithUserEntity> _getLeaveRequestWithUserList(
     List<LeaveRequestEntity> leaveEntityList,
   ) {

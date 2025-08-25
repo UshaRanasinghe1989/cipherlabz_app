@@ -15,9 +15,6 @@ class HomePageWidget extends StatelessWidget {
     return SafeArea(
       top: true,
       bottom: true,
-      left: false,
-      right: false,
-      maintainBottomViewPadding: true,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(

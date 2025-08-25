@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_package/login_package.dart';
 //WIDGETS
 import 'package:home_package/src/presentation/widget/top_row/profile_img.dart';
+import 'package:notification_package/notification_package.dart';
 import 'package:shared_resources/shared_resources.dart';
 //APP COLORS
 import 'package:color_package/color_package.dart';
@@ -42,7 +43,10 @@ class TopRowWidget extends ConsumerWidget {
           ),
         ),
         IconButton(
-          onPressed: null,
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NotificationPage()),
+          ),
           icon: Icon(
             Icons.notification_add_outlined,
             color: AppColors.blue0085FF,

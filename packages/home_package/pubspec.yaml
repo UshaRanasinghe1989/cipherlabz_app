@@ -25,7 +25,9 @@ dependencies:
   attendance_package: 
     path: ../../packages/attendance_package
   announcement_package: 
-    path: ../../packages/announcement_package  
+    path: ../../packages/announcement_package 
+  notification_package: 
+    path: ../../packages/notification_package  
 
   color_package:
     path: ../../packages/color_package

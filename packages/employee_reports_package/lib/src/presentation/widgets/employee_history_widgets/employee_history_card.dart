@@ -1,9 +1,7 @@
 import 'package:color_package/color_package.dart';
 import 'package:core/core.dart';
-import 'package:core/helpers/datetime_helpers.dart';
 import 'package:employee_reports_package/employee_reports_package.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 
 class EmployeeHistoryCard extends StatelessWidget {
   final SubordinateReport report;

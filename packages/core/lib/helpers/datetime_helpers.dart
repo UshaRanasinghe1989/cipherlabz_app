@@ -39,4 +39,36 @@ class DatetimeHelpers {
     return (isSameDay(startDate, checkDate) || checkDate.isAfter(startDate)) &&
         (isSameDay(endDate, checkDate) || checkDate.isBefore(endDate));
   }
+
+  //TIME AGO
+  static String timeAgo(DateTime date) {
+    final now = DateTime.now();
+    final dateNow = getDateOnly(now);
+    final getDate = getDateOnly(date);
+    final difference = dateNow.difference(getDate).inDays;
+
+    //TODAY
+    if (difference == 0) {
+      return "Today";
+    }
+    //PAST
+    else if (difference == 1) {
+      return "Yesterday";
+    } else if (difference == 2) {
+      return "$difference days ago";
+    } else if (difference > 2) {
+      return formattedDate(date);
+    }
+    //FUTURE
+    else if (difference == -1) {
+      return "Tomorrow";
+    } else {
+      return formattedDate(date);
+    }
+  }
+
+  //GET DATE ONLY
+  static DateTime getDateOnly(DateTime date) {
+    return DateTime(date.year, date.month, date.day);
+  }
 }

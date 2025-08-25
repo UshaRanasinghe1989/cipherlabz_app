@@ -1,0 +1,37 @@
+name: user_profile_package
+description: User profile package
+version: 0.0.1
+publish_to: none
+environment:
+  sdk: ^3.8.1
+  flutter: ">=1.17.0"
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_svg: ^2.0.7
+  dartz: ^0.10.1
+  intl: ^0.18.1
+  cupertino_icons: ^1.0.8
+  collection: ^1.19.1
+  flutter_riverpod: ^2.6.1
+  fl_chart: ^1.0.0
+  logger: ^2.6.1
+  color_package:
+    path: ../../packages/color_package
+  shared_resources:
+    path: ../../packages/shared_resources
+  core:
+    path: ../../packages/core
+  user_package:
+    path: ../../packages/user_package
+  login_package:
+    path: ../../packages/login_package
+  attendance_package:
+    path: ../../packages/attendance_package
+  leave_package:
+    path: ../../packages/leave_package
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+flutter: null

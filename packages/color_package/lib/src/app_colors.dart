@@ -73,4 +73,7 @@ class AppColors {
 
   //EMPLOYEE HISTORY COLORS
   static const greyCBCBCBB0 = Color.fromRGBO(203, 203, 203, 0.69); //#CBCBCBB0
+
+  //USER PROFILE REPORT
+  static const blue0085FF94 = Color.fromRGBO(0, 132, 255, 0.58); //#0085FF94
 }

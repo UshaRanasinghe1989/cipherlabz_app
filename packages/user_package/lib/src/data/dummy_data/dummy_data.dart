@@ -11,6 +11,7 @@ class UserSet {
       category: UserCategory.superUser,
       loginId: "sunil@gmail.com",
       jobRole: "IT Support",
+      department: "IT Department",
       password: "test",
     ),
     UserModel(
@@ -20,6 +21,7 @@ class UserSet {
       category: UserCategory.regularUser,
       loginId: "nimal@gmail.com",
       jobRole: "Project Manager",
+      department: "IT Department",
       password: "test",
     ),
     UserModel(
@@ -29,6 +31,7 @@ class UserSet {
       category: UserCategory.regularUser,
       loginId: "charith@gmail.com",
       jobRole: "Software Engineer",
+      department: "IT Department",
       password: "test",
     ),
   };

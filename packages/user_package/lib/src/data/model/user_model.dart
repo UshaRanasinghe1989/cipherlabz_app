@@ -8,6 +8,7 @@ class UserModel extends UserEntity {
     required super.category,
     required super.loginId,
     required super.jobRole,
+    required super.department,
     required super.password,
   });
 
@@ -19,6 +20,7 @@ class UserModel extends UserEntity {
       category: json['category'],
       loginId: json['loginId'],
       jobRole: json['jobRole'],
+      department: json['department'],
       password: json['password'],
     );
   }
@@ -31,6 +33,7 @@ class UserModel extends UserEntity {
       'category': category,
       'loginId': loginId,
       'jobRole': jobRole,
+      'department': department,
       'password': password,
     };
   }

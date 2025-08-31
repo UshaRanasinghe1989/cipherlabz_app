@@ -34,4 +34,13 @@ abstract class AttendanceRepository {
   //GET SUBORDINATE USER - ATTENDANCE LIST
   Future<Either<Failure, List<EmployeeAttendanceEntity>>>
   getEmployeeAttendanceList(List<int> subordinateIdList);
+
+  //GET EMPLOYEE ATTENDANCE COUNT
+  Future<Either<Failure, int>> getEmpAttendanceCount(DateTime today);
+
+  //GET EMPLOYEE LATE COUNT
+  Future<Either<Failure, int>> getEmpLateCount(DateTime today);
+
+  //GET EMPLOYEE LEAVE COUNT
+  Future<Either<Failure, int>> getEmpLeaveCount(DateTime today);
 }

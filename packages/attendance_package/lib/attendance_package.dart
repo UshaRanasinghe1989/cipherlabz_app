@@ -42,3 +42,5 @@ export 'package:attendance_package/src/presentation/widget/employee_attendance_d
 export 'package:attendance_package/src/presentation/state/attendance_state.dart';
 //NOTIFIERS
 export 'package:attendance_package/src/application/notifiers/attendance_notifier.dart';
+//ENUM
+export 'package:attendance_package/src/enum/attendance_status.dart';

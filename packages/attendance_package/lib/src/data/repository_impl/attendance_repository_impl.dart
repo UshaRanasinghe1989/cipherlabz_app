@@ -80,4 +80,19 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
       toDate,
     );
   }
+
+  @override
+  Future<Either<Failure, int>> getEmpAttendanceCount(DateTime today) async {
+    return await dataSource.getEmpAttendanceCount(today);
+  }
+
+  @override
+  Future<Either<Failure, int>> getEmpLateCount(DateTime today) async {
+    return await dataSource.getEmpLateCount(today);
+  }
+
+  @override
+  Future<Either<Failure, int>> getEmpLeaveCount(DateTime today) async {
+    return await dataSource.getEmpLeaveCount(today);
+  }
 }

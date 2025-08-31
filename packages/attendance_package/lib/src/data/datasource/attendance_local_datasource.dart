@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:core/helpers/datetime_helpers.dart';
 import 'package:dartz/dartz.dart';
 //RESOURCES
 import 'package:core/errors/failure.dart';
@@ -134,6 +135,73 @@ class AttendanceLocalDataSource {
       return Right(employeeAttendanceList);
     } else {
       return Left(GeneralFailure(errorMessage: "No Date Available !"));
+    }
+  }
+
+  //GET EMPLOYEE ATTENDANCE COUNT
+  Future<Either<Failure, int>> getEmpAttendanceCount(DateTime today) async {
+    List<AttendanceModel> employeeAttendanceList = [];
+    try {
+      employeeAttendanceList = AttendanceData.attendanceMap.values
+          .where(
+            (e) =>
+                DatetimeHelpers.getDateOnly(e.checkIn) == today &&
+                (e.status != AttendanceStatus.pending ||
+                    e.status != AttendanceStatus.leave),
+          )
+          .toList();
+    } catch (e) {
+      logger.i(e);
+    }
+
+    if (employeeAttendanceList.isNotEmpty) {
+      return Right(employeeAttendanceList.length);
+    } else {
+      return Left(GeneralFailure(errorMessage: "No Data Available !"));
+    }
+  }
+
+  //GET EMPLOYEE LATE COUNT
+  Future<Either<Failure, int>> getEmpLateCount(DateTime today) async {
+    List<AttendanceModel> employeeLateList = [];
+    try {
+      employeeLateList = AttendanceData.attendanceMap.values
+          .where(
+            (e) =>
+                DatetimeHelpers.getDateOnly(e.checkIn) == today &&
+                e.status != AttendanceStatus.late,
+          )
+          .toList();
+    } catch (e) {
+      logger.i(e);
+    }
+
+    if (employeeLateList.isNotEmpty) {
+      return Right(employeeLateList.length);
+    } else {
+      return Left(GeneralFailure(errorMessage: "No Data Available !"));
+    }
+  }
+
+  //GET EMPLOYEE LEAVE COUNT
+  Future<Either<Failure, int>> getEmpLeaveCount(DateTime today) async {
+    List<AttendanceModel> employeeLeaveList = [];
+    try {
+      employeeLeaveList = AttendanceData.attendanceMap.values
+          .where(
+            (e) =>
+                DatetimeHelpers.getDateOnly(e.checkIn) == today &&
+                e.status != AttendanceStatus.leave,
+          )
+          .toList();
+    } catch (e) {
+      logger.i(e);
+    }
+
+    if (employeeLeaveList.isNotEmpty) {
+      return Right(employeeLeaveList.length);
+    } else {
+      return Left(GeneralFailure(errorMessage: "No Data Available !"));
     }
   }
 }
